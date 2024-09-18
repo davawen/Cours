@@ -1,0 +1,741 @@
+#import "@local/physique:0.1.0": *
+
+#show: doc => template(doc)
+
+#show "TODO": box([TODO], stroke: black, inset: 5pt, fill: red)
+
+Lois de Snells-Descartes, Stigmatisme et aplanétisme
+
+= Vocabulaire de l'Optique géométrique
+
+== Notion de poli optique
+
+On se place dans le cadre de l'optique géométrique: pas de diffraction.
+
+il faut donc un état de surface impeccable (le poli optique): pas d'aspérités sur les surfaces qu'on utilise.
+
+== Interfaces optiques
+
+On va différencier des interfaces optiques:
+- Dioptre: surface présentant le poli optique et séparant deux milieux d'indice différent
+- Miroir: surface présentant le poli optique renvoyant les rayons d'où il viennent
+
+On se place dans un système doptrique si seul des dioptres sont utilisés, et dans un système catadioptrique si seul des dioptres et des miroirs sont utilisés.
+
+== Rayon incident, réfléchi ou réfracté
+
+Dans le cas d'une surface quelconque, on parlera de la normale $arrow(n)$ et on définira tous les angles à partir de cette normale.
+
+#figure(caption: "Rayon incident, réfracté, et réfléchi", canvas({
+  import draw: *
+
+  line((-2, 2), (0, 0), name: "incident")
+  line((0, 0), (2, 2), stroke: (dash: "dashed"), name: "reflect")
+  line((0, 0), (1, -2), stroke: (dash: "dashed"), name: "refract")
+  
+  line((0, 2), (0, -2), stroke: (dash: "dotted"), name: "normal")
+
+  arc-through((-3, -0.5), (0, 0), (3, -0.5), name: "dioptre")
+
+  content((-2, 1), $n_1$)
+  content((-2, -1), $n_2$)
+
+  content("dioptre.end", [dioptre], anchor: "south", padding: 7pt)
+
+  content("incident.start", [rayon incident], anchor: "south", padding: 2pt)
+  content("reflect.end", [rayon réflechi], anchor: "south", padding: 2pt)
+  content("refract.mid", [rayon réfracté], anchor: "west", padding: 2pt)
+}))
+
+== Objet réel ou image virtuelle
+
+
+#def[Objet]: point de convergence des rayons qui arrivent sur le *système*. \
+#def[Image]: point de convergence des rayons qui sortent du *système*. \
+#def[Réel]: La lumière va physiquement passer à cet endroit. \
+#def[Virtuel]: La lumière ne va passer à travers ce point (car obstacle ou trajectoire changée avant). \
+
+Les notions d'objet et d'image sont à voir du *point de vue du système optique*.
+
+Afin d'obtenir un objet virtuel, il faut le _créer_ à l'aide d'un système optique.
+
+On peut obtenir recueillir une image réelle sur un écran, à l'inverse d'une image virtuelle. Il faut utiliser un système annexe (faire projection de l'image virtuelle) afin de récuperer l'image virtuelle.
+
+#figure(caption: "Objet réel ou virtuel", grid(columns: 2, gutter: 5em,
+  canvas({
+    import draw: *
+
+    let A = (-2.5, 0)
+    let half_mark = (end: "straight", pos: -63%)
+
+    lentil(0.6, height: 1.3, name: "lentil")
+
+    for i in (20, 35, 50, 65, 80) {
+      line(A, "lentil.left." + str(i) + "%", mark: half_mark)
+    }
+
+    content(A, $A$, anchor: "east")
+  }),
+  canvas({
+    import draw: *
+
+    let A = (0, 0)
+    let half_mark = (end: "straight", pos: -63%)
+
+    lentil(0.6, height: 1, name: "lentil")
+
+    for i in (20, 35, 50, 65, 80) {
+      let pos = "lentil.left." + str(i) + "%"
+      get-ctx(ctx => {
+        let (ctx, b) = cetz.coordinate.resolve(ctx, pos)
+
+        let bp = cetz.vector.add(b, b)
+        line(bp, pos, mark: half_mark)
+        line(pos, A, stroke: (dash: "dashed"))
+      })
+    }
+    content(A, $A$, anchor: "west")
+  })
+))
+
+#figure(caption: "Image réelle ou virtuelle", grid(columns: 2, gutter: 5em,
+  canvas({
+    import draw: *
+
+    let B = (2.5, 0)
+    let half_mark = (end: "straight", pos: -63%)
+
+    lentil(0.6, height: 1.3, name: "lentil")
+
+    for i in (20, 35, 50, 65, 80) {
+      line("lentil.right." + str(i) + "%", B, mark: half_mark)
+    }
+
+    content(B, $B$, anchor: "west")
+  }),
+  canvas({
+    import draw: *
+
+    let B = (0, 0)
+    let half_mark = (end: "straight", pos: -63%)
+
+    lentil(0.6, height: 1, name: "lentil")
+
+    for i in (20, 35, 50, 65, 80) {
+      let pos = "lentil.right." + str(i) + "%"
+      get-ctx(ctx => {
+        let (ctx, b) = cetz.coordinate.resolve(ctx, pos)
+
+        let bp = cetz.vector.add(b, b)
+        line(B, pos, stroke: (dash: "dashed"))
+        line(pos, bp, mark: half_mark)
+      })
+    }
+    content(B, $B$, anchor: "east")
+  })
+))
+
+Traits pleins: la lumière passe effectivement par ce point. \
+Traits pointillés: la lumière *semble* provenir de ce point.
+
+== Système centré
+
+#def[Système centré]: système qui présente un axe de révolution ou un système de révolution
+
+Dans les systèmes centrés, les rayons passant par le l'axe du système, sont symmétriques.
+
+On pourra toujours approximer les surfaces et les lentilles par des sphères.
+
+On tracera toujours un axe optique:
+
+
+#figure(caption: "Système centré", canvas({
+  import draw: *
+
+  line((-4, 0), (4, 0), mark: (end: "straight"))
+
+  lentil(0, name: "lentil")
+
+  set-style(circle: (radius: 2pt, fill: black))
+
+  circle((-2, 0), name: "c")
+  circle((2, 0), name: "cx")
+  line("c", "lentil.right.10%", mark: (end: "straight"))
+  line("lentil.left.30%", "cx", mark: (end: "straight"))
+
+  content("c.north", $c$, padding: 3pt, anchor: "south")
+  content("cx.north", $c'$, padding: 3pt, anchor: "south")
+}))
+
+= Lois de la réflexion - Stigmatisme et aplanétisme rigoureux
+
+== Lois de Snells-Descartes pour la réflexion
+
+#def[$I$]: Point d'impact du rayon incident sur le miroir \
+#def[Plan d'incidence]: Le plan contenant le rayon incident contient la normale et $I$.
+
+Trois lois de l'optique:
+- Le rayon réflechi appartient au plan d'incidence
+- Le rayon réflechi traverse la normale (passe de la zone 1 vers la zone 2)
+- L'angle de réflexion ($r$) est égal à l'angle d'incidence ($i$). \
+  On utilise des angles géométriques (non-orientés).
+
+#figure(canvas({
+  import draw: *
+  import cetz: angle
+
+  rotate(30deg)
+  scale(1.5)
+
+  line((0, 0.7), (0, -1), stroke: (dash: "dotted"), name: "normal")
+  arc("normal.100%", start: 30deg, stop: 150deg, mode: "CLOSE", fill: rgb("#0000ff7f"), name: "lentil", anchor: "south")
+
+  on-layer(-1, {
+    line("lentil.north", (rel: (-1, 1)), mark: (start: "straight"), name: "incident")
+    line("lentil.north", (rel: (1, 1)), mark: (end: "straight"), name: "reflechi")
+
+    angle.angle("lentil.north", "normal.start", "reflechi.end", radius: 0.6)
+    angle.angle("lentil.north", "normal.start", "reflechi.end", name: "angle_right", radius: 0.7)
+
+    angle.angle("lentil.north", "normal.start", "incident.end", name: "angle_left", radius: 0.6)
+  })
+  content("angle_left.label", $i$, anchor: "south-east")
+  content("angle_right.label", $r$, anchor: "south")
+
+  content("incident.end", [_rayon incident_], padding: 5pt, anchor: "east")
+  content("reflechi.end", [_rayon réfléchi_], padding: 5pt, anchor: "west")
+  content("normal.start", [_normale_], padding: 5pt, anchor: "south")
+}))
+
+Avec des angles orientés, on peut fusionner la $2^"ème"$ et la $3^"ème"$ loi.
+
+On se place l'origine des angles à la normale,
+puis on pose $r = -i$, ce qui implique forcément que l'on traverse la normale.
+
+== Stigmatisme rigoureux
+
+On parle d'un système *rigoureusement stigmatique* pour un couple de points $(A, A')$ lorsque tout rayon passant par le point $A$ et traverse le système passe par $A'$.
+
+#figure(caption: "Système rigoureusement stigmatique", canvas({
+  import draw: *
+
+  circle((-3, 0.4), radius: 2pt, fill: black, name: "A")
+  content("A", $A$, anchor: "south", padding: 5pt)
+  circle((3.9, -0.4), radius: 2pt, fill: black, name: "A'")
+  content("A'", $A'$, anchor: "south", padding: 5pt)
+
+  lentil(0.5, name: "lentil")
+
+  line("A", "lentil.left.0.5", mark: (end: "straight"), stroke: red)
+  line("lentil.right.1.7", "A'", mark: (end: "straight"), stroke: red)
+
+  line("A", "lentil.left.0.9", mark: (end: "straight"), stroke: green)
+  line("lentil.right.0.2", "A'", mark: (end: "straight"), stroke: green)
+
+  line("A", "lentil.left.1.9", mark: (end: "straight"), stroke: blue)
+  line("lentil.right.0.8", "A'", mark: (end: "straight"), stroke: blue)
+}))
+
+Conjugaison entre un point objet $A$ et un point image $A'$.
+
+NOTE: $A$ et $A'$ peuvent être des points virtuels (dans un miroir par exemple)
+
+#def[Stigmatisme approché]:
+Approximation du stigmatisme rigoureux: on peut dire que telle point possède telle point image, mais de façon approchée.
+
+== Notion de foyer
+
+On considère que les rayons parallèles proviennent d'un objet ou d'une image placé à l'$oo$.
+
+#def[Foyer image]: point image conjugué par le point objet placé à l'infini \
+#def[Foyer objet]: point objet conjugué par le point image placé à l'infini
+
+Lorsqu'un point objet est sur l'axe optique, son image est forcément sur l'axe optique.
+
+== Foyers secondaires - Plan focal
+
+Lorsque des rayons arrivent inclinés par rapport à l'axe optique, le point de convergence sera dans le plan focal.
+
+#figure(caption: "Foyer primaire et secondaire", canvas({
+  import draw: *
+
+  line((-3, 0), (5, 0), mark: (end: "straight"), name: "axe")
+  content("axe.end", [axe optique], anchor: "north", padding: 2pt)
+
+  let l = (0.8, 0.4, 0, -0.4, -0.8)
+  for l in l {
+    line((-2, l), (0, l))
+  }
+
+  for l in l {
+    line((0, l), (3, -l), mark: (end: "straight"))
+  }
+
+  line((1.5, -1), (1.5, 1), stroke: (dash: "dotted"), name: "fecal")
+
+  content("fecal.end", [plan focal], anchor: "south")
+
+  point((1.5, 0), value: $F'$, anchor: "north")
+
+  rotate(-45deg)
+  let l = (0.6, 0.3, 0, -0.3, -0.6)
+  for l in l {
+    line((-2, l), (-l, l), stroke: blue)
+  }
+
+
+  rotate(45deg)
+  for l in l {
+    line((0, l), (3, -l - 2), stroke: blue, mark: (end: "straight"))
+  }
+  point((1.5, -1), value: $F'_1$, anchor: "north", color: blue)
+
+  lentil(0, fill: white)
+
+}))
+
+== Aplanétisme rigoureux
+
+Rappel: stigmatisme rigoureux: correspondance entre un point objet et un point image.
+
+On est capable de déterminer l'image d'un point par sigmatisme rigoureux.
+Un objet est rarement contenu en un seul point.
+Si je prend un objet perpendiculaire à l'axe optique, son image reste-t-elle perpendiculaire à l'axe optique?
+
+#def[Aplanétisme rigoureux]: Un système est rigoureusement aplanétique si:
+1. Il est rigoureusement stigmatique pour $(A, A')$, avec $A$ et $A'$ sur l'axe optique
+2. Que ce système soit rigoureusement stigmatique pour $(B, B')$ avec $B$ et $B'$ en dehors de l'axe optique
+3. Si l'objet $(A B) perp$  l'axe optique alors $(A' B')$ est $perp$ à l'axe optique
+
+NOTE: On a besoin *d'un seul point* sur l'axe optique et *d'un seul point* pas sur l'axe optique (on ne parle pas de *tout* les points).
+
+== Exemple de système rigoureusement stigmatique et aplanétique: le miroir plan
+
+L'image par une surface réfléchissante va être symmétrique par rapport au plan du miroir.
+
+Pour n'importe quel point symmétriques par rapport à l'autre, le stigmatisme rigoureux est vérifié, donc (1.) et (2.) sont vérifiés.
+
+Si deux points sont perpendiculaires par rapport à l'axe du mirroir, par symmétrie, leur image sera perpendiculaire donc aplanétisme rigoureux vérifié.
+
+#def[Formule de conjugaison]: relation qui va lier la position de l'objet et de l'image conjuguée
+
+#figure(caption: "Translation d'un objet devant un miroir", canvas({
+  import draw: *
+  import cetz: angle
+
+  line((0, 2), (0, -2), name: "miroir")
+  line((-4, 0), (4, 0), mark: (end: "straight"))
+
+  point((-3, 0), color: blue, value: $A$, name: "A", anchor: "south-east")
+  point((3, 0), color: blue, value: $A'$, name: "A'", anchor: "south-west")
+
+  point((0, 0), value: $S_A$, anchor: "north-west", name: "SA")
+  angle.right-angle("SA", "A'", "miroir.start", radius: 1em)
+
+  set-style(stroke: (paint: blue))
+
+  line("A", (0, -1), mark: half_mark)
+  line((0, -1), (-3, -2), mark: half_mark)
+  line((0, -1), "A'", stroke: (dash: "dotted"))
+
+  line("A", (0, 1), mark: half_mark)
+  line((0, 1), (-3, 2), mark: half_mark)
+  line((0, 1), "A'", stroke: (dash: "dotted"))
+
+  set-style(stroke: (paint: red))
+
+  point((-3, 1), color: red, value: $B$, name: "B")
+  point((3, 1), color: red, value: $B'$, name: "B'")
+  point((0, 1), color: red, value: $S_B$, anchor: "south-west")
+
+  line("A", "B")
+  line("A'", "B'")
+  line("B", "B'")
+  angle.right-angle("A", "SA", "B", radius: 1em)
+  angle.right-angle("A'", "SA", "B'", radius: 1em)
+}))
+
+#let ov(c) = $overline(#c)$
+
+La formule de conjugaison du miroir plan est: $ ov(S A') = - ov(S A) $
+
+Grandissement $gamma$:
+- $A -> A'$, $A B perp$ axe optique
+- $B -> B'$, $A' B' perp$ axe optique
+
+$ gamma = ov(A' B')/ov(A B) = 1 $
+
+Par propriétés de translation qui conservent les distances (car toutes les transformations liées à la réflection du miroir plan sont des translation)
+
+Dernière question: à ton affaire à un foyer? \
+On amène notre objet vers l'infini, donc $ov(S A) --> -oo$,
+donc $ov(S A') --> +oo$, donc pas de foyer (si il y avait un foyer, $ov(S A')$ tendrait vers une constante).
+
+== Déplacement de l'image par un miroir plan
+
+Translation:
+
+#figure(caption: "Translation devant un miroir (ii.)", canvas({
+  import draw: *
+  import cetz: angle
+
+  line((0, 2), (0, -2), name: "miroir")
+  line((-4, 0), (4, 0), mark: (end: "straight"))
+
+  point((-1, 0), color: blue, value: $A$, name: "A", anchor: "south-east")
+  point((1, 0), color: blue, value: $A'$, name: "A'", anchor: "south-west")
+
+  set-style(mark: (end: "straight"))
+
+  set-style(stroke: (paint: red))
+  point((-2, 0), color: red, value: $A$, name: "A2", anchor: "south-east")
+  point((2, 0), color: red, value: $A'$, name: "A'2", anchor: "south-west")
+
+  line("A", "A2")
+  line("A'", "A'2")
+
+  set-style(stroke: (paint: green))
+  point((-1, 1), color: green, value: $A$, name: "A3", anchor: "south-east")
+  point((1, 1), color: green, value: $A'$, name: "A'3", anchor: "south-west")
+  line("A", "A3")
+  line("A'", "A'3")
+}))
+
+Rotation:
+
+#figure(caption: "Rotation devant un miroir", canvas({
+  import draw: *
+  import cetz: angle
+
+  point((-2, 0), value: $A$, anchor: "south-east", name: "A")
+  point((2, 0), value: $A'$, name: "A'")
+
+  line((0, 2), (0, -2), name: "miroir")
+  line((-4, 0), (4, 0), mark: (end: "straight"))
+
+  rotate(30deg)
+  line((0, 2.5), (0, -2.5), stroke: blue, name: "miroir2")
+
+  set-style(stroke: red)
+  point((-2, 0), color: red, value: $A$, name: "A2")
+  point((2, 0), color: red, value: $A'$, name: "A'2")
+  line("A2", "A'2")
+
+  // rotate(-50deg)
+  angle.angle((0, 0), "miroir.start", "miroir2.start", radius: 1, label: $alpha$)
+  angle.angle((0, 0), "A", "A2", radius: 1, label: $alpha$)
+}))
+
+Par rotation, l'image sera tournée.
+
+= Lois de la réfraction - Stigmatisme et Aplanétisme approchés
+
+== Lois de Snells-Descartes de la réfraction
+
+#figure(caption: "Réfraction", canvas({
+  import draw: *
+  import cetz: angle
+
+  scale(1.5)
+  line((0, 0.7), (0, -1), stroke: (dash: "dotted"), name: "normal")
+  arc("normal.100%", start: 20deg, stop: 160deg, name: "lentil", anchor: "chord-center")
+
+  on-layer(-1, {
+    line("lentil.north", (rel: (-1, 1)), mark: (start: "straight"), name: "incident")
+    line("lentil.north", (rel: (0.7, -1)), mark: (end: "straight"), name: "refracte")
+
+    angle.angle("lentil.north", "normal.end", "refracte.end", radius: 0.6)
+    angle.angle("lentil.north", "normal.end", "refracte.end", name: "angle_right", radius: 0.7)
+
+    angle.angle("lentil.north", "normal.start", "incident.end", name: "angle_left", radius: 0.6)
+  })
+  content("angle_left.label", $i_1$, anchor: "south")
+  content("angle_right.label", $i_2$, anchor: "south")
+
+  content("incident.end", [_rayon incident_], padding: 5pt, anchor: "east")
+  content("refracte.end", [_rayon réfracté_], padding: 5pt, anchor: "west")
+  content("normal.start", [_normale_], padding: 5pt, anchor: "south")
+}))
+
+1. Le rayon réfracté appartient au plan d'incidence défini par la direction du rayon incident, la direction de la normale à l'interface au point d'impact du rayon incident et le point d'impact $I$.
+2. Le rayon réfracté traverse la normale
+3. $n_1 sin i_1 = n_2 sin i_2$
+
+Loi de Kepler: approximation pour les petits angles:
+- si $i_1$ et $i_2$ faibles, alors $sin i_1 approx i_1$ et $sin i_2 approx i_2$
+- donc $n_1 i_1 approx n_2 i_2$ 
+
+NOTE: Toujours marquer les unités des angles (radians ou degrés)
+
+== Construction de Descartes
+
+Méthode de Descartes pour dessiner un angle réfracté sans rapporteur (avec un compas):
+- On trace à cercle sur $I$ dont le rayon est proportionel à $n_1$
+- On trace à cercle sur $I$ avec un rayon $R_2 = n_2/n_1 R_1$
+- On continue le rayon incident derrière le dioptre
+- On pose $K$ l'intersection de $C_1$ et du rayon incident derrière le dioptre et $H$ le projeté de $K$ sur le dioptre
+- On pose $K'$ l'intersection de $C_1$ et du rayon réfracté et $H'$ le projeté de $K'$ sur le dioptre
+- Ainsi:
+$ sin i_1 = (I H)/(I K) = (I H)/R_1 $
+$ sin i_2 = (I H')/(I K') = (I H')/R_2 $
+$ n_1 sin i_1= n_2 sin i_2 $
+$ n_1 / R_1 I H = n_2 (I H')/R_2 = n_2 I H' / ((n_2) / n_1 R_1) = n_1 / R_1 I H' $ 
+
+#figure(caption: "Construction géométrique du rayon réfracté", canvas({
+  import draw: *
+  import cetz: angle
+
+  line((0, -3), (0, 3), name: "miroir")
+  line((-3, 0), (3, 0), stroke: (dash: "dotted"), name: "normal")
+  content("normal.start", [normale], anchor: "south-east", padding: 2pt)
+
+  set-style(stroke: gray)
+
+  circle((0, 0), radius: 1.3)
+  line((0, 0), (-50deg, 1.3), name: "R1")
+  content("R1.end", $R_1$, anchor: "west")
+
+  circle((0, 0), radius: 2.5)
+  line((0, 0), (-70deg, 2.5), name: "R2")
+  content("R2.end", $R_2$, anchor: "north-west")
+
+  set-style(stroke: blue)
+  line((-2, -2), (0, 0), mark: half_mark, name: "incident")
+  angle.angle((0, 0), radius: 1, label: $i_1$, "normal.start", "incident.start")
+
+  line((0, 0), (2, 2), stroke: (dash: "dotted"))
+
+  point((45deg, 1.3), value: $K$, color: blue, name: "K")
+  point((rel: (-0.92, 0), to: (45deg, 1.3)), color: blue, value: $H$, name: "H", anchor: "south-east")
+
+  set-style(stroke: red)
+  point((rel: (1.42, 0), to: (45deg, 1.3)), color: red, value: $K'$, name: "K'", anchor: "south-east")
+
+  line((0, 0), "K'", mark: half_mark)
+  angle.angle((0, 0), (1, 0), "K'", radius: 1, label: $i_2$)
+
+  set-style(stroke: black)
+  line("H", "K'", stroke: (dash: "dashed"))
+  angle.right-angle("H", (0, 0), "K", radius: 0.3)
+}))
+
+== Applications directes de la réfraction: réfraction dans un milieu stratifié: Mirage
+
+TODO Dessin de mirage
+
+Mirage inférieur:
+
+On voit le ciel en regardant le sol (on a l'habitude de la propagation rectiligne de la lumière)
+
+Mirage supérieur
+
+On voit la mer (ou ce qu'il y a sur la mer) en regardant le ciel.
+
+== Reflexion totale
+
+On part de $n_1 sin i_1 = n_2 sin i_2$. \
+À t-on un rayon réfracté ou réfléchi?
+
+Il y a toujours un rayon incident, donc $i_1$ existe toujours.
+On a un rayon réfracté si $i_2$ existe.
+$ 0 <= sin i_2 <= 1 \
+ 0 <= n_1 / n_2 sin i_1 <= 1
+$
+
+- Si $n_1/n_2 <= 1$ (on passe d'un milieu moins réfringent vers un milieu plus réfringent), on a toujours
+  $  0 <= n_1 / n_2 sin i_1 <= 1 $
+  donc notre rayon sera toujours réfracté.
+
+- Si $n_1/n_2 > 1$, on pourra observer une réfraction si
+$ n_1 / n_2 sin i_1 <= 1 \
+sin i_1 <= n_2 / n_1 <= 1 $
+  On peut donc poser un angle de réfraction limite $i_l$ tel que:
+  $ sin i_l = n_2 / n_1 \
+  i_l = arcsin(n_2 / n_1) $
+  La réfraction est licite si $sin i_1 <= sin i_l <=> i_1 <= i_l$ ($sin$ croissant sur $[0; pi/2]$).
+  Si $i_1$ est supérieur à l'angle de réflexion limite, on observera un phénomène de réflexion totale.
+
+== Applications de la réflexion totale
+
+=== Surfaces réfléchissantes
+
+Pour obtenir une surface réfléchissante, un miroir est la première option, mais ces derniers sont compliqués à produire et à polir.
+On peut obtenir une surface réfléchissante simplement à l'aide d'un dioptre (sur lequel il sera plus simple d'obtenir un poli optique satisfaisant)
+
+#figure(image("surface_reflechissante.png", width: 80%))
+
+On ressortira du prisme si l'angle $i$ à l'intérieur du prisme est inférieur à l'angle limite. (donc premier schéma faux: pas de réflexion interne, on observe une réfraction).
+Par contre, dans le deuxième schéma, l'angle vaut 45 degrés, donc réflexion totale.
+Utilisation réelle de ce prisme:
+
+TODO: $A+$
+
+=== Fibre optique
+
+#figure(caption: "Constitution d'un cable de fibre optique", image("fibre.png", width: 70%))
+
+#figure(caption: "Réflexion totale dans un cable de fibre optique", image("fibre2.png", width: 80%))
+
+On note $i_1$ l'angle de réfraction après $i_2$. On a:
+
+$ n_0 sin i_0 = n_2 sin r $
+$ n_2 sin i_2 = n_1 sin i_1 $
+
+Réflexion totale si $sin i_1 = n_2 / n_1 sin i_2 > 1$
+
+Relation des angles internes du triangle $O H_1 A_1$:
+$ r + i_2 + pi/2 = pi $
+$ r = pi/2 - i_2 $
+
+On remplace:
+$ n_0 sin i_0 = n_2 sin (pi/2 - i_2) $
+$ n_0 sin i_0 &= n_2 cos i_2 \
+&= n_2 sqrt(1 - sin^2 i_2)
+$
+
+\
+On souhaite que:
+$ sqrt(1 - sin^2 i_2) < sqrt(1 - n_1^2 / n_2^2 ) $
+
+Or on a:
+$ sin i_0 &= n_2 / n_0 sqrt(1 - sin^2 i_2^2) \
+ &< n_2/n_0 sqrt(1 - n_1^2 / n_2^2) $
+
+Il faut que:
+$ sin i_0 < sqrt(n_2^2 - n_1^2)/n_2 $
+
+#resultb($ i_0 < arcsin(sqrt(n_2^2 - n_1^2)/n_0) $)
+
+Tout rayon de lumière entrant dans la fibre optique avec un angle respectant cette inégalité restera donc dans la fibre optique. On appelle la valeur limite *l'angle d'acceptance*.
+
+Fibre optique avec courbure:
+
+#figure(image("fibre3.png", width: 70%))
+
+On souhaite que la condition de réflexion totale reste vérifiée, même si on tord la fibre.
+On souhaite donc que $alpha$ (angle d'incidence sur la gaine) reste supérieur à l'angle de réfraction limite.
+
+On utilise le triangle rectangle de hauteur $h$, d'hypoténus $R$ et d'angle $alpha$, on a donc:
+$ sin alpha = h / R $
+$ R = h + a <=> h = R - a $
+
+Donc:
+$ sin alpha = (R - a)/R $
+
+Pour garder la condition de réflexion totale, on veux que:
+$ n_2 / n_1 sin alpha > 1 $
+
+Il nous faut donc que
+$ n_2 / n_1 (R - a)/R > 1 $
+$ n_2 R - n_2 a > n_1 R $
+$ (n_2 - n_1) R > n_2 a $
+#resultb($ R > (n_2 a)/(n_2 - n_1) $)
+
+Application numérique: si on prend des nombres de $n_1 = 1.5$, $n_2 = 1.6$ et $a = 25 "micromètre"$, on a un rayon minimum (?) de:
+$ R &= (1.6 times 25)/(1.6 - 1.5) \
+&= #(1.6 * 25)/0.1 \
+&= 400 "micromètre" $
+
+(Pour un rayon arrivant parfaitement droit)
+
+Calcul du temps de voyage: \
+On note $L$ la longueur du cable de fibre.
+
+TODO: $B^+***$ (le graphique du diable) (niveau dark souls)
+
+Pour un rayon arrivant parfaitement droit (temps minimal), on a:
+$ tau_min = L/v = (n_2 L)/c $
+Avec $v$: la vitesse dans le cœur de la fibre, donc $v = c/n_2$
+
+Pour un rayon rebondissant, on a:
+$ sin i_2 = L_1 / d_1 <=> d_1 = L_1 / (sin i_2) $
+Dans le cas limite (angle d'acceptance), on a $sin i_2 = n_1 / n_2$, soit:
+$ d_1 = (n_2 L_1) / n_1 $
+
+On souhaite trouver la distance totale $d$ avec
+$ d = d_1 + d_2 + dots $
+On retrouve toujours la même relation de distance (voir figure), on a donc:
+$ d_i = n_2/n_1 L_i $
+$ d = n_2/n_1 underbrace(L_1 + L_2 + dots, L) $
+$ d = n_2/n_1 L $
+
+On a donc:
+$ tau_max = d/v &= (n_2 d) / c \
+&= (n_2^2 L)/(n_1 c) $
+
+On peut donc calculer la différence entre l'arrivée la plus rapide et la plus lente:
+$ Delta tau &= tau_max - tau_min \
+&= (n_2 L)/c (n_2/n_1 - 1) \
+&= (n_2 (n_2 - n_1) L)/(n_1 c) $
+
+Ainsi, l'écart temporel entre deux informations $T$ doit être supérieur à $Delta tau$.
+Autrement dit, la (cadence) maximale $Q = 1/T$ de notre cable doit vérifier: 
+#resultb($ Q < 1/(Delta tau) $)
+
+Application numérique: $n_1 = 1.5$, $n_2 = 1.6$, $L = 10$ m
+
+$ Delta tau &= (1.6 (1.6 - 1.5) times 10)/(1.5 times c) \
+&= 1.6/(1.5 times c) $
+
+$ Q_max = (1.5 times c)/1.6 =  #(1.5 * 299792545 / 1.6) "Hz" $ 
+
+== Stigmatisme et aplanétisme approché
+
+Dans le cas du miroir plan, le stigmatisme et l'aplanétisme est vérifié pour n'importe quel point symmétrique par rapport à l'axe du miroir.
+
+Malheureusement, pour la majorité des autres systèmes optiques, le stigmatisme/aplanétimse rigoureux n'est pas vérifié.
+
+Dans le cas de la rétine / d'un appareil photo, le senseur (cone / grain de pellicule / capteur lumineux) n'est pas un point mathématique (comme dans le cas du stigmatisme approché): il possède une surface.
+
+Si tout les rayons passant par un point ne convergent pas vers un seul point mathématique, mais vers un voisinage de ce point, le résultat qu'on *observera* sera le même.
+
+On parlera dans ce cas de stigmatisme et d'aplanétisme *approché*.
+
+On va accepter de constreindre l'ensemble de rayons considérés par le système afin de vérifier les conditions de stigmatisme approché. Ce sont les conditions de Gauss:
+
+1. Les rayons doivent avoir un faible angle $alpha$ par rapport à l'axe optique
+2. Le point d'intersection doit être à une faible distance de l'axe optique
+3. L'angle d'incidence $beta$ sur l'axe optique doit être faible
+
+Les notions de "faible" ici dépendant de la taille des cellules du détecteur.
+
+TODO `(Schéma Gauss)`
+
+#note[Si deux des trois conditions sont vérifiées, la troisième est automatiquement vérifiée.]
+De plus, si les conditions de Gauss sont vérifiées, stigmatisme et aplanétisme approché sont automatiquement vérifiés.
+
+== Exemple de système réalisant le stigmatisme et l'aplanétisme approché: le dioptre plan
+
+
+TODO `(Schéma Dioptre Plan)`
+
+On voit que le $A'$ du premier rayon n'est pas le même que le $A'$ du deuxième rayon.
+
+TODO `(Schéma Dioptre Plan 2)`
+
+On essaye de définir l'angle $i$ par rapport à $i'$ et $ S I$. On a:
+$ tan i = overline(S I) / overline(A S) = (sin i)/(cos i) = (sin i)/(sqrt(1 - sin^2 i)) $
+$ tan i' = overline(S I) / overline(A' S) = (sin i')/(cos i') = (sin i')/(sqrt(1 - sin^2 i'))  $
+
+Or, on a que $ n' sin i' = n sin i <=> sin i' = n/(n') sin i $
+Et:
+$ tan i' = overline(S I)/overline(A S) = (n sin i)/(n' sqrt(1 - n^2/n'^2 sin^2 i)) $
+$ sin i = overline(S I)/overline(A S) sqrt(1 - sin^2 i) $
+$ overline(S I)/overline(A S) = n/n' overline(S I)/overline(A S) sqrt(1 - sin^2 i)/(1 - n^2/n'^2 i') $
+
+On cherche à obtenir une relation indépendante de l'angle d'incidence, car si notre relation est indépendante, elle marche pour tout angle d'incidence donc stigmatisme.
+
+$ overline(A' S) = n'/n overline(A S) sqrt((1 - n^2/n'^2 sin^2 i)/(1 - sin^2 i)) $
+
+Relations indépendante de $i$ donc indépendante du rayon si:
+$sin^2 i --> 0$
+
+On l'observe dans le cas des conditions de Gauss (petits angles).
+On a donc:
+$ overline(A' S) = n'/n overline(A S) sqrt(1/1) $
+
+#figure(caption: "Relation de conjugaison du dioptre plan", resultb($ overline(A' S)/n' = overline(S A)/n $))
+
+Pour "tout" rayon qui vérifie les conditions de Gausse, le stigmatisme approché.
+
+On pose $B$ au dessus de $A$ tel que $A B$ perpendiculaire à l'axe optique. Dans le cas de nos conditions de Gauss, $A' B'$ est perpendiculaire à l'axe optique donc aplanétisme approché.
