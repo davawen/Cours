@@ -2,8 +2,6 @@
 
 #show: doc => template(doc)
 
-#show "TODO": box([TODO], stroke: black, inset: 5pt, fill: red)
-
 Lois de Snells-Descartes, Stigmatisme et aplanétisme
 
 = Vocabulaire de l'Optique géométrique
@@ -568,8 +566,6 @@ On ressortira du prisme si l'angle $i$ à l'intérieur du prisme est inférieur 
 Par contre, dans le deuxième schéma, l'angle vaut 45 degrés, donc réflexion totale.
 Utilisation réelle de ce prisme:
 
-TODO: $A+$
-
 === Fibre optique
 
 #figure(caption: "Constitution d'un cable de fibre optique", image("fibre.png", width: 70%))
@@ -641,7 +637,47 @@ $ R &= (1.6 times 25)/(1.6 - 1.5) \
 Calcul du temps de voyage: \
 On note $L$ la longueur du cable de fibre.
 
-TODO: $B^+***$ (le graphique du diable) (niveau dark souls)
+#figure(caption: [Parcours minimal et maximal de la fibre optique], canvas({
+  import draw: *
+
+  line((-5, 2.5), (5, 2.5))
+  line((-5, 2), (5, 2))
+  line((-5, -2), (5, -2))
+  line((-5, -2.5), (5, -2.5))
+
+  line((-4.9, -2.8), (4.9, -2.8), mark: (start: ">", end: ">"), name: "L")
+  content("L.50%", $L$, anchor: "north", padding: 5pt)
+
+  content((0, 2.3), $n_1$)
+  content((0, -2.2), $n_1$)
+  content((0, -1.6), $n_2$)
+
+
+  line((-5, 2), (-5, -2), stroke: (paint: gray, dash: "dashed"))
+  line((5, 2), (5, -2), stroke: (paint: gray, dash: "dashed"))
+
+  line((-6, 0), (6, 0), stroke: (dash: "dotted"), name: "normal")
+  line((-7, 0), (7, 0), stroke: blue, mark: half_mark)
+
+  line((-7, -2), (-5, 0), stroke: red, name: "incident")
+
+  line((-5, 0), (-2, 2), stroke: red, name: "d1")
+  line((-2, 2), (4, -2), stroke: red)
+  line((4, -2), (5, -2 + 2/3), stroke: red)
+  line((5, -2 + 2/3), (6.5, 0), stroke: red)
+
+  content("d1.50%", $d_1$, angle: (rel: (3, 2)), anchor: "south", padding: 5pt)
+
+  line((-4.9, -0.3), (-1.9, -0.3), mark: (start: ">", end: ">"), name: "L1")
+  content("L1.50%", $L_1$, anchor: "north", padding: 5pt)
+
+  line("d1.end", (rel: (0, -1.5)), stroke: (paint: red, dash: "dotted"), name: "d1_normal")
+
+  import cetz: angle
+  angle.angle("incident.end", "normal.start", "incident.start", stroke: red, radius: 1, label: $i$)
+  angle.angle("incident.end", "normal.end", "d1.end", stroke: red, radius: 1, label: $r$)
+  angle.angle("d1.end", "d1.start", (rel: (0, -1)), stroke: red, radius: 1, label: $i_2$)
+}))
 
 Pour un rayon arrivant parfaitement droit (temps minimal), on a:
 $ tau_min = L/v = (n_2 L)/c $
@@ -699,7 +735,25 @@ On va accepter de constreindre l'ensemble de rayons considérés par le système
 
 Les notions de "faible" ici dépendant de la taille des cellules du détecteur.
 
-TODO `(Schéma Gauss)`
+#figure(caption: [Conditions de Gauss], canvas({
+  import draw: *
+  import cetz: angle
+
+  line((-5, 0), (3, 0), mark: (end: "straight"), name: "axe")
+
+  lentil(0.5, name: "lentil")
+
+  line((-3, 0), "lentil.left.30%", name: "ray")
+
+  angle.angle("ray.start", "ray.end", "axe.end", radius: 1, name: "alpha")
+  content("alpha.start", $alpha$, anchor: "north")
+
+  point("ray.end", value: $I$)
+  line((-2, 1), (0, 0), stroke: (dash: "dotted"), name: "normal")
+
+  angle.angle("ray.end", "ray.start", "normal.start", radius: 1, name: "beta")
+  content("beta.start", $beta$, anchor: "north-east", padding: 5pt)
+}))
 
 #note[Si deux des trois conditions sont vérifiées, la troisième est automatiquement vérifiée.]
 De plus, si les conditions de Gauss sont vérifiées, stigmatisme et aplanétisme approché sont automatiquement vérifiés.
@@ -707,11 +761,51 @@ De plus, si les conditions de Gauss sont vérifiées, stigmatisme et aplanétism
 == Exemple de système réalisant le stigmatisme et l'aplanétisme approché: le dioptre plan
 
 
-TODO `(Schéma Dioptre Plan)`
+#figure(canvas({
+  import draw: *
+  import cetz: angle
+
+  line((-5, 0), (5, 0), mark: (end: "straight"))
+  line((0, -3), (0, 3))
+
+  line((-4, 0), (4, 0), stroke: blue, mark: (end: "straight"))
+
+  line((-5, -1), (0, 1.5), stroke: green, name: "ray1")
+  line("ray1.end", (rel: (1, 1.5)), stroke: green, name: "ray1_refract")
+  line("ray1.end", (rel: (-1, -1.5)), stroke: (paint: green, dash: "dashed"), name: "ray1_dash")
+
+  line((-4.5, -1), (0, 2), stroke: red, name: "ray2")
+  line("ray2.end", (rel: (1, 1.5)), stroke: red, name: "ray2_refract")
+  line("ray2.end", (rel: (-1.333, -2)), stroke: (paint: red, dash: "dashed"), name: "ray2_dash")
+
+  point((-3, 0), value: $A$, anchor: "north")
+  point("ray1_dash.end", value: $A'$, anchor: "north", color: green)
+  point("ray2_dash.end", value: $A'$, anchor: "north", color: red)
+}))
 
 On voit que le $A'$ du premier rayon n'est pas le même que le $A'$ du deuxième rayon.
 
-TODO `(Schéma Dioptre Plan 2)`
+#figure(canvas({
+  import draw: *
+  import cetz: angle
+
+  line((-5, 0), (5, 0), mark: (end: "straight"), name: "axe")
+  line((0, -3), (0, 3))
+
+  line((-5, -0.7), (0, 1), stroke: blue, name: "ray1")
+  line("ray1.end", (rel: (1, 1.5)), stroke: blue, name: "ray1_refract")
+  line("ray1.end", (rel: (-1/1.5, -1)), stroke: (paint: blue, dash: "dashed"), name: "ray1_dash")
+
+  line("ray1.end", (rel: (1, 0)), stroke: (paint: blue, dash: "dotted"))
+
+  point((-3, 0), value: $A$, name: "A", anchor: "north")
+  point((0, 0), value: $S$, name: "S", anchor: "north-west")
+  point("ray1_dash.end", value: $A'$, name: "A'", anchor: "north")
+  point("ray1.end", value: $I$, anchor: "north-west")
+
+  angle.angle("A", "ray1.end", "axe.end", radius: 0.7, label: $i$)
+  angle.angle("ray1.end", (rel: (1, 0)), "ray1_refract.end", radius: 0.7, label: $i'$)
+}))
 
 On essaye de définir l'angle $i$ par rapport à $i'$ et $ S I$. On a:
 $ tan i = overline(S I) / overline(A S) = (sin i)/(cos i) = (sin i)/(sqrt(1 - sin^2 i)) $
