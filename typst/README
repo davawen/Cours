@@ -1,0 +1,4 @@
+Pour pouvoir utiliser le packet `@local/physique`:
+faire un lien symbolique vers le dossier `physique` dans `~/.local/share/typst/packages/local`
+
+`ln -s <CHEMIN VERS CE DOSSIER>/physique ~/.local/share/typst/packages/local/physique`

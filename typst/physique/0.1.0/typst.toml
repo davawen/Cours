@@ -1,0 +1,4 @@
+[package]
+name = "physique"
+version = "0.1.0"
+entrypoint = "lib.typ"
