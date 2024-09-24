@@ -107,7 +107,7 @@ Les conditions de Gauss assurent le stigmatisme et l'aplanétisme peut importe l
 == Foyers principaux, foyers secondaires
 
 #def[Foyer principal]: Foyer sur l'axe optique \
-#def[Foyer secondaire]: Autre foyer sur l'axe optique
+#def[Foyer secondaire]: Autre foyer pas sur l'axe optique
 
 Voir: _Chapitre 2. 2.4) Foyers secondaires - Plan focal_
 
@@ -236,4 +236,153 @@ Observation d'un objet proche:
 - Effet "loupe" avec une lentille convergente
 - Image plus petite avec une lentille divergente
 
+= Construction d'un rayon transmis ou d'un rayon incident - Utilisation des foyers secondaires
 
+#figure(caption: [Obtention du rayon transmis par une lentille convergente], image("fig_rayon_transmis.png", width: 80%))
+
+#figure(caption: [Obtention du rayon transmis par une lentille divergente], image("fig_rayon_transmis_div.png", width: 80%))
+
+Pour construire un rayon transmis quelconque, on trace le rayon parallèle à celui-ci qui passe par le centre de la lentille.
+
+Le rayon étudié passe forcément par l'intersection du rayon parallèle et du plan focal image.
+
+On peut utiliser la même méthode avec le foyer objet. On place l'intersection du plan focal objet et du rayon incident, et on trace le rayon qui passe par cette intersection et par le centre de la lentille. Le rayon transmis est parallèle avec ce rayon.
+
+
+= Projection d'une image à l'aide d'une lentille
+
+Le problème posé est: «on a un objet, et l'objet en question, ça peut-être une observation, et vous voulez par exemple le projeter sur un écran, imaginez par exemple un petit objet et je veux vous la montrer et que tout le monde la voie»
+
+On veut faire une projection pour récuperer une image réelle plus grande (ou plus petite) que l'objet utilisé.
+
+On a un objet réel, on veut en faire une image réelle, avec des critères de grandissement qui peuvent changer (entre plus petit et plus grand).
+
+== Choix du type de lentille
+
+#grid(columns: (1fr, 1fr), gutter: 4em,
+figure_lentille_convergente,
+figure_lentille_divergente
+)
+
+On va utiliser une lentille convergente (seul moyen de faire réel $->$ réel). On aura donc une image renversée.
+
+== Condition de projection d'un objet réel
+
+On a la relation de conjugaison:
+$ 1/ov(O A') - 1/ov(O A) = 1/f' $
+
+On pose: $D = ov(A A')$ et $x = ov(O A')$.
+
+On a une image réelle si et seulement si $x > 0$.
+
+Où faut-il mettre la lentille entre les deux pour pouvoir conjuguer l'objet $A$ avec son image $A'$
+
+#figure(canvas({
+  import draw: *
+
+  line((-4, 0), (4, 0), mark: (end: "straight"))
+
+  line((0, -2), (0, 2), mark: (start: "straight", end: "straight"))
+
+  point((-3, 0), value: $A$)
+  point((2, 0), value: $A'$)
+
+  line((-3, -0.5), (2, -0.5), mark: (start: "straight", end: "straight"), name: "D")
+
+  line((0, 1), (2, 1), mark: (start: "straight", end: "straight"), name: "x")
+
+  content("D.50%", $D$, anchor: "north", padding: 5pt)
+  content("x.50%", $x$, anchor: "south", padding: 5pt)
+}))
+
+On a $ov(O A) = ov(O A') + ov(A' A) = x - D$
+
+On veut déterminer la position de la lentille, donc on veut déterminer les 
+
+On a donc:
+$ 1/x - 1/(x - D) = 1/f' $
+$ f'(x - D) - x f' = x(x - D) $
+$ f'x - f' D - x f' = x^2 - D x  $
+$ -f' D = x^2 - D x $
+#resultb($ x^2 - D x + f' D = 0 $)
+
+En résolvant l'équation pour $x$:
+$ Delta = D^2 - 4f' D $
+
+On aura des solutions réelles que si $Delta >= 0$.
+Interprétation physique: $x$ est une distance, donc $x in RR^+$.
+
+$ D (D - 4f') >= 0 $
+
+On veut $A$ objet réel et $A'$ image réelle, donc $ov(A A') > 0$, donc $D > 0$. Pour que l'équation ait une solution réelle, il faut que $D >= 4f'$.
+
+== Condition sur le grandissement
+
+On suppose que la condition précédente est vérifiée ($D >= 4f'$), et que par conséquent $x$ est positif.
+
+On a:
+#box(height: 5em)[
+#columns[
+$ x_1 = (D + sqrt(D(D - 4f')))/2 $
+$ x_2 = (D - sqrt(D(D - 4f')))/2 $
+]]
+
+On a $D >= 0$, donc $sqrt(D(D - 4f')) >= 0$, donc $x_1 > x_2$. \
+$x_1$ est trivialement positif. \
+$sqrt(D(D - 4f')) = sqrt(D^2 - 4D f') < sqrt(D^2)$, donc $x_2$ est positif.
+
+On a donc deux positions valides.
+
+On définit le grandissement:
+$ gamma = ov(O A')/ov(O A) $
+
+On connait déjà $ov(O A')$ (c'est $x$), mais il faut encore définir $ov(O A)$:
+$ ov(O A) = ov(O A') + ov(A' A) = x - D $
+
+On pose:
+$ y_1 = ov(O A) = x_1 - D = (-D + sqrt(D(D - 4f')))/2 $
+$ y_2 = ov(O A) = x_2 - D = (-D - sqrt(D(D - 4f')))/2 $
+
+On a $y_2$ trivialement négatif, et par la même méthode qu'avant, $y_1$ est négatif aussi.
+
+On a donc:
+$ gamma = x/y $
+
+Soit:
+$ gamma_1 = x_1/y_1 = (D + sqrt(D (D - 4f')))/(-D + sqrt(D (D - 4f'))) $
+
+$ gamma_2 = x_2/y_2 = (D - sqrt(D (D - 4f')))/(-D - sqrt(D (D - 4f'))) $
+
+Dans les deux cas, on a un numérateur positif et un dénominateur négatif, donc on a toujours un grandissement négatif (image renversée).
+
+On prend la valeur absolue (on prend l'opposé pour avoir une fraction positive):
+
+$ abs(gamma_1) = (D + sqrt(D (D - 4f')))/(D - sqrt(D (D - 4f'))) $
+$ abs(gamma_2) = (D - sqrt(D (D - 4f')))/(D + sqrt(D (D - 4f'))) $
+
+On a donc: $abs(gamma_1) > 1$ et $abs(gamma_2) < 1$.
+Quand on a besoin d'aggrandir un objet, on utilisera donc la solution $x_1$, et quand on a besoin de réduire (téléscope), on utilisera $x_2$.
+
+== Choix de la lentille
+
+On a besoin de $D >= 4f'$, donc ne pas choisir une lentille avec une distance focale trop grande (sinon, le système optique ne rentrera pas sur le rail)
+
+== Problème de luminosité
+
+Dû aux conditions de Gauss (et donc à la faible surface et taille de lentille utilisables), on risque de perdre beaucoup de lumière.
+
+On utilisera éventuellement un condenseur.
+
+= Focométrie des lentilles
+
+#def[Focométrie]: Détermination de la distance focale d'une lentille
+
+Toutes les méthodes que l'on va énoncer ne fonctionnent que pour les lentilles convergentes.
+
+== Méthode des points conjugués
+
+On prend un objet, on forme son image, on détermine donc $ov(O A)$ et $ov(O A')$, et on utilise la relation de conjugaison pour récuperer la valeure de $f'$. On a:
+
+$ f' = (ov(O A) times ov(O A'))/(ov(O A) - ov(O A')) $
+
+== Méthode de Silbermann
