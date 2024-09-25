@@ -25,6 +25,10 @@
   content(pos, value, anchor: anchor, padding: padding)
 }
 
+#let arrow(..stl-points) = {
+  line(..stl-points, mark: (end: "straight"))
+}
+
 #let line_through(a, b, box: (none, none), name: none, ..style) = {
   import draw: *
 
@@ -234,6 +238,12 @@
   show figure.caption: emph
 
   set heading(numbering: "1.1.1)")
+  show heading.where(level: 1): h => {
+    h
+    // reset equation counter for each chapter
+    counter(math.equation).update(0)
+  }
+
   doc
 }
 

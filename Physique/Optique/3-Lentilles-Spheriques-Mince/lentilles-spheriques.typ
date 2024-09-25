@@ -4,6 +4,8 @@
 
 #titleb[Lentilles sphériques minces dans l'approximation de Gauss]
 
+
+
 = Définitions
 
 == Lentille
@@ -141,8 +143,11 @@ Ces règles de constructions ne sont valables que dans les conditions de Gauss, 
 == Cas d'une lentille convergente
 
 #figure(caption: [Conjugaison des objets et des images dans ne lentille divergente], image("fig_tab_convergente.png"))
+#figure_lentille_convergente
 
 == Cas d'une lentille divergente
+
+#figure_lentille_divergente
 
 #figure(caption: [Conjugaison des objets et des images dans une lentille divergente], image("fig_tab_divergente.png"))
 
@@ -301,6 +306,12 @@ On veut déterminer la position de la lentille, donc on veut déterminer les
 
 On a donc:
 $ 1/x - 1/(x - D) = 1/f' $
+$ ((x - D) - x)/(x(x - D)) = 1/f' $
+$ (x(x - D))/((x - D) - x) = f' $
+$ x(x - D) = f'((x - D) - x) $
+$ x(x - D) = f'(x - D) - f'x $
+
+D'où:
 $ f'(x - D) - x f' = x(x - D) $
 $ f'x - f' D - x f' = x^2 - D x  $
 $ -f' D = x^2 - D x $
@@ -316,7 +327,7 @@ $ D (D - 4f') >= 0 $
 
 On veut $A$ objet réel et $A'$ image réelle, donc $ov(A A') > 0$, donc $D > 0$. Pour que l'équation ait une solution réelle, il faut que $D >= 4f'$.
 
-== Condition sur le grandissement
+== Condition sur le grandissement <condition>
 
 On suppose que la condition précédente est vérifiée ($D >= 4f'$), et que par conséquent $x$ est positif.
 
@@ -386,3 +397,115 @@ On prend un objet, on forme son image, on détermine donc $ov(O A)$ et $ov(O A')
 $ f' = (ov(O A) times ov(O A'))/(ov(O A) - ov(O A')) $
 
 == Méthode de Silbermann
+
+La méthode de Silbermann a pour but de former une image de même taille que l'objet.
+On pose un objet et une lentille sur notre axe optique, ainsi qu'un écran qu'on va bouger jusqu'a trouver une image de la même taille que l'objet.
+
+#figure(caption: [Méthode de Silbermann], canvas({
+  import draw: *
+
+  line((-4, 0), (4, 0), mark: (end: "straight"))
+
+  line((0, -2), (0, 2), mark: (start: "straight", end: "straight"))
+  
+  point((-3, 0), value: $A$, anchor: "north")
+  point((-3, 1), value: $B$)
+  line((-3, 0), (-3, 1))
+
+  line((2.5, -1.5), (2.5, 1.5), name: "ecran")
+  content("ecran.end", [écran], anchor: "south-west")
+
+  line((2, -1.6), (3, -1.6), mark: (start: "straight", end: "straight"))
+}))
+
+On aura donc:
+$ gamma = ov(O A')/ov(O A) = -1 $
+$ <=> ov(O A') = ov(-O A) $
+
+$ 1/ov(O A') - 1/ov(O A) = 1/f' \
+<=> -1/ov(O A) - 1/ov(O A) = 1/f' \
+<=> -2/ov(O A) = 1/f' \
+<=> f' = -ov(O A)/2 = ov(O A')/2 $
+
+#resultb($ f' = ov(A A')/4 $)
+
+== Méthode de Bessel
+
+On utilise les formules de projection d'un objet réel vers une image réelle qu'on a démontré en @condition.
+
+#figure(caption: [Méthode de Bessel], canvas({
+  import draw: *
+
+  line((-5, 0), (5, 0), mark: (end: "straight"))
+
+  point((-3, 0), value: $A$, anchor: "north", name: "A")
+  point((-3, 1), value: $B$, name: "B")
+  line((-3, 0), (-3, 1), name: "AB")
+
+  line((0, 2), (0, -2), stroke: blue, mark: (start: "straight", end: "straight"), name: "lentil1")
+  line((2, 2), (2, -2), stroke: blue, mark: (start: "straight", end: "straight"), name: "lentil2")
+
+  line((4, 1.5), (4, -1.5), name: "ecran")
+
+  line("lentil1.0.5", "lentil2.0.5", mark: (start: "straight", end: "straight"), name: "d")
+  content("d.50%", $d$, anchor: "south", padding: 2pt)
+
+}))
+
+On place la lentille dans une des deux positions valides.
+On utilise la distance entre l'objet et son image pour calculer la distance focale.
+
+On a donc:
+$ x_1 = (D + sqrt(D(D - 4f')))/2 $
+$ x_2 = (D - sqrt(D(D - 4f')))/2 $
+
+Ainsi:
+$ d &= x_1 - x_2 \
+&= sqrt(D(D - 4f')) $
+$ d^2 = D^2 - 4D f' $
+$ 4D f' = D^2 - d^2 $
+#resultb($ f' = (D^2 - d^2)/(4D) $)
+
+== Méthode d'autocollimation
+
+#figure(caption: [Méthode de Bessel], canvas({
+  import draw: *
+
+  line((-4, 0), (2, 0), mark: (end: "straight"))
+
+  line((0, 2), (0, -2), mark: (start: "straight", end: "straight"), name: "lentil")
+  line((0.5, 2), (0.5, -2), name: "miroir")
+
+  for i in range(11) {
+    line((0.55, -2 + i*0.4), (0.9, -1.8 + i *0.4))
+  }
+  
+  point((-3, 0), value: $A$, anchor: "north", name: "A")
+  point((-3, 1), value: $B$, name: "B")
+  line((-3, 0), (-3, 1))
+
+  line("A", "lentil.0.7", mark: half_mark)
+  line("lentil.0.7", "miroir.0.7", mark: half_mark)
+  line("miroir.0.9", "lentil.0.9", mark: half_mark)
+  line("lentil.0.9", "A", mark: half_mark)
+
+  line((-2.8, -1), (-0.2, -1), mark: (start: "straight", end: "straight"), name: "focal")
+
+  content("focal.50%", $f'$, anchor: "north", padding: 2pt)
+}))
+
+Méthode très pratique qui ne nécessite pas de faire des calculs numériques poussés. Elle présente aussi l'avantage d'être pratique en terme de réalisation. Elle nécéssite cependant un miroir plan.
+
+On place un miroir plan derrière la lentille, et on va décaler les deux simultanéments. On va essayer d'obtenir la distance focale comme la distance entre l'objet et la lentille.
+
+On a:
+$ A -> cal(L) -> A_1 -> m -> A'_1 -> cal(L) ("dans le sens inverse") -> A' $
+
+On veut que $A$ soit posé au foyer objet de la lentille, ce qui nous donnera donc:
+$ F -> cal(L) -> oo -> m -> oo -> cal(L) ("dans le sens inverse") -> F'_"retour" $
+
+On regarde sur le plan de l'objet si l'image s'est bien formée "à l'identique". Il suffit de mesurer la distance entre l'objet et la lentille pour obtenir la distance focale.
+
+= Capacité numérique
+
+#def[Capacité numérique]: être capable de faire un certain nombre de chose de façon informatique.
