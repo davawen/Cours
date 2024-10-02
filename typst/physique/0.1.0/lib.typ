@@ -3,6 +3,7 @@
 
 #let def(x) = underline([*#x*])
 #let ov = math.overline
+#let arw(x) = math.accent(x, math.arrow)
 
 #let lentil(openess, height: 1, fill: none, name: none) = {
   import draw: translate, bezier, group, anchor
@@ -21,13 +22,13 @@
 
 #let point(pos, value: [], anchor: "south", color: black, padding: 5pt, name: none) = {
   import draw: circle, content
-  circle(pos, radius: 2pt, stroke: color, fill: color, name: name)
+  circle(pos, radius: 1.5pt, stroke: color, fill: color, name: name)
   content(pos, value, anchor: anchor, padding: padding)
 }
 
-#let arrow(..stl-points) = {
-  line(..stl-points, mark: (end: "straight"))
-}
+// #let arrow(..stl-points) = {
+//   line(..stl-points, mark: (end: "straight"))
+// }
 
 #let line_through(a, b, box: (none, none), name: none, ..style) = {
   import draw: *
@@ -261,4 +262,4 @@
 #let note = infobox(symbol: $Phi$, info_text: "Note:", color: blue)
 #let tip = infobox(symbol: $checkmark$, info_text: "Tip:", color: green)
 // #let important = infobox(symbol: )
-#let warn = infobox(symbol: $triangle.stroked.nested$, info_text: "Warn:", color: orange)
+#let warn = infobox(symbol: $minus.triangle$, info_text: "Warn:", color: orange)

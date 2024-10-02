@@ -505,7 +505,3 @@ On veut que $A$ soit posé au foyer objet de la lentille, ce qui nous donnera do
 $ F -> cal(L) -> oo -> m -> oo -> cal(L) ("dans le sens inverse") -> F'_"retour" $
 
 On regarde sur le plan de l'objet si l'image s'est bien formée "à l'identique". Il suffit de mesurer la distance entre l'objet et la lentille pour obtenir la distance focale.
-
-= Capacité numérique
-
-#def[Capacité numérique]: être capable de faire un certain nombre de chose de façon informatique.
