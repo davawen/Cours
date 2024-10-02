@@ -261,5 +261,5 @@
 
 #let note = infobox(symbol: $Phi$, info_text: "Note:", color: blue)
 #let tip = infobox(symbol: $checkmark$, info_text: "Tip:", color: green)
-// #let important = infobox(symbol: )
+#let caution = infobox(symbol: $excl.double$, info_text: "Caution:", color: red)
 #let warn = infobox(symbol: $minus.triangle$, info_text: "Warn:", color: orange)
