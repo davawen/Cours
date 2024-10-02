@@ -134,7 +134,7 @@ Avec $dif q$ la quantité de charges ayant traversé la section, et $dif t$ l'in
   Si les électrons ne se déplacent pas dans le sens prévu, l'intensité mesurée sera négative (débit en sens inverse).
 ]
 
-= Ordre de grandeur des intensités
+== Ordre de grandeur des intensités
 
 On peut travailler avec une très large gamme d'intensité:
 - À la maison: $approx 10 "A"$
@@ -157,7 +157,7 @@ $ U_(B A) = V_B - V_A = -U_(A B) $
          +--------+
   A *----|        |----* B
          +--------+
-     <--------------------
+  <--------------------
 ```))
 
 #move(dx: 20em, dy: -11em, $U_(B A)$)
@@ -176,3 +176,204 @@ $ U_(B A) = V_B - V_A = -U_(A B) $
 #def[Masse]: origine des potentiels (le point de référence dit plus haut)
 
 #def[Terre]: conducteur Terre auxquels sont reliées les carcasses des appareils pour des raisons de sécurités souvent pris comme masse
+
+On se sera souvent tenté de prendre la Masse à la Terre.
+Quand tout les éléments sont reliés à la Terre, tout ces éléments ont déjà un potentiel commun.
+
+#warn[Il faut faire bien attention quand on place la Terre:
+on peut court-circuiter des éléments en la plaçant à deux endroits à la fois ] 
+
+#align(center, render(```
+       .-----.       
+  +----|     |------+
+  |    '-----'      |
+.-+-.             .-+-.
+|   |             |   |
+|   |             |   |
+'-+-'             '-+-'
+  |                 |
+  '-----------------+
+                   _|_
+                    -
+  ```))
+
+Si on place une autre terre:
+
+#align(center, render(```
+Court circuit
+  Entre les deux masses
+   |
+   V
+   .      .------.       
+  ||-+----|      |----+
+   ' |    '------'    |
+   .-+-.            .-+-.
+   |   |            |   |
+   |   |            |   |
+   '-+-'            '-+-'
+     |                |
+     '----------------+
+                     _|_
+                      -
+  ```))
+
+Par contre, on peut:
+
+#align(center, render(```
+          .------.       
+     +----|      |----+
+     |    '------'    |
+   .-+-.            .-+-.
+   |   |            |   |
+   |   |            |   |
+   '-+-'            '-+-'
+     |                |
+     +----------------+
+    _|_              _|_
+     -                -
+  ```))
+
+= Approximation des régimes quasi-stationnaires (#smallcaps[ARQS])
+
+#def[Régime quasi-stationnaire]: 
+
+== Régime continu
+
+#def[Régime continu]: Toutes les grandeurs (électriques) sont constantes au cours du temps:
+1. Toutes les intensités
+2. Toutes les tensions
+
+Par exemple, dans un régime continu, si on mesure la tension entre deux dipôles, elle restera la même durant l'entièreté de la vie du circuit.
+
+== Régime variable
+
+#def[Régime variable]: Grandeurs électriques variables au cours du temps
+
+== ARQS
+
+La question va être: dans un régime variable, peut-on continuer à appliquer les lois valides dans un régime continu?
+
+Si on change un paramètre dans un circuit, l'information ne se propage pas de manière instantané. Il y aura donc un temps de propagation entre la source des variations et le reste du circuit. \
+On va comparer deux temps:
+- $tau$, le temps de propagation de l'information dans le circuit
+- $T$, le temps caractéristique du régime variable
+
+On va se placer dans l'approximation des régimes quasi-stationnaires quand $tau << T$
+
+Autre manière de le voir: les signaux électriques (électromagnétiques donc) se propagent à la vitesse de la lumière.
+On peut donc utiliser une notion de distance plutôt que de temps:
+- $L = c tau$, la longueur du circuit
+- $lambda = c T$, La longueur caractéristique du circuit
+
+On se place dans l'ARQS quand $L << lambda$.
+
+En pratique, en électricité, on l'applique tout le temps.
+
+== Régime continu, permanent, ou transitoire
+
+Deux grandes catégories de régimes:
+1. Stationnaire / permanent
+2. Transitoire
+
+Un régime sera dit stationnaire ou permanent si les *caractéristiques du signal* seront constantes au cours du temps.
+
+Par exemple: si on a un signal (intensité ou tension à un point du circuit) sinusoïdale, défini donc par:
+
+$ s(t) = S cos(omega t + phi) $
+
+Avec $S$ l'amplitude, $omega$ la pulsation et $phi$ la phase initiale.
+
+Le signal est trivialement variable, mais
+si ces caractéristiques restent constantes, il sera dit stationnaire/permanent.
+
+En général, un signal avec une période et une amplitude constante sera dit stationnaire.
+
+Un régime continu est stationnaire, mais un régime stationnaire ne sera pas toujours continu.
+
+Tout ce qui n'est pas stationnaire ou permanent sera dit transitoire.
+
+#def[Temps caractéristique de charge du condensateur]: ordre de grandeur du régime transitoire de charge du condensateur
+
+= Lois de Kirchhoff
+
+== Terminologie des circuits
+
+
+#align(center, render(```
+  A  .---.      B    .---.       C
+  *--| X |------*----|   |------* 
+  |  '---'      |    '---'.----'|
+  |           .-+-.     .-+-.   |
+  |           |   |    /   /    |
+  |           '-+-'   '-+-'     |
+  |             |      /        |
+  |             |.----+         |
+  |      .---.  |     .---.     |
+D *------|   |--*-----|   |-----* F 
+  |      '---'  E     '---'     | 
+  |        .---.   G   .---.    |
+  +--------|   |---*---|   |----+
+           '---'       '---'
+```))
+
+#def[Dipôle]: Un  élément qui a deux bornes \
+  Exemple: $X$
+
+#def[Nœud]: Point où sont connectés plus de deux dipoles ($>= 3$) \
+  Exemples: $B, C, D, E, F$
+
+#def[Branche]: Portion de circuit entre deux nœuds successifs \
+  Exemples: $B A D, E F, C F, G D$
+
+#def[Maille]: Ensemble de branches partant d'un nœud pour revenir à ce nœud, *sans paser deux fois par la même branche*. \
+En clair: on part d'un point, et on fait une boucle pour revenir au même point. \
+  Exemples: $E B C F, D A B E, E B C, E C F$
+
+#note[Un même circuit a plusieurs représentation équivalentes. Utiliser celle qui marche le mieux pour soi.]
+
+== Loi des nœuds
+
+Dans un régime continu:
+
+#resultb[*La somme des intensités sortant d'un nœud est égale à la somme des intensités entrantes*
+
+$ sum_k epsilon_k i_k = 0 $
+
+Avec: $ epsilon_k = cases(1 "si ik arrive", -1 "si ik part") $
+
+]
+
+#align(center, render(```
+  I2  I3
+   \  |
+    V ^
+     \|
+I1 ->-* N
+     /|\
+    ^ V ^
+   /  |  \
+  I6  I5  I4
+  ```))
+
+$ i_1 + i_2 + i_4 + i_6 = i_3 + i_5 $
+
+== Loi des mailles
+
+Dans un régime continu et dans une maille:
+
+#resultb[*La somme des potentiels dans le sens de la maille est égale à la somme des potentiels dans le sens inverse à la maille.*
+  $ sum_k epsilon_k u_k = 0 $
+Avec:
+  $ epsilon_k = cases(+1 "si uk dans le sens de la maille", -1 "si uk dans le sens opposé à la maille") $
+]
+
+TODO: graphique
+
+$ u_1 + u_4 + u_7 = u_2 + u_3 + u_5 + u_6 $
+$  $
+
+== Lois de Kirchhoff
+
+#def[Lois de Kirchhoff]:
+1. Lois des nœuds
+2. Lois des mailles
