@@ -1,10 +1,9 @@
 #import "@local/physique:0.1.0": *
+#import optique: *
 
 #show: doc => template(doc)
 
 #titleb[Lentilles sphériques minces dans l'approximation de Gauss]
-
-
 
 = Définitions
 
