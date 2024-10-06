@@ -1,8 +1,9 @@
 #import "@local/physique:0.1.0": *
+#import optique: *
 
 #show: doc => template(doc)
 
-Lois de Snells-Descartes, Stigmatisme et aplanétisme
+#titleb[Lois de Snells-Descartes, Stigmatisme et aplanétisme]
 
 = Vocabulaire de l'Optique géométrique
 
@@ -22,7 +23,7 @@ On se place dans un système doptrique si seul des dioptres sont utilisés, et d
 
 == Rayon incident, réfléchi ou réfracté
 
-Dans le cas d'une surface quelconque, on parlera de la normale $arrow(n)$ et on définira tous les angles à partir de cette normale.
+Dans le cas d'une surface quelconque, on parlera de la normale $arw(n)$ et on définira tous les angles à partir de cette normale.
 
 #figure(caption: "Rayon incident, réfracté, et réfléchi", canvas({
   import draw: *

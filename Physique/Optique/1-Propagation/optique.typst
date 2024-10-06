@@ -1,9 +1,9 @@
-#import "@preview/cetz:0.2.2"
-#import cetz: canvas, draw, tree, plot
+#import "@local/physique:0.1.0": *
+#import optique: *
 
-#set heading(numbering: "1.1.1)")
+#show: doc => template(doc)
 
-#let def(x) = underline([*#x*])
+#titleb[Propagation de la lumière]
 
 = Historique
 
@@ -42,7 +42,6 @@ $ E = k D $
 
 #figure(caption: "Niveaux d'énergie", canvas({
   import draw: *
-
 
   let level(y, num) = {
     line((0,y), (1, y))
