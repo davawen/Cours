@@ -1,6 +1,8 @@
 #import "@preview/cetz:0.2.2"
 #import cetz: draw, canvas, vector
 
+#import "optique.typ"
+
 #let def(x) = underline([*#x*])
 #let ov = math.overline
 #let arw(x) = math.accent(x, math.arrow)
@@ -263,3 +265,4 @@
 #let tip = infobox(symbol: $checkmark$, info_text: "Tip:", color: green)
 #let caution = infobox(symbol: $excl.double$, info_text: "Caution:", color: red)
 #let warn = infobox(symbol: $minus.triangle$, info_text: "Warn:", color: orange)
+#let todo = infobox(symbol: $supset.double$, info_text: text(fill: teal)[TODO:], color: teal)
