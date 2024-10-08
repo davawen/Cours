@@ -1,6 +1,43 @@
 #import "utils.typ": *
 
-#let resistlr(pos, rot: 0deg, label: none, name: none, size: 0.5) = {
+#let tenselr(label, rev: false) = {
+  (label: label, rev: rev)
+}
+
+#let tenserl(label, rev: false) = {
+  (label: label, rev: not rev)
+}
+
+#let tension(from, to, offset, tense, size: 0.7) = {
+  import draw: *
+
+  let midpoint = (from, 50%, to)
+
+  let from = (midpoint, size, from)
+  let to = (midpoint, size, to)
+
+  if tense.rev == true or tense.rev == 1 {
+    (from, to) = (to, from)
+  }
+
+  group({
+    line((rel: offset, to: from), (rel: offset, to: to), mark: (end: "straight"), name: "line")
+
+    content((rel: ((0, 0), 0.3, offset), to: "line.50%"), tense.label)
+  })
+}
+
+#let maille(pos, size, rev: false) = {
+  import draw: *
+
+  group({
+    translate(pos)
+
+    arc((0, 0), start: 45deg, stop: 225deg, radius: size, mark: (end: "straight"))
+  })
+}
+
+#let resistlr(pos, rot: 0deg, tense: none, label: none, name: none, size: 0.5) = {
   import draw: *
   group(name: name, {
     translate(pos)
@@ -12,6 +49,10 @@
 
     if label != none {
       content((0, size/2), label, angle: rot, anchor: "south", padding: 4pt)
+    }
+
+    if tense != none {
+      tension("l", "r", (0, 0.7), tense)
     }
   })
 }
@@ -39,9 +80,7 @@
 
   let points = (a, b, ..points.pos())
   if straight {
-    for i in range(points.len()-1) {
-      let a = points.at(i)
-      let b = points.at(i+1)
+    for (a, b) in points.chunks(2, exact: true) {
       if rev == true or rev == 1 {
         line(a, (a, "|-", b), name: "__first")
         line( (a, "|-", b), b)
@@ -49,11 +88,10 @@
         line(a, (a, "-|", b), name: "__first")
         line( (a, "-|", b), b)
       }
-    }
-
-    if intensity != none {
-      mark("__first.50%", "__first.51%", symbol: ">", fill: black)
-      content("__first.50%", intensity, anchor: "south", padding: 5pt)
+      if intensity != none {
+        mark("__first.50%", (rel: (0.2, 0), to: "__first.51%"), symbol: ">", fill: black)
+        content("__first.50%", intensity, anchor: "south", padding: 5pt)
+      }
     }
   } else {
     line(..points)
@@ -85,21 +123,29 @@
   })
 }
 
-#let node(pos, anch: "south-east", name: none, round: false) = {
+#let node(pos, anch: "south-east", id: none, name: none, round: false) = {
   import draw: *
+  if id == none {
+    id = name
+  }
+
   group({
+    translate(pos)
     if round {
-      circle(pos, radius: 0.07, fill: black)
+      circle((0, 0), radius: 0.07, fill: black)
+    } else {
+      line((-0.05, -0.05), (0.05, 0.05))
+      line((-0.05, 0.05), (0.05, -0.05))
     }
 
     if name != none {
       let label = eval("$" + name + "$")
-      content(pos, label, anchor: anch, padding: 3pt)
+      content((0, 0), label, anchor: anch, padding: 3pt)
     }
   })
 
-  if name != none {
-    hide(circle(pos, radius: 0, name: name))
+  if id != none {
+    hide(circle(pos, radius: 0, name: id))
   }
 }
 
@@ -129,27 +175,6 @@
   })
 }
 
-#let tension(from, to, offset, label, rev: false) = {
-  import draw: *
-
-  let midpoint = (from, 50%, to)
-
-  // let perp = ()
-
-  let from = (midpoint, 0.7, from)
-  let to = (midpoint, 0.7, to)
-
-  if rev == true or rev == 1 {
-    (from, to) = (to, from)
-  }
-
-  group({
-    line((rel: offset, to: from), (rel: offset, to: to), mark: (end: "straight"), name: "line")
-
-    content((rel: ((0, 0), 0.3, offset), to: "line.50%"), label)
-  })
-}
-
 #let generator(pos, rot: 0deg, name: none) = {
   import draw: *
 
@@ -164,37 +189,3 @@
     anchor("r", (0.4, 0))
   })
 }
-
-#figcan({
-  let resisttd = resisttd.with(size: 0.4)
-  let resistlr = resistlr.with(size: 0.4)
-
-  generator((0, 0), name: "gen")
-
-  node((-2, 0), name: "A")
-  node((2, 0), name: "D")
-  node((3, 0), name: "E")
-
-  node((0, -2), name: "C")
-
-  node((-2, -4), name: "B")
-  node((0, -4), name: "H")
-
-  node((3, -4), name: "G")
-
-  resisttd((-2, -2), name: "d1")
-  resistlr((-1, -1), rot: -45deg, name: "d2")
-  resistlr((-1, -3), rot: 45deg, name: "d3")
-
-  resistlr((-1, -4), name: "d4")
-  resistlr((1, -4), name: "d5")
-
-  resistlr((1, -1), rot: 45deg, name: "d2")
-  resistlr((1, -3), rot: -45deg, name: "d3")
-
-  fil("A", "gen.l", i: $I_g$)
-  fil("gen.r", "D", i: $I_g$)
-  fil("D", "E", i: $I_g$)
-
-  // fil("")
-})

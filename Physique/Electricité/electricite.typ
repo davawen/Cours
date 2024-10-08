@@ -1,6 +1,8 @@
 #import "@local/physique:0.1.0": *
 #import "@preview/bob-draw:0.1.0": render
 
+#import elec: *
+
 #show: doc => template(doc)
 
 #titleb[Introduction à l'électricité]
@@ -14,7 +16,7 @@
 == Electrisation
 
 Phénomène qui permet de faire apparaître des charges par frottement ou déplacement, qui vont notemment appliquer des forces en utilisant la force de Coulomb:
-$ arw(f)_(1->2) = 1/(4pi epsilon_0) (q_1 q_2)/(M_1 M_2)^3 arrow(M_1 M_2) $
+$ arw(f)_(1->2) = 1/(4pi epsilon_0) (q_1 q_2)/(M_1 M_2)^3 arw(M_1 M_2) $
 
 Avec $M_1$, $M_2$ les positions des particules, $q_1$, $q_2$ leur charge.
 
@@ -62,8 +64,8 @@ On va s'intéresser plus particulier aux mouvements d'ensemble d'origine électr
 
 Si on place de nombreuses charge dans un même champ électrique, toutes les charges subiront le même mouvement #sym.arrow mouvement d'ensemble électrique.
 
-$ arw(f)_(1->2) = q_2 underbrace((1/(4 pi epsilon_0) q_1/(M_1 M_2)^3) arrow(M_1 M_2), arrow(E)(M_2)) $
-$ arw(f)_(1->2) = q_2 arrow(E)(M_2) $
+$ arw(f)_(1->2) = q_2 underbrace((1/(4 pi epsilon_0) q_1/(M_1 M_2)^3) arw(M_1 M_2), arw(E)(M_2)) $
+$ arw(f)_(1->2) = q_2 arw(E)(M_2) $
 
 On pose $arw(E)(M_2)$ le champ électrique en $M_2$.
 On va principalement utiliser les mouvement résultant de ce genre de champs.
@@ -85,7 +87,7 @@ On va principalement utiliser les mouvement résultant de ce genre de champs.
 
   point((0, 0), value: $q > 0$, color: yellow)
   line((0, -0.2), (1, -.2), mark: (end: "straight"), name: "f", stroke: yellow)
-  content("f.end", $arw(f) = q arrow(E)$, anchor: "west")
+  content("f.end", $arw(f) = q arw(E)$, anchor: "west")
 
   line((0, -0.5), (1.5, -0.5), mark: (end: "straight"), name: "v", stroke: red)
   content("v.end", $arw(v)$, anchor: "north-west")
@@ -106,7 +108,7 @@ Le courant possède un sens conventionnel arbitraire: il est opposé au sens des
 
   point((0, 0), value: $e$, color: yellow)
   line((0, -0.2), (-1, -.2), mark: (end: "straight"), name: "f", stroke: yellow)
-  content("f.end", $arw(f) = q arrow(E)$, anchor: "east")
+  content("f.end", $arw(f) = q arw(E)$, anchor: "east")
 
   line((0, -0.5), (-1.5, -0.5), mark: (end: "straight"), name: "v", stroke: red)
   content("v.end", $arw(v)$, anchor: "north-east")
@@ -150,18 +152,17 @@ On peut travailler avec une très large gamme d'intensité:
 On note $U_(B A)$ la tension de $A$ vers $B$, avec:
 $ U_(B A) = V_B - V_A = -U_(A B) $
 
+#figcan({
+  resistlr((0, 0), name: "d")
 
-#align(center, render(```
+  node((-2, 0), name: "A", round: true)
+  node((2, 0), name: "B", round: true)
 
-     -------------------->
-         +--------+
-  A *----|        |----* B
-         +--------+
-  <--------------------
-```))
+  fil("A", "d.l", "d.r", "B")
 
-#move(dx: 20em, dy: -11em, $U_(B A)$)
-#move(dx: 20em, dy: -4.5em, $U_(A B)$)
+  tension("A", "B", (0, .7), $U_(B A)$)
+  tension("A", "B", (0, -.7), $U_(A B)$, rev: true)
+})
 
 == Ordre de grandeur des tensions
 
@@ -235,8 +236,6 @@ Par contre, on peut:
 
 = Approximation des régimes quasi-stationnaires (#smallcaps[ARQS])
 
-#def[Régime quasi-stationnaire]: 
-
 == Régime continu
 
 #def[Régime continu]: Toutes les grandeurs (électriques) sont constantes au cours du temps:
@@ -282,6 +281,8 @@ Par exemple: si on a un signal (intensité ou tension à un point du circuit) si
 $ s(t) = S cos(omega t + phi) $
 
 Avec $S$ l'amplitude, $omega$ la pulsation et $phi$ la phase initiale.
+
+#def[Régime quasi-stationnaire]: 
 
 Le signal est trivialement variable, mais
 si ces caractéristiques restent constantes, il sera dit stationnaire/permanent.
@@ -367,7 +368,30 @@ Avec:
   $ epsilon_k = cases(+1 "si uk dans le sens de la maille", -1 "si uk dans le sens opposé à la maille") $
 ]
 
-TODO: graphique
+#figcan({
+  node((-3, 0), name: "A")
+  node((0, 0), name: "B")
+  node((3, 0), name: "C")
+
+  node((3, -2), name: "D")
+  node((0, -4), name: "F")
+  node((-3, -4), name: "G")
+
+  resistlr((-1.5, 0), name: "d1", tense: tenselr($u_1$))
+  resistlr((1.5, 0), name: "d2", tense: tenserl($u_2$))
+
+  resisttd((3, -1), name: "d3")
+  resisttd((3, -3), name: "d4")
+
+  resistlr((-1.5, -4), name: "d5")
+  resistlr((1.5, -4), name: "d6")
+
+  resisttd((-3, -2), name: "d7")
+
+  fil("A", "d1.l", "d1.r", "d2.l", "d2.r", "C")
+  fil("C", "d3.t", "d3.d", "d4.t", "d4.d", "d6.r", rev: 1)
+  fil("d6.l", "d5.r", "d5.l", "d7.d", "d7.t", "A")
+})
 
 $ u_1 + u_4 + u_7 = u_2 + u_3 + u_5 + u_6 $
 $  $
@@ -377,3 +401,92 @@ $  $
 #def[Lois de Kirchhoff]:
 1. Lois des nœuds
 2. Lois des mailles
+
+= Puissance
+
+== Définition
+
+Résultat parachuté:
+$ cal(P) = u dot i $ si $u$ et $i$ de sens opposés.
+
+#let different(s) = figcan({
+  draw.scale(s)
+
+  resistlr((0, 0), name: "D")
+
+  node((-1.5, 0), name: "A")
+  node((1.5, 0), name: "B", anch: "south-west")
+
+  fil("A", "D.l", i: $i$)
+  fil("D.r", "B", i: $i'$)
+  tension("D.l", "D.r", (0, -0.7), $u$, rev: 1)
+})
+
+#different(1)
+
+Preuve:
+
+On a (définition de l'intensité):
+$ i = (dif q)/(dif t) $
+Autrement dit:
+$ dif q = i dif t $
+
+L'énergie affectée au dipôle en A peut être notée:
+$ V_A dif q = V_A i dif t $
+Et l'énergie affectée au dipôle en B:
+$ V_B dif q = V_B i dif t $
+
+On a la variation d'énergie définie par l'énergie apportée moins l'énergie perdue:
+$
+dif E =
+underbrace(V_A i dif t, "affectée") -
+underbrace(V_B i dif t, "perdue") =
+i dif t underbrace((V_A - V_B), "tension") $
+$ dif E = u i dif t $
+
+On sait que la puissane est $"energie"/"durée"$, donc:
+$ cal(P) = (dif E)/(dif t) = u dot i $
+
+== Récepteurs ou générateurs
+
+On a $cal(P) = u dot i$ la puissance #text(fill: red)[reçue]
+
+On peut se retrouver dans une tension dans le même sens que l'intensité:
+#let same(s) = figcan({
+  draw.scale(s)
+  resistlr((0, 0), name: "D")
+
+  node((-1.5, 0), name: "A")
+  node((1.5, 0), name: "B", anch: "south-west")
+
+  fil("A", "D.l", i: $i$)
+  fil("D.r", "B", i: $i'$)
+  tension("D.l", "D.r", (0, -0.7), $u'$)
+})
+#same(1)
+
+On a $u' = -u$ et $i' = i$, donc
+$ cal(P) = u dot i = (- u') dot i' = -u' i' $
+
+On peut arranger les résultats dans un tableau:
+#align(center, table(
+  inset: 0.7em,
+  columns: 4,
+  table.header([], [Puissance reçue], [Puissance fournie], [Convention]),
+  [#different(0.5)], $u times i$, $-u times i$, [récepteur],
+  [#same(0.5)], $-u' times i$, $u' times i$, [générateur]
+))
+
+== Ordres de grandeurs
+
+- milliwatt : laser d’un CD-ROM 5 mW, laser d’un graveur de CD-ROM 100 mW, diode életroluminescente LED 36 mW
+- du watt au kilowatt : radio-transmetteur portatif 5 W, cerveau humain de 20 à 40 W, lampe à incandescence
+  40-100 W, sortie d’un panneau solaire photovolta¨ıque 150 W, puissance d’un PC 300-400 W
+- supérieur au kilowatt : bouilloire électrique 1-2 kW, flash d’un appareil photographique amateur 12 kW, éolienne (rotor de 40 m de diamètre et un vent de 43 km.h−1) 500 kW
+- mégawatt : ordinateur le plus puissant en 2012 : barrage 100 MW, usine marémotrice de la Rance 240 MW, réacteur nucléaire 900 MW
+- gigawatt : réacteur d’une centrale nucléaire 1 GW• milliwatt : laser d’un CD-ROM 5 mW, laser d’un graveur de CD-ROM 100 mW, diode életroluminescente LED 36 mW
+- du watt au kilowatt : radio-transmetteur portatif 5 W, cerveau humain de 20 à 40 W, lampe à incandescence 40-100 W, sortie d’un panneau solaire photovolta¨ıque 150 W, puissance d’un PC 300-400 W
+- supérieur au kilowatt : bouilloire électrique 1-2 kW, ﬂash d’un appareil photographique amateur 12 kW, éolienne (rotor de 40 m de diamètre et un vent de 43 km.h−1) 500 kW
+- mégawatt : ordinateur le plus puissant en 2012 : barrage 100 MW, usine marémotrice de la Rance 240 MW, réacteur nucléaire 900 MW
+- gigawatt : réacteur d’une centrale nucléaire 1 GW
+
