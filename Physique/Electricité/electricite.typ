@@ -160,8 +160,8 @@ $ U_(B A) = V_B - V_A = -U_(A B) $
 
   fil("A", "d.l", "d.r", "B")
 
-  tension("A", "B", (0, .7), $U_(B A)$)
-  tension("A", "B", (0, -.7), $U_(A B)$, rev: true)
+  tension("A", "B", (0, .7), tenselr($U_(B A)$))
+  tension("A", "B", (0, -.7), tenserl($U_(A B)$))
 })
 
 == Ordre de grandeur des tensions
@@ -389,8 +389,8 @@ Avec:
   resisttd((-3, -2), name: "d7")
 
   fil("A", "d1.l", "d1.r", "d2.l", "d2.r", "C")
-  fil("C", "d3.t", "d3.d", "d4.t", "d4.d", "d6.r", rev: 1)
-  fil("d6.l", "d5.r", "d5.l", "d7.d", "d7.t", "A")
+  fil("C", "d3.l", "d3.r", "d4.l", "d4.r", "d6.r", rev: 1)
+  fil("d6.l", "d5.r", "d5.l", "d7.r", "d7.l", "A")
 })
 
 $ u_1 + u_4 + u_7 = u_2 + u_3 + u_5 + u_6 $
@@ -412,14 +412,13 @@ $ cal(P) = u dot i $ si $u$ et $i$ de sens opposés.
 #let different(s) = figcan({
   draw.scale(s)
 
-  resistlr((0, 0), name: "D")
+  resistlr((0, 0), name: "D", tense: tenserl($u$))
 
   node((-1.5, 0), name: "A")
   node((1.5, 0), name: "B", anch: "south-west")
 
   fil("A", "D.l", i: $i$)
   fil("D.r", "B", i: $i'$)
-  tension("D.l", "D.r", (0, -0.7), $u$, rev: 1)
 })
 
 #different(1)
@@ -454,14 +453,13 @@ On a $cal(P) = u dot i$ la puissance #text(fill: red)[reçue]
 On peut se retrouver dans une tension dans le même sens que l'intensité:
 #let same(s) = figcan({
   draw.scale(s)
-  resistlr((0, 0), name: "D")
+  resistlr((0, 0), name: "D", tense: tenselr($u'$))
 
   node((-1.5, 0), name: "A")
   node((1.5, 0), name: "B", anch: "south-west")
 
   fil("A", "D.l", i: $i$)
   fil("D.r", "B", i: $i'$)
-  tension("D.l", "D.r", (0, -0.7), $u'$)
 })
 #same(1)
 
