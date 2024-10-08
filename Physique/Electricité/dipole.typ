@@ -104,21 +104,12 @@ Si on rencontre un (vrai!) nœud, on n'est pas en série.
 On met des éléments en parallèles les un aux autres:
 
 #figcan({
-  resistlr((0, 3), name: "d1")
-  resistlr((0, 2), name: "d2")
-  resistlr((0, 1), name: "d3")
-  resistlr((0, 0), name: "d4")
-
-  node((-2, 1.5), name: "A")
-  node((2, 1.5), name: "B")
-
-  tension("d1.r", "d1.l", (0, 0.7), tenselr($u$), size: 1.2)
-
-  fil(rev: 1, "A", "d1.l", "A", "d2.l", "A", "d3.l", "A", "d4.l")
-  fil("d1.r", "B", "d2.r", "B", "d3.r", "B", "d4.r", "B")
-
-  fil((-3, 1.5), "A", i: $i$)
-  fil("B", (3, 1.5), i: $i$)
+  derivation((0, 0), i: $i$, tense: tenserl($u$),
+    apply(resistlr),
+    apply(resistlr),
+    apply(resistlr),
+    apply(resistlr),
+  )
 })
 
 En parallèle, la tension reste la même et les intensités s'additionnent:

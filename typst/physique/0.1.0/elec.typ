@@ -64,8 +64,8 @@
     rotate(rot)
     rect((-size/2, -size), (size/2, size))
 
-    anchor("t", (0,  size))
-    anchor("d", (0, -size))
+    anchor("l", (0,  size))
+    anchor("r", (0, -size))
 
     if label != none {
       content((size/2, 0), angle: rot, label, anchor: "west", padding: 4pt)
@@ -83,10 +83,10 @@
     for (a, b) in points.chunks(2, exact: true) {
       if rev == true or rev == 1 {
         line(a, (a, "|-", b), name: "__first")
-        line( (a, "|-", b), b)
+        line((a, "|-", b), b)
       } else {
         line(a, (a, "-|", b), name: "__first")
-        line( (a, "-|", b), b)
+        line((a, "-|", b), b)
       }
       if intensity != none {
         mark("__first.50%", (rel: (0.2, 0), to: "__first.51%"), symbol: ">", fill: black)
@@ -188,4 +188,61 @@
     anchor("l", (-0.4, 0))
     anchor("r", (0.4, 0))
   })
+}
+
+#let apply(f, ..args) = {
+  (f: f, pos: args.pos(), named: args.named())
+}
+
+/// Use apply to create an element for this method
+/// Example:
+/// ```typst
+/// derivation((0, 0), 
+///   apply(resistlr, name: "d1"),
+///   apply(ground, rot: 45deg)
+/// )
+/// ```
+#let derivation(pos, rot: 0deg, width: 5, inset: 1, i: none, tense: none, name: none, ..elems) = {
+  import draw: *
+
+  let elems = elems.pos()
+
+  group(name: name, {
+    translate(pos)
+    rotate(rot)
+
+    anchor("l", (-width/2, 0))
+    anchor("r", (width/2, 0))
+
+    node((-width/2 + 1, 0), id: "ln", round: true)
+    node((width/2 - 1, 0), id: "rn", round: true) 
+
+    fil("l", "ln", i: i)
+    fil("r", "rn", i: i)
+
+    if tense != none {
+      tension("l", "r", (0, inset * (elems.len())/2), tense, size: width/4)
+    }
+
+    for (i, elem) in elems.enumerate() {
+      let (f, pos: positional, named) = elem
+
+      if (named.at("name", default: none) == none) {
+        named.insert("name", "__tmpname")
+      }
+      
+      let name = named.at("name")
+
+      f((0, inset * ((elems.len() + 1)/2 - i - 1)), ..positional, ..named)
+
+      fil(name + ".l", "ln")
+      fil(name + ".r", "rn")
+    }
+  })
+}
+
+#let serie(pos, rot: 0deg, tense: none, i: none, name: none, ..elems) = {
+  import draw: *
+
+  let elems = elems.pos()
 }
