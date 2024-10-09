@@ -153,15 +153,10 @@ On note $U_(B A)$ la tension de $A$ vers $B$, avec:
 $ U_(B A) = V_B - V_A = -U_(A B) $
 
 #figcan({
-  resistlr((0, 0), name: "d")
-
-  node((-2, 0), name: "A", round: true)
-  node((2, 0), name: "B", round: true)
-
-  fil("A", "d.l", "d.r", "B")
-
-  tension("A", "B", (0, .7), tenselr($U_(B A)$))
-  tension("A", "B", (0, -.7), tenserl($U_(A B)$))
+  serie((0, 0), left: "A", right: "B", name: "D",
+    apply(resistor, u: tenselr($U_(A B)$))
+  )
+  tension("D.l", "D.r", (0, 0.6), tenserl($U_(B A)$))
 })
 
 == Ordre de grandeur des tensions
@@ -184,55 +179,41 @@ Quand tout les éléments sont reliés à la Terre, tout ces éléments ont déj
 #warn[Il faut faire bien attention quand on place la Terre:
 on peut court-circuiter des éléments en la plaçant à deux endroits à la fois ] 
 
-#align(center, render(```
-       .-----.       
-  +----|     |------+
-  |    '-----'      |
-.-+-.             .-+-.
-|   |             |   |
-|   |             |   |
-'-+-'             '-+-'
-  |                 |
-  '-----------------+
-                   _|_
-                    -
-  ```))
+#figcan({
+  resistor((1, 0), name: "d1")
+  resistor((2, -1), rot: 90deg, name: "d2")
+  resistor((0, -1), rot: 90deg, name: "d3")
+
+  ground((2, -2), name: "g")
+
+  fil("d1.l", "d3.r", "d1.r", "d2.r", "d2.l", "g", "g", "d3.l")
+})
 
 Si on place une autre terre:
 
-#align(center, render(```
-Court circuit
-  Entre les deux masses
-   |
-   V
-   .      .------.       
-  ||-+----|      |----+
-   ' |    '------'    |
-   .-+-.            .-+-.
-   |   |            |   |
-   |   |            |   |
-   '-+-'            '-+-'
-     |                |
-     '----------------+
-                     _|_
-                      -
-  ```))
+#figcan({
+  resistor((1, 0), name: "d1")
+  resistor((2, -1), rot: 90deg, name: "d2")
+  resistor((0, -1), rot: 90deg, name: "d3")
+
+  ground((2, -2), name: "g")
+  ground((0, 0), rot: -90deg, name: "g2")
+
+  fil("d1.l", "d3.r", "d1.r", "d2.r", "d2.l", "g", "g", "d3.l")
+})
 
 Par contre, on peut:
 
-#align(center, render(```
-          .------.       
-     +----|      |----+
-     |    '------'    |
-   .-+-.            .-+-.
-   |   |            |   |
-   |   |            |   |
-   '-+-'            '-+-'
-     |                |
-     +----------------+
-    _|_              _|_
-     -                -
-  ```))
+#figcan({
+  resistor((1, 0), name: "d1")
+  resistor((2, -1), rot: 90deg, name: "d2")
+  resistor((0, -1), rot: 90deg, name: "d3")
+
+  ground((2, -2), name: "g")
+  ground((0, -2), name: "g2")
+
+  fil("d1.l", "d3.r", "d1.r", "d2.r", "d2.l", "g", "g", "d3.l")
+})
 
 = Approximation des régimes quasi-stationnaires (#smallcaps[ARQS])
 
@@ -299,23 +280,30 @@ Tout ce qui n'est pas stationnaire ou permanent sera dit transitoire.
 
 == Terminologie des circuits
 
+#figcan({
+  serie((0, 0), name: "D", left: "A", right: "C",
+    apply(resistor, label: $X$), apply(resistor)
+  )
 
-#align(center, render(```
-  A  .---.      B    .---.       C
-  *--| X |------*----|   |------* 
-  |  '---'      |    '---'.----'|
-  |           .-+-.     .-+-.   |
-  |           |   |    /   /    |
-  |           '-+-'   '-+-'     |
-  |             |      /        |
-  |             |.----+         |
-  |      .---.  |     .---.     |
-D *------|   |--*-----|   |-----* F 
-  |      '---'  E     '---'     | 
-  |        .---.   G   .---.    |
-  +--------|   |---*---|   |----+
-           '---'       '---'
-```))
+  node((0, 0), offset: (0, 0.8em), name: "B", round: true)
+
+  resistor((0, -1.5), rot: -90deg, name: "d1")
+  node((0, -3), offset: (0, -0.8em), name: "E", round: true)
+  serie((0, -3), left: "D", right: "F", name: "D2",
+    apply(resistor), apply(resistor)
+  )
+
+  node((0, -4), offset: (0, -0.8em), name: "G", round: true)
+  serie((0, -4), name: "D3", apply(resistor), apply(resistor))
+
+  resistor((1.5, -1.5), rot: 45deg, name: "d2")
+
+  fil((-2.725, 0), (-2.725, -4))
+  fil((2.725, 0), (2.725, -4))
+
+  fil("B", "d1.l", "d1.r", "E")
+  fil("E", "d2.l", "d2.r", (2.725, 0), straight: false)
+})
 
 #def[Dipôle]: Un  élément qui a deux bornes \
   Exemple: $X$
@@ -344,17 +332,16 @@ Avec: $ epsilon_k = cases(1 "si ik arrive", -1 "si ik part") $
 
 ]
 
-#align(center, render(```
-  I2  I3
-   \  |
-    V ^
-     \|
-I1 ->-* N
-     /|\
-    ^ V ^
-   /  |  \
-  I6  I5  I4
-  ```))
+#figcan({
+  node((0, 0), round: true, name: "N")
+
+  fil((-2, 0), "N", i: $i_1$)
+  fil((-2, 2), "N", i: $i_2$, straight: false)
+  fil((2, -2), "N", i: $i_4$, straight: false)
+  fil((-2, -2), "N", i: $i_6$, straight: false)
+  fil("N", (0, 2), i: $i_3$, straight: false)
+  fil("N", (0, -2), i: $i_5$, straight: false)
+})
 
 $ i_1 + i_2 + i_4 + i_6 = i_3 + i_5 $
 
@@ -377,16 +364,16 @@ Avec:
   node((0, -4), name: "F")
   node((-3, -4), name: "G")
 
-  resistlr((-1.5, 0), name: "d1", tense: tenselr($u_1$))
-  resistlr((1.5, 0), name: "d2", tense: tenserl($u_2$))
+  resistor((-1.5, 0), name: "d1", u: tenselr($u_1$))
+  resistor((1.5, 0), name: "d2", u: tenserl($u_2$))
 
-  resisttd((3, -1), name: "d3")
-  resisttd((3, -3), name: "d4")
+  resistor((3, -1), rot: -90deg, name: "d3")
+  resistor((3, -3), rot: -90deg, name: "d4")
 
-  resistlr((-1.5, -4), name: "d5")
-  resistlr((1.5, -4), name: "d6")
+  resistor((-1.5, -4), name: "d5")
+  resistor((1.5, -4), name: "d6")
 
-  resisttd((-3, -2), name: "d7")
+  resistor((-3, -2), rot: -90deg, name: "d7")
 
   fil("A", "d1.l", "d1.r", "d2.l", "d2.r", "C")
   fil("C", "d3.l", "d3.r", "d4.l", "d4.r", "d6.r", rev: 1)
@@ -412,10 +399,10 @@ $ cal(P) = u dot i $ si $u$ et $i$ de sens opposés.
 #let different(s) = figcan({
   draw.scale(s)
 
-  resistlr((0, 0), name: "D", tense: tenserl($u$))
+  resistor((0, 0), name: "D", u: tenserl($u$))
 
   node((-1.5, 0), name: "A")
-  node((1.5, 0), name: "B", anch: "south-west")
+  node((1.5, 0), offset: (0.5em, 0.8em), name: "B")
 
   fil("A", "D.l", i: $i$)
   fil("D.r", "B", i: $i'$)
@@ -453,10 +440,10 @@ On a $cal(P) = u dot i$ la puissance #text(fill: red)[reçue]
 On peut se retrouver dans une tension dans le même sens que l'intensité:
 #let same(s) = figcan({
   draw.scale(s)
-  resistlr((0, 0), name: "D", tense: tenselr($u'$))
+  resistor((0, 0), name: "D", u: tenselr($u'$))
 
   node((-1.5, 0), name: "A")
-  node((1.5, 0), name: "B", anch: "south-west")
+  node((1.5, 0), name: "B")
 
   fil("A", "D.l", i: $i$)
   fil("D.r", "B", i: $i'$)

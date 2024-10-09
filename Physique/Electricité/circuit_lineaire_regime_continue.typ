@@ -14,7 +14,7 @@
 
 Exemple, on veut connaitre la tension et l'intensite de ce résistor:
 #figcan({
-  resistlr((0, 0), tense: tenserl($u$), name: "r")
+  resistor((0, 0), u: tenserl($u$), name: "r")
 
   node((-1, 0), name: "A")
   node((1, 0), name: "B")
@@ -27,13 +27,13 @@ Exemple, on veut connaitre la tension et l'intensite de ce résistor:
 Branchement en courte dérivation:
 
 #figcan({
-  resistlr((0, 0), tense: tenserl($u$), name: "r")
+  resistor((0, 0), u: tenserl($u$), name: "r")
 
   node((-2, 0), name: "A")
   node((2, 0), name: "B")
 
-  elem-letter((0, 1), $V$, name: "V")
-  elem-letter((3, 0), $A$, name: "Am")
+  voltmetre((0, 1), name: "V")
+  amperemetre((3, 0), name: "Am")
 
   fil("A", "r.l", "B", "r.r", i: $i_R$)
   fil("V.l", "A", "V.r", "B", i: $i_A$)
@@ -43,18 +43,22 @@ Branchement en courte dérivation:
 
 On mesure la bonne tension, mais une partie de l'intensité va partir dans la branche du voltmètre.
 
+Branchement en longue dérivation:
+
 #figcan({
-  resistlr((0, 0), tense: tenserl($u_R$), name: "r")
+  node((-4, 0), name: "A")
+  node((4, 0), name: "B")
 
-  node((-1, 0), name: "A")
-  node((1, 0), name: "B")
+  voltmetre((0, 1), name: "V")
 
-  elem-letter((0, 1), $V$, name: "V")
-  elem-letter((2, 0), $A$, name: "Am", tense: tenserl($u_A$))
+  serie((0, 0), name: "D", i: $i_R$,
+    apply(resistor, u: tenserl($u_R$)),
+    apply(amperemetre, u: tenserl($u_A$))
+  )
 
-  fil("A", "r.l", "B", "r.r")
-  fil("V.l", "A", "V.r", (3, 0), "B", "Am.l", "Am.r", (4, 0))
+  fil("A", (-3, 0), (3, 0), "B", i: $i$)
+  fil((-3, 0), "D.l", "D.r", (3, 0))
+  fil("V.l", (-3, 0), "V.r", (3, 0), i: $i_V$)
 })
 
 On mesure la bonne intensité, mais une partie de la tension va venir de l'ampèremètre.
-

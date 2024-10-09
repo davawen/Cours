@@ -16,15 +16,9 @@ Un dipôle est un élément de circuit possédant deux bornes.
 Il y a deux caractéristique d'un dipôle: la tension et l'intensité.
 
 #figcan({
-  resistlr((0, 0), label: [Dipôle], name: "d")
-
-  node((-2, 0), name: "A")
-  node((2, 0), name: "B")
-
-  fil("A", "d.l", i: $i$)
-  fil("d.r", "B")
-
-  tension("d.l", "d.r", (0, -0.5), tenserl($u$))
+  serie((0, 0), i: $i$, left: "A", right: "B",
+    apply(resistor, u: tenserl($u$))
+  )
 })
 
 On peut grapher l'intensité en fonction de la tension, ou la tension en fonction de l'intensité.
@@ -83,14 +77,12 @@ Au-delà de cette puissance, il est probable qu'ils grillent.
 
 On met des élément les uns après les autre:
 #figcan({
-  resistlr((-2, 0), name: "d1", tense: tenserl($u_1$))
-  resistlr((0, 0), name: "d2", tense: tenserl($u_2$))
-  resistlr((2, 0), name: "d3", tense: tenserl($u_3$))
-  resistlr((4, 0), name: "d4", tense: tenserl($u_4$))
-
-  tension("d4.r", "d1.l", (0, -1), tenselr($u$), size: 3.5)
-
-  fil((-3, 0), "d1.l", "d1.r", "d2.l", "d2.r", "d3.l", "d3.r", "d4.l", "d4.r", (5, 0), i: $i$)
+  serie((0, 0), i: $i$, u: tenserl($u$),
+    apply(resistor, u: tenserl($u_1$)),
+    apply(resistor, u: tenserl($u_2$)),
+    apply(resistor, u: tenserl($u_3$)),
+    apply(resistor, u: tenserl($u_4$)),
+  )
 })
 
 En série, l'intensité reste la même et les tensions s'additionnent:
@@ -104,11 +96,11 @@ Si on rencontre un (vrai!) nœud, on n'est pas en série.
 On met des éléments en parallèles les un aux autres:
 
 #figcan({
-  derivation((0, 0), i: $i$, tense: tenserl($u$),
-    apply(resistlr),
-    apply(resistlr),
-    apply(resistlr),
-    apply(resistlr),
+  derivation((0, 0), i: $i$, u: tenserl($u$),
+    apply(resistor),
+    apply(resistor),
+    apply(resistor),
+    apply(resistor),
   )
 })
 
@@ -136,7 +128,7 @@ Bon, on appelle tout une résistance.
 #note[Un résistor peut quand-même avoir des comportements un peu chelou qui ne peuvent pas être modélisés par la caractéristique résistance]
 
 Schéma:
-#figcan(resistlr((0, 0)))
+#figcan(resistor((0, 0)))
 
 En convention récepteur, la caractéristique du résistor est une droite et obéit à $u = R dot i$.
 
@@ -144,9 +136,9 @@ Attention, en convention générateur, le signe est inversé, on a $u = -R dot i
 
 === Association en série
 #figcan({
-  resistlr((-2, 0), name: "d1", label: $R_1$)
-  resistlr((0, 0), name: "d2", label: $R_2$)
-  resistlr((2, 0), name: "d3", label: $R_3$)
+  resistor((-2, 0), name: "d1", label: $R_1$)
+  resistor((0, 0), name: "d2", label: $R_2$)
+  resistor((2, 0), name: "d3", label: $R_3$)
 
   tension("d3.r", "d1.l", (0, 1), tenselr($u$), size: 1)
 
@@ -162,7 +154,7 @@ $
 Donc une association en série de résistances est équivalente à une grosse résistance:
 
 #figcan({
-  resistlr((0, 0), name: "D", size: 1, label: $R_"eq"$)
+  resistor((0, 0), name: "D", size: 1, label: $R_"eq"$)
   fil((-3, 0), "D.l", "D.r", (3, 0), i: $i$)
 })
 
@@ -172,9 +164,9 @@ $ R_"eq" = sum_k R_k $
 === Association en parallèle
 
 #figcan({
-  resistlr((0, 2), name: "d2")
-  resistlr((0, 1), name: "d3")
-  resistlr((0, 0), name: "d4")
+  resistor((0, 2), name: "d2")
+  resistor((0, 1), name: "d3")
+  resistor((0, 0), name: "d4")
 
   node((-2, 1), name: "A")
   node((2, 1), name: "B")
@@ -219,7 +211,7 @@ Donc $cal(P)_"reçue" > 0$ en convention récepteur.
 == Bobine d'inductance $L$
 
 #figcan({
-  bobine((0, 0), tense: tenserl($u$))
+  bobine((0, 0), u: tenserl($u$))
 })
 
 On a la relation:
@@ -290,7 +282,7 @@ Schéma:
 
 #figcan({
   draw.scale(1)
-  condensateur((0, 0), tense: tenserl($u$), name: "c")
+  condensateur((0, 0), u: tenserl($u$), name: "c")
 
   fil((-1, 0), "c.l", "c.r", (1, 0), i: $i$)
 
@@ -374,7 +366,7 @@ On nomme $E$ cette tension.
 On appelle ce genre de dipôle une *source idéale de tension*, de symbole:
 
 #figcan({
-  source-ideale((0, 0), name: "s", label: tenselr($E$), tense: tenserl($u$))
+  source-ideale((0, 0), name: "s", label: tenselr($E$), u: tenserl($u$))
   fil((-1, 0), "s.l", "s.r", (1, 0), i: $i$)
 })
 
@@ -388,7 +380,7 @@ On nomme une source idéale de courant une source d'on l'intensité est la même
 Sa caractéristique (avec l'intensité en abscisse) est une droite verticale. On nomme $I_0$ son intensité.
 
 #figcan({
-  source-ideale-courant((0, 0), name: "s", tense: tenserl($u$))
+  source-ideale-courant((0, 0), name: "s", u: tenserl($u$))
   fil((-1, 0), "s.l", "s.r", (1, 0), i: $I_0$)
 })
 
@@ -412,8 +404,8 @@ On peut représenter un dipôle de tension constante $u_1$ par une source idéal
 #figcan({
   //serie()
 
-  source-ideale((0, 0), label: tenselr($E$), tense: tenselr($u_1$), name: "s")
-  resistlr((2, 0), label: $R$, tense: tenselr($u_2$), name: "r")
+  source-ideale((0, 0), label: tenselr($E$), u: tenselr($u_1$), name: "s")
+  resistor((2, 0), label: $R$, u: tenselr($u_2$), name: "r")
 
   fil((-1, 0), "s.l", "s.r", "r.l", "r.r", (4, 0), i: $i$)
   tension((-1, 0), (4, 0), (0, -1.3), tenselr($u$), size: 2)
@@ -445,7 +437,7 @@ On a:
 #figcan({
   derivation((0, 0), inset: 2.5, i: $i$,
     apply(source-ideale-courant, label: tenselr($I_0 = E/R$)),
-    apply(resistlr, label: $R$)
+    apply(resistor, label: $R$)
   )
 
   tension((-1, 0), (1, 0), (0, 0.001), tenselr($u$))
