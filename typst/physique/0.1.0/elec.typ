@@ -1,11 +1,11 @@
 #import "utils.typ": *
 
-#let tenselr(label, rev: false) = {
-  (label: label, rev: rev)
+#let tenselr(label, rev: false, size: 0) = {
+  (label: label, rev: rev, size: size)
 }
 
-#let tenserl(label, rev: false) = {
-  (label: label, rev: not rev)
+#let tenserl(label, rev: false, size: 0) = {
+  (label: label, rev: not rev, size: size)
 }
 
 #let tension(from, to, offset, tense, size: 0.7) = {
@@ -13,8 +13,8 @@
 
   let midpoint = (from, 50%, to)
 
-  let from = (midpoint, size, from)
-  let to = (midpoint, size, to)
+  let from = (midpoint, size + tense.size, from)
+  let to = (midpoint, size + tense.size, to)
 
   if tense.rev == true or tense.rev == 1 {
     (from, to) = (to, from)
@@ -37,8 +37,9 @@
   })
 }
 
-#let resistlr(pos, rot: 0deg, tense: none, label: none, name: none, size: 0.5) = {
+#let resistor(pos, rot: 0deg, u: none, label: none, name: none, size: 0.5) = {
   import draw: *
+
   group(name: name, {
     translate(pos)
     rotate(rot)
@@ -51,24 +52,8 @@
       content((0, size/2), label, angle: rot, anchor: "south", padding: 4pt)
     }
 
-    if tense != none {
-      tension("l", "r", (0, -0.6), tense)
-    }
-  })
-}
-
-#let resisttd(pos, rot: 0deg, label: none, name: none, size: 0.5) = {
-  import draw: *
-  group(name: name, {
-    translate(pos)
-    rotate(rot)
-    rect((-size/2, -size), (size/2, size))
-
-    anchor("l", (0,  size))
-    anchor("r", (0, -size))
-
-    if label != none {
-      content((size/2, 0), angle: rot, label, anchor: "west", padding: 4pt)
+    if u != none {
+      tension("l", "r", (0, -0.6), u)
     }
   })
 }
@@ -90,23 +75,18 @@
       }
       if intensity != none {
         mark("__first.50%", (rel: (0.2, 0), to: "__first.51%"), symbol: ">", fill: black)
-        content("__first.50%", intensity, anchor: "south", padding: 5pt)
+        content((rel: (0, 0.8em), to: "__first.50%"), intensity)
       }
     }
   } else {
-    line(..points)
+    for (a, b) in points.chunks(2, exact: true) {
+      line(a, b, name: "__first")
+      if intensity != none {
+        mark("__first.50%", "__first.51%", symbol: ">", fill: black)
+        content((rel: (0, 0.8em), to: "__first.50%"), intensity)
+      }
+    }
   }
-}
-
-#let connect(..elems) = {
-  import draw: *
-
-  intersections("__tmp_connect_intersect", {
-    elems
-  })
-  for-each-anchor("__tmp_connect_intersect", (name) => {
-    circle("__tmp_connect_intersect." + name, radius: 0.1, fill: black)
-  })
 }
 
 #let ground(pos, rot: 0deg, name: none) = {
@@ -115,38 +95,35 @@
     translate(pos)
     rotate(rot)
 
-    anchor("p", (0, 0))
+    anchor("l", (0, 0))
+    anchor("r", (0, 0))
 
     line((0, 0), (0, -0.5))
     line((-0.3, -0.5), (0.3, -0.5))
     line((-0.2, -0.6), (0.2, -0.6))
+    line((-0.1, -0.7), (0.1, -0.7))
   })
 }
 
-#let node(pos, anch: "south-east", id: none, name: none, round: false) = {
+#let node(pos, offset: (-0.5em, 0.8em), id: none, name: none, round: false) = {
   import draw: *
   if id == none {
     id = name
   }
 
-  group({
+  group(name: id, {
     translate(pos)
     if round {
       circle((0, 0), radius: 0.07, fill: black)
-    } else {
-      line((-0.05, -0.05), (0.05, 0.05))
-      line((-0.05, 0.05), (0.05, -0.05))
     }
+
+    anchor("default", (0, 0))
 
     if name != none {
       let label = eval("$" + name + "$")
-      content((0, 0), label, anchor: anch, padding: 3pt)
+      content(offset, label)
     }
   })
-
-  if id != none {
-    hide(circle(pos, radius: 0, name: id))
-  }
 }
 
 #let pile(pos, rot: 0deg, rev: false, name: none) = {
@@ -175,22 +152,7 @@
   })
 }
 
-#let generator(pos, rot: 0deg, name: none) = {
-  import draw: *
-
-  group(name: name, {
-    translate(pos)
-    rotate(rot)
-
-    circle((0, 0), radius: 0.4)
-    content((0, 0), $G$)
-
-    anchor("l", (-0.4, 0))
-    anchor("r", (0.4, 0))
-  })
-}
-
-#let elem-letter(pos, letter, rot: 0deg, tense: none, name: none) = {
+#let elem-letter(pos, letter: $G$, rot: 0deg, u: none, name: none) = {
   import draw: *
 
   group(name: name, {
@@ -203,13 +165,17 @@
     anchor("l", (-0.4, 0))
     anchor("r", (0.4, 0))
 
-    if tense != none {
-      tension("l", "r", (0, -0.6), tense)
+    if u != none {
+      tension("l", "r", (0, -0.6), u)
     }
   })
 }
 
-#let source-ideale(pos, rot: 0deg, label: none, tense: none, name: none) = {
+#let generateur = elem-letter.with(letter: $G$)
+#let voltmetre = elem-letter.with(letter: $V$)
+#let amperemetre = elem-letter.with(letter: $A$)
+
+#let source-ideale(pos, rot: 0deg, label: none, u: none, name: none) = {
   import draw: *
 
   group(name: name, {
@@ -225,13 +191,13 @@
     if label != none {
       tension("l", "r", (0, 0.6), label, size: 0.4)
     }
-    if tense != none {
-      tension("l", "r", (0, -0.6), tense)
+    if u != none {
+      tension("l", "r", (0, -0.6), u)
     }
   })
 }
 
-#let source-ideale-courant(pos, rot: 0deg, label: none, tense: none, name: none) = {
+#let source-ideale-courant(pos, rot: 0deg, label: none, u: none, name: none) = {
   import draw: *
 
   group(name: name, {
@@ -247,13 +213,13 @@
     if label != none {
       tension("l", "r", (0, 0.6), label, size: 0.4)
     }
-    if tense != none {
-      tension("l", "r", (0, -0.6), tense)
+    if u != none {
+      tension("l", "r", (0, -0.6), u)
     }
   })
 }
 
-#let bobine(pos, rot: 0deg, coils: 4, tense: none, name: none) = {
+#let bobine(pos, rot: 0deg, coils: 4, u: none, label: none, name: none) = {
   import draw: *
 
   group(name: name, {
@@ -263,8 +229,12 @@
     anchor("l", (-0.3*(coils/2+1), 0))
     anchor("r", (0.3*(coils/2+1), 0))
 
-    if tense != none {
-      tension("l", "r", (0, 0.5), tense)
+    if label != none {
+      content((0, 0.5), label)
+    }
+
+    if u != none {
+      tension("l", "r", (0, -0.5), u)
     }
 
     line("l", (-0.3*coils/2, 0))
@@ -279,7 +249,7 @@
   })
 }
 
-#let condensateur(pos, rot: 0deg, tense: none, name: none) = {
+#let condensateur(pos, rot: 0deg, u: none, name: none) = {
   import draw: *
   group(name: name, {
     translate(pos)
@@ -296,8 +266,8 @@
     anchor("l", (3*minus, 0))
     anchor("r", (3*plus, 0))
 
-    if (tense != none) {
-      tension("l", "r", (0, 0.7), tense)
+    if (u != none) {
+      tension("l", "r", (0, 0.7), u)
     }
   })
 }
@@ -314,7 +284,7 @@
 ///   apply(ground, rot: 45deg)
 /// )
 /// ```
-#let derivation(pos, rot: 0deg, width: 5, inset: 1, i: none, tense: none, name: none, ..elems) = {
+#let derivation(pos, rot: 0deg, left: none, right: none, width: 5, inset: 1, i: none, u: none, name: none, ..elems) = {
   import draw: *
 
   let elems = elems.pos()
@@ -326,14 +296,14 @@
     anchor("l", (-width/2, 0))
     anchor("r", (width/2, 0))
 
-    node((-width/2 + 1, 0), id: "ln", round: true)
-    node((width/2 - 1, 0), id: "rn", round: true) 
+    node((-width/2 + 1, 0), id: "ln", name: left, round: true)
+    node((width/2 - 1, 0), id: "rn", name: right, round: true) 
 
     fil("l", "ln", i: i)
     fil("r", "rn", i: i)
 
-    if tense != none {
-      tension("l", "r", (0, inset * (elems.len())/2), tense, size: width/4)
+    if u != none {
+      tension("l", "r", (0, inset * (elems.len())/2), u, size: width/4)
     }
 
     for (i, elem) in elems.enumerate() {
@@ -353,29 +323,50 @@
   })
 }
 
-#let serie(pos, rot: 0deg, tense: none, i: none, name: none, ..elems) = {
+#let serie(pos, rot: 0deg, inset: 1.8, left: none, right: none, u: none, i: none, name: none, ..elems) = {
   import draw: *
 
   let elems = elems.pos()
+
+  let get_name(i) = {
+    let name = elems.at(i).at("named").at("name", default: none)
+    if (name == none) {
+      return "__tmpname" + str(i)
+    } else {
+      return name
+    }
+  }
+
   group(name: name, {
     translate(pos)
     rotate(rot)
 
-    node()
+    node((-inset * (elems.len()+1)/2, 0), id: "l", name: left)
+    node((inset * (elems.len()+1)/2, 0), id: "r", name: right)
 
     for (i, elem) in elems.enumerate() {
       let (f, pos: positional, named) = elem
 
-      if (named.at("name", default: none) == none) {
-        named.insert("name", "__tmpname")
-      }
-      
-      let name = named.at("name")
+      named.insert("name", get_name(i))
+      f((-inset * ((elems.len() + 1)/2 - i - 1), 0), ..positional, ..named)
+    }
 
-      f((0, 0), ..positional, ..named)
+    if elems.len() > 0 {
+      fil("l", get_name(0) + ".l", i: i)
+      fil(get_name(elems.len()-1) + ".r", "r", i: i)
+    } else {
+      fil("l", "r", i: i)
+    }
 
-      fil(name + ".l", "ln")
-      fil(name + ".r", "rn")
+    for i in range(1, elems.len()) {
+      let a = get_name(i - 1)
+      let b = get_name(i)
+
+      fil(a + ".r", b + ".l")
+    }
+
+    if u != none {
+      tension("l", "r", (0, -1.2), u, size: inset*(elems.len()-1))
     }
   })
 }
