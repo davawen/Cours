@@ -218,13 +218,241 @@ Donc $cal(P)_"reçue" > 0$ en convention récepteur.
 
 == Bobine d'inductance $L$
 
-#todo[Dessine la bobine fdp]
+#figcan({
+  bobine((0, 0), tense: tenserl($u$))
+})
 
 On a la relation:
 $ u = L (dif i)/(dif t) $
 
 La bobine est un fil enroulé autour d'un truc. Le fil possède très probablement une résistance.
-
 La majorité du temps, on représentera une bobine par une inductance ET une résistance.
-
 On ne peut pas exclure un comportement de type condensateur dans une bobine.
+
+=== Association en série
+
+Plusieurs bobines:
+#figcan({})
+
+$ u &= u_1 + u_2 + u_3 \
+&= L_1 (dif i)/(dif t) + L_2 (dif i)/(dif t) + L_3 (dif i)/(dif t) \
+&= (L_1 + L_2 + L_3) (dif i)/(dif t)
+$
+
+Les inductances s'ajoutent en série.
+$ L = sum_k L_k $
+
+=== Association en parallèle
+#figcan({
+  derivation((0, 0), 
+    apply(bobine),
+    apply(bobine)
+  )
+})
+
+$ i = i_1 + i_2 \
+<=> (dif i)/(dif t) = (dif i_1)/(dif t) + (dif i_2)/(dif t) \
+(dif i)/(dif t) = u/L_1 + u/L_2 \
+= underbrace((1/L_1 + 1/L_2), "1/L_eq")u 
+$
+
+L'inverse des inductances s'ajoutent en parallèle:
+$ 1/L_"eq" = sum_k 1/L_k $
+
+=== Puissance
+
+On a:
+$ cal(P)_"reçue"(t) = i(t) u(t) $
+
+Or,
+$ u(t) = L (dif i)/(dif t) $
+
+D'où:
+$ cal(P)_"reçue"(t) = i(t) L (dif i(t))/(dif t) \
+= L i(t) (dif i(t))/(dif t) \
+= (dif)/(dif t)(1/2 L dot i^2(t))
+$
+
+Or, on a aussi que la puissance est l'énergie au cours du temps:
+$E = cal(P) dot T$ pour une puissance constante, et pour une puissance variable:
+$ E(t) = integral_0^t cal(P)(x)dif x \
+= integral_0^t (dif)/(dif x) (1/2 L dot i^2(x)) dif x \
+= 1/2 L dot i^2 (t)
+$
+
+Intuition: si l'intensité augmente, la bobine est réceptrice. Si l'intensité diminue, la bobine est génératrice. Elle lisse les changement d'intensité dans le circuit.
+
+On a l'inductance définie en Henry, $H = V dot A^-1 dot s$
+
+== Condensateur de capacité $C$
+
+Schéma:
+
+#figcan({
+  draw.scale(1)
+  condensateur((0, 0), tense: tenserl($u$), name: "c")
+
+  fil((-1, 0), "c.l", "c.r", (1, 0), i: $i$)
+
+  draw.content((-0.4, -0.6), $q$)
+  draw.content((0.3, -0.6), $-q$)
+})
+
+Un condensateur est composé de deux plaques conductrices séparée par un matériau di-électrique (isolant).
+
+En tirant de la charge d'un coté du condensateur, elle est accumulée de l'autre coté.
+
+On a:
+$ q = C dot u $
+
+Avec $q$ la charge du condensateur, $C$ la capacité en farads ($F$) et $u$ la tension aux bornes.
+
+(Donc: $u = q/C$)
+
+Pour connaître l'intensité d'un capaciteur, on repart de la définition de l'intensité:
+$ i = (dif q)/(dif t) = dif / (dif t) (C dot u) = C (dif u)/(dif t) $
+
+
+=== Association en série:
+
+#figcan({
+
+})
+
+On a:
+$ u = u_1 + u_2 \
+(dif u)/(dif t) = (dif u_1)/(dif t) + (dif u_2)/(dif t) \
+= i/C_1 + i/C_2 \
+= (1 / C_1 + 1/C_2)i
+$
+
+En série, la somme des capacité s'additionnent
+
+=== Association en parallèle:
+
+#figcan({
+  derivation((0, 0), inset: 1.4, i: $i$, 
+    apply(condensateur),
+    apply(condensateur),
+    apply(condensateur),
+  )
+})
+
+$ i = i_1 + i_2 + i_3 \
+= C_1 (dif u)/(dif t) + C_2 (dif u)/(dif t) + C_3 (dif u)/(dif t) \
+= (C_1 + C_2 + C_3)(dif u)/(dif t)
+$
+
+En parallèle, les capacité s'ajoutent:
+$ C_"eq" = sum_k C_k $
+
+#caution[Les règles d'ajout des tensions/intensités sont inversées entre les capaciteurs et les autres dipôle]
+
+=== Puissance
+
+On a:
+$ cal(P)_"reçue"(t) = i(t) u(t) \
+cal(P)_"reçue"(t) = u(t) C (dif u)/(dif t) \
+cal(P)_"reçue"(t) = (dif)/(dif t)(1/2 C dot u(t)^2)
+$
+
+D'où:
+$ E_c (t) = 1/2 C dot u(t)^2 $
+
+Si l'énergie augmente, on la stocke, et on peut la restituer.
+
+= Dipoles linéaires actifs
+
+== Source idéale de tension
+
+Rappel: les dipoles linéaires actifs ont une caractéristique qui ne passe pas par l'origine.
+
+Situation la plus simple: la caractéristique est une droite.
+
+Si cette droite est horizontale, la tension aux bornes du dipôle sera toujours la même.
+On nomme $E$ cette tension.
+On appelle ce genre de dipôle une *source idéale de tension*, de symbole:
+
+#figcan({
+  source-ideale((0, 0), name: "s", label: tenselr($E$), tense: tenserl($u$))
+  fil((-1, 0), "s.l", "s.r", (1, 0), i: $i$)
+})
+
+On se place le plus souvent en convention générateur, mais on peut ne peut le faire:
+#caution[Faire attention au signe!!]
+
+== Hors programme: source idéale de courant
+
+On nomme une source idéale de courant une source d'on l'intensité est la même peut-importe la tension.
+
+Sa caractéristique (avec l'intensité en abscisse) est une droite verticale. On nomme $I_0$ son intensité.
+
+#figcan({
+  source-ideale-courant((0, 0), name: "s", tense: tenserl($u$))
+  fil((-1, 0), "s.l", "s.r", (1, 0), i: $I_0$)
+})
+
+Il existe une combinaison des deux, avec une caractéristique "carré" (de tension constante jusqu'a une certaine intensité, à partir de laquelle l'intensité devient constante).
+
+== Source réelle = modèle de Thévenin
+
+La caractéristique d'une source réelle est une droite qui n'est pas horizontale, pas verticale, et qui ne passe pas par l'origine.
+
+Cette droite a donc une pente, notée $-R$, elle intersecte l'axe des ordonnées en $E$, la tension quand l'intensité est nulle, et elle intersecte l'axe des abscisses en $I_0$, l'intensité quand la tension est nulle.
+
+On a donc:
+$ u = E - R dot i $
+
+Par homogénéité, $E$ et $R dot i$ sont en Volts, donc on peut poser les tensions $u_1$ et $u_2$ avec:
+$ u = u_1 + u_2 $
+Avec $u_1 = E$ et $u_2 = -R dot i$
+
+On peut représenter un dipôle de tension constante $u_1$ par une source idéale de courant de tension $E$, et un dipôle de tension $-R dot i$ avec un résistor de résistance $R$ en convention générateur:
+
+#figcan({
+  //serie()
+
+  source-ideale((0, 0), label: tenselr($E$), tense: tenselr($u_1$), name: "s")
+  resistlr((2, 0), label: $R$, tense: tenselr($u_2$), name: "r")
+
+  fil((-1, 0), "s.l", "s.r", "r.l", "r.r", (4, 0), i: $i$)
+  tension((-1, 0), (4, 0), (0, -1.3), tenselr($u$), size: 2)
+})
+
+Le modèle de Thevenin est donc caractérisé par:
+- La tension à vide de force électromotrice $E$
+- La résistance interne $R$
+
+(D'où le fait qu'une source idéale de tension n'existe pas dans la vrai vie: pas de résistance nulle)
+
+=== Modèle de Norton (hors programme)
+
+On refait la même chose avec une source idéale de courant:
+
+On a $I_0$ l'intensité quand la tension est nulle, et $E$ la tension quand l'intensite est nulle.
+
+Sa caractéristique (d'axe $u$) est une droite dont la pente est $-1/R$
+
+On peut poser:
+$ R dot i &= E - u \
+<=> i &= E/R - 1/R u $
+
+Par homogénéité, $i = i_1 + i_2$ avec:
+- $i_1 = E/R = I_0$ (modélisable par une source idéale de courant d'intensité $I_0$)
+- $i_2 = -1/R$ (modélisable par un résistor de résistance $R$)
+
+On a:
+#figcan({
+  derivation((0, 0), inset: 2.5, i: $i$,
+    apply(source-ideale-courant, label: tenselr($I_0 = E/R$)),
+    apply(resistlr, label: $R$)
+  )
+
+  tension((-1, 0), (1, 0), (0, 0.001), tenselr($u$))
+})
+
+On peut caractériser le modèle de Norton par:
+- Le courant de court-circuit $I_0 = E/R$
+- La résistance interne $R$
+
+On peut basculer du modèle de Norton vers le modèle de thévenin (avec le terme $E/R$).
