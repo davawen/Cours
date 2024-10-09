@@ -52,7 +52,7 @@
     }
 
     if tense != none {
-      tension("l", "r", (0, 0.7), tense)
+      tension("l", "r", (0, -0.6), tense)
     }
   })
 }
@@ -190,6 +190,118 @@
   })
 }
 
+#let elem-letter(pos, letter, rot: 0deg, tense: none, name: none) = {
+  import draw: *
+
+  group(name: name, {
+    translate(pos)
+    rotate(rot)
+
+    circle((0, 0), radius: 0.4)
+    content((0, 0), letter)
+
+    anchor("l", (-0.4, 0))
+    anchor("r", (0.4, 0))
+
+    if tense != none {
+      tension("l", "r", (0, -0.6), tense)
+    }
+  })
+}
+
+#let source-ideale(pos, rot: 0deg, label: none, tense: none, name: none) = {
+  import draw: *
+
+  group(name: name, {
+    translate(pos)
+    rotate(rot)
+
+    circle((0, 0), radius: 0.4)
+
+    anchor("l", (-0.4, 0))
+    anchor("r", (0.4, 0))
+
+    line("l", "r")
+    if label != none {
+      tension("l", "r", (0, 0.6), label, size: 0.4)
+    }
+    if tense != none {
+      tension("l", "r", (0, -0.6), tense)
+    }
+  })
+}
+
+#let source-ideale-courant(pos, rot: 0deg, label: none, tense: none, name: none) = {
+  import draw: *
+
+  group(name: name, {
+    translate(pos)
+    rotate(rot)
+
+    circle((0, 0), radius: 0.4)
+
+    anchor("l", (-0.4, 0))
+    anchor("r", (0.4, 0))
+
+    line((0, 0.4), (0, -0.4))
+    if label != none {
+      tension("l", "r", (0, 0.6), label, size: 0.4)
+    }
+    if tense != none {
+      tension("l", "r", (0, -0.6), tense)
+    }
+  })
+}
+
+#let bobine(pos, rot: 0deg, coils: 4, tense: none, name: none) = {
+  import draw: *
+
+  group(name: name, {
+    translate(pos)
+    rotate(rot)
+
+    anchor("l", (-0.3*(coils/2+1), 0))
+    anchor("r", (0.3*(coils/2+1), 0))
+
+    if tense != none {
+      tension("l", "r", (0, 0.5), tense)
+    }
+
+    line("l", (-0.3*coils/2, 0))
+    line("r", (0.3*coils/2, 0))
+
+    translate((-0.3*(coils/2) + 0.3, 0))
+
+    for i in range(coils) {
+      arc((0, 0), start: 0deg, stop: 180deg, radius: 0.15)
+      translate((0.3, 0))
+    }
+  })
+}
+
+#let condensateur(pos, rot: 0deg, tense: none, name: none) = {
+  import draw: *
+  group(name: name, {
+    translate(pos)
+    rotate(rot)
+
+    let (plus, minus) = (0.1, -0.1)
+
+    line((minus, -0.5), (minus, 0.5))
+    line((plus, -0.5), (plus, 0.5))
+
+    line((minus, 0), (3*minus, 0))
+    line((plus, 0), (3*plus, 0))
+
+    anchor("l", (3*minus, 0))
+    anchor("r", (3*plus, 0))
+
+    if (tense != none) {
+      tension("l", "r", (0, 0.7), tense)
+    }
+  })
+}
+
 #let apply(f, ..args) = {
   (f: f, pos: args.pos(), named: args.named())
 }
@@ -245,4 +357,25 @@
   import draw: *
 
   let elems = elems.pos()
+  group(name: name, {
+    translate(pos)
+    rotate(rot)
+
+    node()
+
+    for (i, elem) in elems.enumerate() {
+      let (f, pos: positional, named) = elem
+
+      if (named.at("name", default: none) == none) {
+        named.insert("name", "__tmpname")
+      }
+      
+      let name = named.at("name")
+
+      f((0, 0), ..positional, ..named)
+
+      fil(name + ".l", "ln")
+      fil(name + ".r", "rn")
+    }
+  })
 }
