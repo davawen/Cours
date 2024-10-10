@@ -55,3 +55,5 @@
 #let caution = infobox(symbol: $excl.double$, info_text: "Caution:", color: red)
 #let warn = infobox(symbol: $minus.triangle$, info_text: "Warn:", color: orange)
 #let todo = infobox(symbol: $supset.double$, info_text: text(fill: teal)[TODO:], color: teal)
+
+// Sir Lanceléthanol le best <3 -U
