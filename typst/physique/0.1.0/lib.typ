@@ -58,3 +58,5 @@
 #let hp = infobox(symbol: $alpha$, color: yellow, info_text: text(fill: yellow)[
   Hors-programme:
 ])
+
+// Sir Lanceléthanol le best <3 -U
