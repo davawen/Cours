@@ -55,3 +55,6 @@
 #let caution = infobox(symbol: $excl.double$, info_text: "Caution:", color: red)
 #let warn = infobox(symbol: $minus.triangle$, info_text: "Warn:", color: orange)
 #let todo = infobox(symbol: $supset.double$, info_text: text(fill: teal)[TODO:], color: teal)
+#let hp = infobox(symbol: $alpha$, color: yellow, info_text: text(fill: yellow)[
+  Hors-programme:
+])
