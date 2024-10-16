@@ -428,6 +428,29 @@ $
 
 Donc on calcule $i_3$:
 
-
+#figcan({
+	carre((0, 0),
+		branch(),
+		apply(resistor, label: $R$),
+		(i: $i_1$),
+		branch(
+			apply(resistor, label: $2R$),
+			apply(resistor, label: $2R$)
+		),
+		apply(resistor, label: $3R$),
+		(i: $i_2$),
+		branch(top: ""),
+		(i: $I_3$),
+		apply(resistor, label: $R$),
+		branch(
+			(inset: 1),
+			apply(derivation, inset: 1.2, width: 4,
+				apply(resistor, label: $2R$),
+				apply(resistor, label: $R$)
+			),
+			(inset: 1.7)
+		)
+	)
+})
 
 

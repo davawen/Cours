@@ -1,3 +1,4 @@
+#import "@preview/xarrow:0.3.0"
 #import "@preview/cetz:0.2.2"
 #import cetz: draw, canvas, vector, plot
 

@@ -78,7 +78,7 @@
 				line((a, "-|", b), b)
 			}
 			if intensity != none {
-				mark("__first.50%", (rel: (0.2, 0), to: "__first.51%"), symbol: ">", fill: black)
+				mark("__first.50%", ("__first.50%", 0.2, "__first.51%"), symbol: ">", fill: black)
 				content((rel: (0, 0.8em), to: "__first.50%"), intensity)
 			}
 		}
@@ -412,6 +412,21 @@
 		}
 	}
 
+	let draw-connections(connections) = {
+		for (a, b) in connections.chunks(2) {
+			if type(a) == dictionary {
+				let (co, i, rev) = a
+				if rev == none {
+					fil(co, b, i: i)
+				} else {
+					fil(b, co, i: i)
+				}
+			} else {
+				fil(a, b)
+			}
+		}
+	}
+
 	group(name: name, {
 		set-origin(pos)
 		rotate(rot)
@@ -426,8 +441,16 @@
 				if type(elem.branch) != array {
 					elem.branch = (elem.branch,)
 				}
+
+				let height = 0
+				for elem in elem.branch {
+					if "inset" in elem {
+						height = height + elem.inset
+					} else {
+						height = height + inset
+					}
+				}
 					
-				let height = elem.branch.len()*inset
 				if height > max-height {
 					max-height = height
 				}
@@ -439,26 +462,39 @@
 
 		for (i, elem) in elems.enumerate() {
 			if "branch" in elem { // on part en dérivation
-				anchor("__t", (offset, 0))
+				let branch-name = "__t" + str(i)
+
+				anchor(branch-name, (offset, 0))
 				anchor("__d", (offset, -max-height))
 				if "top" in elem {
-					node("__t", name: elem.top, round: true)
+					node(branch-name, name: elem.top, round: true)
 				}
 				if "down" in elem {
 					node("__d", name: elem.down, round: true)
 				}
 				if "u" in elem {
-					tension("__t", "__d", (-0.6, 0), elem.u, size: max-height/3.0)
+					tension(branch-name, "__d", (-0.6, 0), elem.u, size: max-height/3.0)
 				}
+
+				// on ajoute le haut de la branche en connection
+				connections.push(branch-name)
+				connections.push(branch-name)
 
 				if type(elem.branch) != array {
 					elem.branch = (elem.branch,)
 				}
-
-				let connections = ("__t",)
+				
+				// on définie une nouvelle liste de connections
+				// pour la branche
+				let connections = (branch-name,)
 
 				let branch-offset = -inset/2
 				for (i, elem) in elem.branch.enumerate() {
+					if "inset" in elem {
+						branch-offset = branch-offset - elem.inset
+						continue
+					}
+
 					let (f, pos: positional, named) = elem
 
 					name = get_name(named, i)
@@ -472,9 +508,7 @@
 				}
 
 				connections.push("__d")
-				for (a, b) in connections.chunks(2) {
-					fil(a, b)
-				}
+				draw-connections(connections)
 
 				if branch-offset > max-height {
 					max-height = branch-offset
@@ -492,6 +526,11 @@
 				f((ret-offset, max-height), ..positional, ..named)
 
 				ret-offset = ret-offset + inset
+			} else if "i" in elem {
+				let rev = elem.at("rev", default: none)
+
+				let last = connections.last()
+				connections.at(-1) = (co: last, i: elem.i, rev: rev)
 			} else { // buisness as usual
 				let (f, pos: positional, named) = elem
 
@@ -506,14 +545,11 @@
 		}
 
 		connections.push((offset - inset, 0))
-		for (a, b) in connections.chunks(2) {
-			fil(a, b)
-		}
-
 		ret-connections.push((offset - inset, -max-height))
-		for (a, b) in ret-connections.chunks(2) {
-			fil(a, b)
-		}
+
+		draw-connections(connections)
+		draw-connections(ret-connections)
+
 
 		// if elems.len() > 0 {
 		// 	fil("l", get_name(0) + ".l", i: i)
