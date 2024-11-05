@@ -30,6 +30,7 @@ Dans un système afocal, l'infini est conjugué à l'infini:
 
 $ oo -->^(lc_1) F'_1 -->^(lc_2) ... --> F'_n -->^(lc_n) oo  $
 
+
 Dans le cas particulier de deux lentilles, on a:
 $ oo -->^(lc_1) F'_1 = F'_2 -->^(lc_2) oo $
 
@@ -147,3 +148,144 @@ Le cristallin n'est pas parfaitement sphérique, la lentille n'est pas symmétri
 
 === Presbytie
 Le cristallin est moins souple, on peut moins accomoder.
+
+= Loupe
+
+#figcan({
+	import draw: *
+	line((-4, 0), (4, 0), mark: (end: "straight"))
+	point((0, 0), value: $O$)
+
+	line((0, 2), (0, -2), mark: (end: "straight", start: "straight"))
+
+	point((-2, 0), value: $A$, anchor: "south-east")
+	point((-2, 1), name: "B", value: $B$, anchor: "south-east")
+	line((-2, 0), (-2, 1))
+
+	cetz.angle.angle((3.5, 0), (0, 4), (0, -4), )
+	point((3.5, 0), value: $O'$)
+
+	set-style(stroke: red)
+	line("B", (0, 1))
+	line((0, 1), (4, -1))
+	line("B", (4, -2))
+
+	set-style(stroke: blue)
+	line((3.5, 0), "B")
+})
+
+On veut pouvoir observer $A B$ en étant au repos.
+Ainsi, il faut que la loupe conjugue $A B$ par l'infini.
+
+On place donc $A B$ au foyer objet $F$ de la lentille.
+
+On calcule le grossissement (qui n'est pas la même chose que le grandissement) par:
+$ G = alpha'/alpha $
+
+#def[$alpha$]: Angle sous lequel on voit l'objet $A B$ sans instrument \
+#def[$alpha'$]: Angle sous lequel on voit l'image $A' B'$
+
+Dans le triangle $O A B$ = $O F B$
+
+On se place dans les conditions de Gauss.
+
+Pour voir $ A B$ le plus grand possible:
+- En l'absence de loupe, on place $A B$ le plus près possible de l'œil, au PP:
+  $ ov(O' A) = -d_m $
+  $ alpha approx tan alpha = ov(A B)/ov(A O') = ov(A B)/d_m $
+- Avec une loupe:
+  $ alpha' approx tan alpha' = ov(A B)/ov(F O) = ov(A B)/f' $
+  $ G = alpha' / alpha = (ov(A B)/f')/(ov(A B)/d_m) = d_m / f' $
+
+Alternativement au grossissement, on peut utiliser le concept de "puissance":
+$ P = alpha' / ov(A B) $
+Ici:
+$ P = 1/f' $
+
+= Lunette astronomique - Instrument pour voir infiniment grand
+
+On a un objet à l'infini (une planète, par exemple).
+On veut que l'œil emmètrope puisse regarder à travers la lunette sans accomodation.
+On a donc:
+$ oo -->^cal(L_1) F'_1 = F_2 -->^cal(L_2) oo $
+
+On est face à un système afocal.
+
+Le foyer image de l'objectif est confondu avec le foyer objet de l'oculaire. \
+#def[Encombrement]: Taille de la lunette le long de l'axe optique.
+
+On a l'encombrement $ov(O_1 O_2)$ avec:
+$ ov(O_1 O_2) = ov(O_1 F_1') + ov(F_2 O_2) = f'_1 + f'_2 $
+
+On mesure le grossissement de même:
+$ G = alpha'/alpha $
+
+On utilise le foyer secondaire $F$:
+
+Dans le triangle $O_1 F_1' F$:
+$ alpha approx tan alpha = ov(F'_1 F)/ov(O_1 F'_1) = ov(F'_1 F)/f'_1 $
+
+Dans le triangle $O_2 F_1' F = O_2 F_2 F$:
+$ alpha' approx tan alpha' = ov(F_2 F)/ov(O_2 F_2) = ov(F'_1 F)/(-f'_2) $
+
+On a:
+$ G = alpha' / alpha = (ov(F'_1 F)/(-f'_2))/(ov(F'_1 F)/f'_1) = -f'_1/f'_2 $
+
+Pour qu'on puisse *voir* quelque chose, avec:
+$ oo -->^cal(L_1) F'_1 -->^cal(L_2) A $
+Il suffit que que $A$ soit situé entre le PP et le PR.
+On a deux positions extrêmes:
+- A au PR: $A = oo$, $F'_1 = F_2$
+- A au PP: $A = d_m$,
+  On a $F'_1 -->^cal(L_2) F_2 $
+
+= Aberrations optiques
+
+== Aberrations chromatiques
+
+L'indice de réfraction de la lentille change selon la longueur d'onde des rayons qui passent au travers (loi de Cauchy).
+Ainsi, des rayons de différentes couleurs auront différents foyers, ce qui amène un "étalage" des couleurs sur l'écran:
+
+#figcan({
+	import draw: *
+
+	arrow((-4, 0), (4, 0))
+	line((0, 2), (0, -2), mark: (start: "straight", end: "straight"))
+
+	line((-4, 1), (0, 1), (4, -1.5), stroke: (paint: yellow, dash: "dashed"))
+	line((-4, 1), (0, 1), (4, -1), stroke: (paint: red, dash: "dashed"))
+	line((-4, -1), (0, -1), (4, 1), stroke: (paint: red, dash: "dashed"))
+
+	line((-4, -1), (0, -1), (4, 1.5), stroke: (paint: yellow, dash: "dashed"))
+	line((-4, 1), (0, 1), (4, -1), stroke: (paint: red, dash: "dashed"))
+	line((-4, 1), (0, 1), (4, -2), stroke: (paint: blue, dash: "dotted"))
+	line((-4, -1), (0, -1), (4, 2), stroke: (paint: blue, dash: "dotted"))
+
+	line((1.3, 1.5), (1.3, -1.5))
+	circle((1.1, -2.2), radius: 0.3, stroke: none, fill: red)
+	circle((1.1, -2.2), radius: 0.2, stroke: none, fill: yellow)
+	circle((1.1, -2.2), radius: 0.1, stroke: none, fill: blue)
+
+	line((2, 1.5), (2, -1.5))
+	circle((2.2, -2.2), radius: 0.4, stroke: none, fill: blue)
+	circle((2.2, -2.2), radius: 0.25, stroke: none, fill: yellow)
+	circle((2.2, -2.2), radius: 0.1, stroke: none, fill: red)
+
+	point((1.3, 0), color: blue)
+	point((1.6, 0), color: yellow)
+	point((2, 0), color: red)
+})
+
+Pour réduire les aberrations chromatiques, on peut alterner lentille convergente et lentille divergente, pour essayer de "recentrer" les foyers de couleur différente.
+
+== Aberrations géométriques
+
+=== Aberration sphérique
+
+Lorsque les rayons n'arrivent pas dans les conditions de Gauss, l'astigmatisme n'est pas vérifié.
+
+On peut placer un diaphragme sur la lentille pour limiter l'angle d'incidence des rayons incidents.
+
+=== Distortion
+
+
