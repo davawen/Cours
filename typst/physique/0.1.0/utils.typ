@@ -6,7 +6,7 @@
   figure(caption: caption, canvas(body))
 }
 
-#let point(pos, value: [], anchor: "south", color: black, padding: 5pt, name: none) = {
+#let point(pos, value: [], anchor: "south-east", color: black, padding: 5pt, name: none) = {
   import draw: circle, content
   circle(pos, radius: 1.5pt, stroke: color, fill: color, name: name)
   content(pos, value, anchor: anchor, padding: padding)
@@ -22,6 +22,9 @@
   line(p1, p2, mark: (end: "straight"), ..params)
 }
 
+/// Draws a line going through the two points
+/// The line stops at the edges of the box, degined by the top-left and the bot-right corner 
+/// If the line is outside the box or grazes, this may not compile
 #let line_through(a, b, box: (none, none), name: none, ..style) = {
   import draw: *
 
@@ -46,7 +49,8 @@
         })
       })
 
-      line("i.0", "i.1", ..style)
+      line("i.0", "i.1", name: "__tmpLine", ..style)
+		copy-anchors("__tmpLine")
     })
   })
 }

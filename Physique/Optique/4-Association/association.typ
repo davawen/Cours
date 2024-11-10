@@ -6,6 +6,8 @@
 
 #titleb[Association de lentilles \ Instruments d'optique]
 
+#outline()
+
 #let lc = math.cal($L$)
 
 = Association de lentilles
@@ -102,7 +104,7 @@ On parle aussi de résolution angulaire. Un œil normal est capable de distingue
 #figcan({
 	import draw: *
 
-	line((-2, 0), (2, 0), mark: (end: "straight"))
+	arrow((-2, 0), (2, 0))
 	line((-2, 0.5), (2, 0))
 })
 
@@ -153,10 +155,10 @@ Le cristallin est moins souple, on peut moins accomoder.
 
 #figcan({
 	import draw: *
-	line((-4, 0), (4, 0), mark: (end: "straight"))
+	arrow((-4, 0), (4, 0))
 	point((0, 0), value: $O$)
 
-	line((0, 2), (0, -2), mark: (end: "straight", start: "straight"))
+	double_arrow((0, 2), (0, -2))
 
 	point((-2, 0), value: $A$, anchor: "south-east")
 	point((-2, 1), name: "B", value: $B$, anchor: "south-east")
@@ -204,6 +206,35 @@ $ P = 1/f' $
 
 = Lunette astronomique - Instrument pour voir infiniment grand
 
+#figcan({
+	arrow((-4, 0), (4, 0))
+	point((-2, 0), value: $O_1$)
+	double_arrow((-2, -2), (-2, 2))
+
+	point((1, 0), value: $O_2$, anchor: "south-west")
+	double_arrow((1, -2), (1, 2))
+
+	point((0, 0), value: $F'_1$)
+	point((0, 0), value: $F_2$, anchor: "south-west")
+
+	import draw: *
+
+	line((0, -2), (0, 2), stroke: (dash: "dotted"))
+
+	set-style(stroke: red)
+	line((-4, 0.5), (-2, 0), (1, -0.75))
+	line((-4, 2), (-2, 1.5), (1, -1.5))
+
+	cetz.angle.angle((-2, 0), (-4, 0), (-4, 0.5))
+
+	set-style(stroke: blue)
+	line((0, -3/6), (4, 1.5), stroke: (paint: blue, dash: "dotted"))
+	line((1, -0.75), (4, 0.75))
+	line((1, -1.5), (4, 0))
+
+	cetz.angle.angle((2.4, 0), (4, 0), (4, 0.75))
+})
+
 On a un objet à l'infini (une planète, par exemple).
 On veut que l'œil emmètrope puisse regarder à travers la lunette sans accomodation.
 On a donc:
@@ -250,7 +281,7 @@ Ainsi, des rayons de différentes couleurs auront différents foyers, ce qui am�
 	import draw: *
 
 	arrow((-4, 0), (4, 0))
-	line((0, 2), (0, -2), mark: (start: "straight", end: "straight"))
+	double_arrow((0, 2), (0, -2))
 
 	line((-4, 1), (0, 1), (4, -1.5), stroke: (paint: yellow, dash: "dashed"))
 	line((-4, 1), (0, 1), (4, -1), stroke: (paint: red, dash: "dashed"))
@@ -287,5 +318,3 @@ Lorsque les rayons n'arrivent pas dans les conditions de Gauss, l'astigmatisme n
 On peut placer un diaphragme sur la lentille pour limiter l'angle d'incidence des rayons incidents.
 
 === Distortion
-
-

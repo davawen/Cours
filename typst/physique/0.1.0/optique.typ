@@ -195,3 +195,10 @@
   content("D'", $D'$)
 }))
 
+#let divergente(x, height: 2) = {
+	import draw: *
+	line((x, height), (x, -height), name: "lentil")
+
+	mark("lentil.start", (rel: (0, -0.05)), symbol: "straight")
+	mark("lentil.end", (rel: (0, 0.05)), symbol: "straight")
+}
