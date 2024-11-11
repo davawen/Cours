@@ -189,26 +189,18 @@ On peut utiliser les ponts pour connaître la tension et l'intensité à n'impor
 == Lois de Kirchehhofhf
 
 Example de circuit:
+
 #figcan({
-  serie((0, 0), name: "D",
-    apply(resistor, label: $R_1$),
-    apply(node, name: "A", round: true),
-    apply(resistor, label: $R_2$)
-  )
+	carre((0, 0), 
+		branch(apply(source-ideale, u: tenserl($E_1$))),  
+		apply(resistor, label: $R_1$),
+		branch(top: "A", down: "B", apply(resistor)), 
+		apply(resistor, label: $R_2$), 
+		branch(apply(source-ideale, u: tenserl($E_2$)))
+	)
 
-  node((0, -3), name: "B", round: true)
-
-  resistor((0, -1.5), rot: -90deg, name: "d")
-
-  fil("D.A", "d.l")
-  fil("d.r", "B")
-  fil("D.l", "B", "D.r", "B", rev: 1)
-
-  source-ideale((-3.6, -1.5), rot: -90deg, u: tenserl($E_1$), name: "e1")
-  source-ideale((3.6, -1.5), rot: -90deg, u: tenserl($E_2$), name: "e2")
-
-   maille((-1.5, -1.5), 0.5, rev: true)
-  maille((1.5, -1.5), 0.5)
+   maille((3, -1), 0.5, rev: true)
+   maille((6, -1), 0.5)
 })
 
 On veut retrouver les intensites $i_1$, $i_2$, et $i_3$.

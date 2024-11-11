@@ -448,16 +448,3 @@ On peut caractériser le modèle de Norton par:
 - La résistance interne $R$
 
 On peut basculer du modèle de Norton vers le modèle de thévenin (avec le terme $E/R$).
-
-#figcan({
-  let s = seriex((0, 0), name: "S")(resistor)(bobine, coils: 5)(ground, rot: 145deg)
-  let s = s(node, name: "B", round: true)(turn: -90deg)(resistor)(resistor)
-  let s = s(turn: -90deg)(bobine)(condensateur)(condensateur)
-  let s = s(turn: -90deg)(resistor)(node, name: "A", round: true)
-  s(close: ())()
-
-  // let s = seriex("S.B")(resistor)
-  // let s = s(turn: -90deg)(resistor)(resistor)
-  // let s = s(turn: -90deg)(close: (2, 0))
-  // s()
-})
