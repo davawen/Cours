@@ -301,3 +301,125 @@
 		draw-connections(ret-connections)
 	})
 }
+
+= Carre
+
+Prend en argument une liste de composants appliqués.
+```typst
+carre2((0, 0), apply(resistor), apply(resistor))
+```
+
+De plus, elle peut prendre des dictionnaire de la forme suivante:
+- `(branch: <arguments de carre2...>, [u: tension])`
+- `(i: equation)`
+
+#let carre2(pos, rot: 0deg, name: none, layout: false, ..elems) = construct_component(pos, rot, name, layout, {
+	import draw: *
+
+	// let layout = 
+
+	let elems = elems.pos()
+
+	let width = 0
+	let height = 0
+
+	let pos = 0
+	let max-height = 0
+	let has-branch = false
+
+	let get_name(params_named, i) = {
+		let name = params_named.at("name", default: none)
+		if (name == none) {
+			return "__tmpname" + str(i)
+		} else {
+			return name
+		}
+	}
+	
+	let branch-hor-padding = 1
+	let branch-ver-padding = 1
+
+	// map les éléments du circuit vers leur représentation (comp, layout)
+	let elems = for (i, elem) in elems.enumerate() {
+		let out = if "branch" in elem { // branche du circuit
+			let u = elem.at("u", default: none)
+			let name = get_name((:), i)
+			let (comp, layout) = carre2((pos, 0), rot: -90deg, name: name, layout: true, ..elem.branch)
+			pos = pos + layout.height + branch-hor-padding*2
+			if layout.width + branch-ver-padding*2 > max-height {
+				max-height = layout.width + branch-ver-padding*2
+			}
+			has-branch = true
+
+			let comp = {
+				translate((branch-hor-padding, 0))
+				comp
+				translate((-branch-hor-padding, 0))
+			}
+
+			(comp: comp, layout: layout, name: name, type: "branch")
+		} else {
+			let name = none
+			let (comp, layout) = if "i" in elem { // intensite
+				name = get_name((:), i)
+				intensite((pos, 0), elem.i, name: name, layout: true)
+			} else {
+				let (f, pos: positional, named) = elem
+				name = get_name(named, i)
+				f((pos, 0), ..positional, ..named, name: name, layout: true)
+			}
+			pos = pos + layout.width + 0.6
+			if layout.height > max-height {
+				max-height = layout.height
+			}
+
+			let comp = {
+				translate((layout.width/2 + 0.3, 0))
+				comp
+				translate((-layout.width/2 - 0.3, 0))
+			}
+
+			(comp: comp, layout: layout, name: name, type: "comp")
+		}
+
+		(out,)
+	}
+
+	let comp = {
+		translate((-pos/2, -max-height/2)) // center carre
+
+		anchor("l", (0, 0))
+		anchor("r", (pos, 0))
+
+		let connections = ("l",)
+
+		let draw-connections(connections) = {
+			for (a, b) in connections.chunks(2) {
+				line(a, b)
+			}
+		}
+
+		for elem in elems {
+			if elem.type == "branch" {
+				connections.push((elem.name + ".l", "|-", (0, 0)))
+				connections.push((elem.name + ".l", "|-", (0, 0)))
+
+				translate((0, -max-height/2))
+				elem.comp
+				translate((0, max-height/2))
+
+				line(elem.name + ".l", (elem.name + ".l", "|-", (0, 0)))
+				line(elem.name + ".r", (elem.name + ".r", "|-", (0, -max-height)))
+			} else if elem.type == "comp" {
+				connections.push(elem.name + ".l")
+				connections.push(elem.name + ".r")
+				elem.comp
+			}
+		}
+
+		connections.push("r")
+		draw-connections(connections)
+	}
+
+	(comp: comp, layout: (width: pos, height: max-height))
+})

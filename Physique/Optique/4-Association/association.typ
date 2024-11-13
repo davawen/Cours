@@ -6,8 +6,6 @@
 
 #titleb[Association de lentilles \ Instruments d'optique]
 
-#outline()
-
 #let lc = math.cal($L$)
 
 = Association de lentilles
@@ -26,7 +24,7 @@ $ F'_1 -->^(lc_1) oo -->^(lc_2) ... $
 
 == Cas d'une système afocal
 
-Mis à part les deux cas particuliers qu'on va voir (système afocal et #todo[]), on ne va pas beaucoup parler d'association de lentilles
+Mis à part les deux cas particuliers qu'on va voir (système afocal et lentilles accolées), on ne va pas beaucoup parler d'association de lentilles.
 
 Dans un système afocal, l'infini est conjugué à l'infini:
 
@@ -160,27 +158,26 @@ Le cristallin est moins souple, on peut moins accomoder.
 
 	double_arrow((0, 2), (0, -2))
 
-	point((-2, 0), value: $A$, anchor: "south-east")
+	point((-2, 0), name: "A", value: $A$, anchor: "south-east")
 	point((-2, 1), name: "B", value: $B$, anchor: "south-east")
 	line((-2, 0), (-2, 1))
 
-	cetz.angle.angle((3.5, 0), (0, 4), (0, -4), )
 	point((3.5, 0), value: $O'$)
 
 	set-style(stroke: red)
 	line("B", (0, 1))
 	line((0, 1), (4, -1))
 	line("B", (4, -2))
+	cetz.angle.angle((0, 0), "A", "B", radius: 1, label: $alpha'$)
 
 	set-style(stroke: blue)
 	line((3.5, 0), "B")
+	cetz.angle.angle((3.5, 0), "A", "B", radius: 1, label: $alpha$)
 })
 
 On veut pouvoir observer $A B$ en étant au repos.
-Ainsi, il faut que la loupe conjugue $A B$ par l'infini.
-
-On place donc $A B$ au foyer objet $F$ de la lentille.
-
+Ainsi, il faut que la loupe conjugue $A B$ par l'infini. \
+On place donc $A B$ au foyer objet $F$ de la lentille. \
 On calcule le grossissement (qui n'est pas la même chose que le grandissement) par:
 $ G = alpha'/alpha $
 

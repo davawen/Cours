@@ -81,20 +81,6 @@ Il est défini par un dictionnaire de la forme:
 	(comp: comp, layout: (width: size, height: size/2))
 })
 
-#let ground(pos, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
-	import draw: *
-	let comp = {
-		anchor("l", (0, 0))
-		anchor("r", (0, 0))
-
-		line((0, 0), (0, -0.5))
-		line((-0.3, -0.5), (0.3, -0.5))
-		line((-0.2, -0.6), (0.2, -0.6))
-		line((-0.1, -0.7), (0.1, -0.7))
-	}
-	(comp: comp, layout: (width: 0.6, height: 0.7))
-})
-
 #let node(pos, name: none, layout: false, offset: (-0.5em, 0.8em), id: none, round: false) = {
 	import draw: *
 	if id == none {
@@ -123,6 +109,32 @@ Il est défini par un dictionnaire de la forme:
 		comp
 	}
 }
+
+#let intensite(pos, intensity, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
+	import draw: *
+	let comp = {
+		anchor("l", (-0.2, 0))
+		anchor("r", (0.2, 0))
+		fil("l", "r")
+		mark("l", "r", symbol: ">", fill: black)
+		content((0, 0.8), intensity)
+	}
+	(comp: comp, layout: (width: 0.4, height: 0.8))
+})
+
+#let ground(pos, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
+	import draw: *
+	let comp = {
+		anchor("l", (0, 0))
+		anchor("r", (0, 0))
+
+		line((0, 0), (0, -0.5))
+		line((-0.3, -0.5), (0.3, -0.5))
+		line((-0.2, -0.6), (0.2, -0.6))
+		line((-0.1, -0.7), (0.1, -0.7))
+	}
+	(comp: comp, layout: (width: 0.6, height: 0.7))
+})
 
 #let pile(pos, rot: 0deg, name: none, layout: false, rev: false) = construct_component(pos, rot, name, layout, {
 	import draw: *
@@ -234,7 +246,7 @@ Il est défini par un dictionnaire de la forme:
 	(comp: comp, layout: (width: width, height: 0.2))
 })
 
-#let condensateur(pos, rot: 0deg, name: none, layout: false, u: none) = construct_component(pos, rot, name, layout, {
+#let condensateur(pos, rot: 0deg, name: none, layout: false, label: none, u: none) = construct_component(pos, rot, name, layout, {
 	import draw: *
 	let comp = {
 		let (plus, minus) = (0.1, -0.1)
@@ -247,6 +259,10 @@ Il est défini par un dictionnaire de la forme:
 
 		anchor("l", (3*minus, 0))
 		anchor("r", (3*plus, 0))
+
+		if label != none {
+			content((rel: (0.5em, -0.5em), to: (0, -0.5)), label)
+		}
 
 		if (u != none) {
 			tension("l", "r", (0, 0.7), u)

@@ -1,9 +1,47 @@
 #import "@preview/xarrow:0.3.0"
-#import "@preview/cetz:0.3.0"
-#import cetz: draw, canvas, vector, plot
+#import "@preview/cetz:0.3.1"
+#import "@preview/cetz-plot:0.1.0"
+#import cetz: draw, canvas, vector
 
 #let figcan(body, caption: none) = {
   figure(caption: caption, canvas(body))
+}
+
+#let plot(x, y: none, x-tick: auto, y-tick: auto, color: blue, ..fs) = {
+	import cetz-plot: plot
+	let (x-min, x-max) = x
+
+	let (y-min, y-max) = if y == none {
+		(auto, auto)
+	} else {
+		y
+	}
+
+	let style = if color == auto { (:) } else {
+		(stroke: color)
+	}
+
+	// let (y-min, y-max) = y
+	let fs = fs.pos()
+
+	let x-tick = if x-tick == auto {
+		(x-max - x-min)/5
+	} else {
+		x-tick
+	}
+
+	figcan({
+		plot.plot(axis-style: "school-book", size: (4, 4), x-min: x-min, x-max: x-max, y-min: y-min, y-max: y-max, x-tick-step: x-tick, y-tick-step: y-tick, {
+			for f in fs {
+				if type(f) == "array" {
+					let (domain, f) = f
+					plot.add(style: style, domain: domain, f)
+				} else {
+					plot.add(style: style, domain: (x-min, x-max), f)
+				}
+			}
+		})
+	})
 }
 
 #let point(pos, value: [], anchor: "south-east", color: black, padding: 5pt, name: none) = {
