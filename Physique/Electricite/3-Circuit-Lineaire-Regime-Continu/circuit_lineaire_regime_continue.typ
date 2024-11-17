@@ -194,13 +194,10 @@ Example de circuit:
 	carre((0, 0), 
 		branch(apply(source-ideale, u: tenserl($E_1$))),  
 		apply(resistor, label: $R_1$),
-		branch(top: "A", down: "B", apply(resistor)), 
+		branch(top: "A", bot: "B", apply(resistor)), 
 		apply(resistor, label: $R_2$), 
 		branch(apply(source-ideale, u: tenserl($E_2$)))
 	)
-
-   maille((3, -1), 0.5, rev: true)
-   maille((6, -1), 0.5)
 })
 
 On veut retrouver les intensites $i_1$, $i_2$, et $i_3$.
@@ -244,17 +241,17 @@ $
 
 #figcan({
 	carre((0, 0), 
-		(branch: (
+		branch(
 			apply(resistor, label: $R$),
 			apply(source-ideale, label: tenserl($E$))
-		)),
+		),
 		apply(resistor, label: $2R$),
-		(top: "B", down: "A", u: tenserl($u$),
-			branch: apply(resistor, label: $3R$)
+		branch(top: "B", down: "A", u: tenserl($u$),
+			apply(resistor, label: $3R$)
 		),
 		apply(resistor, label: $R$),
-		(branch: (apply(resistor, label: $3R$))),
-		(branch: (apply(resistor, label: $2R$))),
+		branch(apply(resistor, label: $3R$)),
+		branch(apply(resistor, label: $2R$)),
 	)
 })
 
@@ -296,7 +293,7 @@ Mettons qu'on veuille connaître la tension $v$ comme il suit:
 	carre((0, 0), 
 		branch(
 			apply(resistor, label: $R$),
-			apply(source-ideale, label: tenserl($E$))
+			apply(source-ideale, u: tenserl($E$))
 		),
 		apply(resistor, label: $2R$),
 		branch(top: "B", down: "A",
@@ -366,7 +363,6 @@ Ne pas tomber dans le "piège" des doubles ponts diviseur de tension.
   serie((0, 0),
     apply(source-ideale),
     apply(resistor, label: $R_1$),
-    apply(derivation,   )
   )
 })
 

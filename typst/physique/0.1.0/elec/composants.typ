@@ -75,7 +75,7 @@ Il est défini par un dictionnaire de la forme:
 		}
 
 		if u != none {
-			tension("l", "r", (0, -size/2 - 0.1), u)
+			tension("l", "r", (0, -size/2 - 0.1), size: size, u)
 		}
 	}
 	(comp: comp, layout: (width: size, height: size/2))
@@ -110,14 +110,18 @@ Il est défini par un dictionnaire de la forme:
 	}
 }
 
-#let intensite(pos, intensity, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
+#let intensite(pos, intensity, rot: 0deg, name: none, layout: false, rev: false) = construct_component(pos, rot, name, layout, {
 	import draw: *
 	let comp = {
 		anchor("l", (-0.2, 0))
 		anchor("r", (0.2, 0))
 		fil("l", "r")
-		mark("l", "r", symbol: ">", fill: black)
-		content((0, 0.8), intensity)
+		if not rev {
+			mark((0, 0), "r", symbol: ">", fill: black)
+		} else {
+			mark((0, 0), "l", symbol: ">", fill: black)
+		}
+		content((0, 0.3), intensity)
 	}
 	(comp: comp, layout: (width: 0.4, height: 0.8))
 })
@@ -261,12 +265,30 @@ Il est défini par un dictionnaire de la forme:
 		anchor("r", (3*plus, 0))
 
 		if label != none {
-			content((rel: (0.5em, -0.5em), to: (0, -0.5)), label)
+			content((0, 0.8), label)
 		}
 
 		if (u != none) {
-			tension("l", "r", (0, 0.7), u)
+			tension("l", "r", (0, -0.7), u)
 		}
 	}
 	(comp: comp, layout: (width: 0.6, height: 1))
+})
+
+#let neon(pos, rot: 0deg, name: none, layout: false, u: none) = construct_component(pos, rot, name, layout, {
+	import draw: *
+	let comp = {
+		anchor("l", (-0.6, 0))
+		anchor("r", (0.6, 0))
+
+		circle((0, 0), radius: 0.5)
+
+		line("l", (-0.3, 0))
+		line("r", (0.3, 0))
+
+		arc((0, 0), start: -45deg, stop: 45deg, radius: 0.3, anchor: "origin")
+		arc((0, 0), start: 180deg - 45deg, stop: 180deg + 45deg, radius: 0.3, anchor: "origin")
+	}
+
+	(comp: comp, layout: (width: 1.2, height: 1))
 })
