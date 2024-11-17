@@ -8,15 +8,15 @@
 	(label: label, rev: not rev, size: size, offset: offset)
 }
 
-#let tension(from, to, offset, tense, size: 0.7) = {
+#let tension(from, to, offset, tense, size: 1) = {
 	import draw: *
 
 	let midpoint = (from, 50%, to)
 
 	let size = size + tense.size
 
-	let from = (midpoint, size, from)
-	let to = (midpoint, size, to)
+	let from = (midpoint, size/2, from)
+	let to = (midpoint, size/2, to)
 
 	if tense.rev == true or tense.rev == 1 {
 		(from, to) = (to, from)

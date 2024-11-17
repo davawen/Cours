@@ -136,13 +136,11 @@ Attention, en convention générateur, le signe est inversé, on a $u = -R dot i
 
 === Association en série
 #figcan({
-  resistor((-2, 0), name: "d1", label: $R_1$)
-  resistor((0, 0), name: "d2", label: $R_2$)
-  resistor((2, 0), name: "d3", label: $R_3$)
-
-  tension("d3.r", "d1.l", (0, 1), tenselr($u$), size: 1)
-
-  fil((-3, 0), "d1.l", "d1.r", "d2.l", "d2.r", "d3.l", "d3.r", (3, 0), i: $i$)
+	serie((0, 0), u: tenserl($u$), i: $i$,
+		apply(resistor, label: $R_1$, u: tenserl($u_1$)),
+		apply(resistor, label: $R_2$, u: tenserl($u_2$)),
+		apply(resistor, label: $R_3$, u: tenserl($u_3$)),
+	)
 })
 
 On a:
@@ -164,20 +162,11 @@ $ R_"eq" = sum_k R_k $
 === Association en parallèle
 
 #figcan({
-  resistor((0, 2), name: "d2")
-  resistor((0, 1), name: "d3")
-  resistor((0, 0), name: "d4")
-
-  node((-2, 1), name: "A")
-  node((2, 1), name: "B")
-
-  tension("d2.r", "d2.l", (0, 0.7), tenselr($u$), size: 1.2)
-
-  fil(rev: 1, "A", "d2.l", "A", "d3.l", "A", "d4.l")
-  fil("d2.r", "B", "d3.r", "B", "d4.r", "B")
-
-  fil((-3, 1), "A", i: $i$)
-  fil("B", (3, 1), i: $i$)
+	derivation((0, 0), i: $i$, left: "A", right: "B", u: tenserl($u$),
+		apply(resistor),
+		apply(resistor),
+		apply(resistor),
+	)
 })
 
 On a:
@@ -236,7 +225,7 @@ $ L = sum_k L_k $
 
 === Association en parallèle
 #figcan({
-  derivation((0, 0), 
+  derivation((0, 0), i: $i$, u: tenserl($u$),
     apply(bobine),
     apply(bobine)
   )
@@ -282,7 +271,7 @@ Schéma:
 
 #figcan({
   draw.scale(1)
-  condensateur((0, 0), u: tenserl($u$), name: "c")
+  condensateur((0, 0), u: tenserl($u$, offset: (0, -0.3)), name: "c")
 
   fil((-1, 0), "c.l", "c.r", (1, 0), i: $i$)
 
@@ -408,7 +397,7 @@ On peut représenter un dipôle de tension constante $u_1$ par une source idéal
   resistor((2, 0), label: $R$, u: tenselr($u_2$), name: "r")
 
   fil((-1, 0), "s.l", "s.r", "r.l", "r.r", (4, 0), i: $i$)
-  tension((-1, 0), (4, 0), (0, -1.3), tenselr($u$), size: 2)
+  tension((-1, 0), (4, 0), (0, -1.3), tenselr($u$), size: 4)
 })
 
 Le modèle de Thevenin est donc caractérisé par:
@@ -435,12 +424,11 @@ Par homogénéité, $i = i_1 + i_2$ avec:
 
 On a:
 #figcan({
-  derivation((0, 0), inset: 2.5, i: $i$,
+  derivation((0, 0), i: $i$, u: tenselr($u$),
     apply(source-ideale-courant, label: tenselr($I_0 = E/R$)),
+	(inset: 1),
     apply(resistor, label: $R$)
   )
-
-  tension((-1, 0), (1, 0), (0, 0.001), tenselr($u$))
 })
 
 On peut caractériser le modèle de Norton par:

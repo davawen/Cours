@@ -3,6 +3,37 @@
 #import "@preview/cetz-plot:0.1.0"
 #import cetz: draw, canvas, vector
 
+= General utilities
+
+/// iterates f with windows from the list:
+/// `windows((1, 2, 3), 2, f)`
+/// will call f with 1, 2 and 2, 3
+/// NOTE: the function is called variadically
+/// in this case, it should be `(a, b) => { ... }` and not `((a, b)) => { ... }`
+#let windows(list, size, f) = {
+	for i in range(0, list.len()+1-size) {
+		f(..list.slice(i, count: size))
+	}
+}
+
+/// A fonctional match expression
+/// 
+/// # Usage
+/// ```typst
+/// match(
+///   x < 2, () => 10,
+///   x < 4, () => "noooo",
+///   () => "base case"
+/// )
+/// ```
+#let match(..arms) = {
+	let found = arms.pos().chunks(2).find(t => t.len() == 1 or t.at(0))
+	if found.len() == 1 { found.at(0)() }
+	else { found.at(1)() }
+}
+
+= CetZ stuff
+
 #let figcan(body, caption: none) = {
   figure(caption: caption, canvas(body))
 }
@@ -92,3 +123,4 @@
     })
   })
 }
+
