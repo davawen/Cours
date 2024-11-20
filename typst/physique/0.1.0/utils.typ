@@ -38,7 +38,7 @@
   figure(caption: caption, canvas(body))
 }
 
-#let plot(x, y: none, x-tick: auto, y-tick: auto, color: blue, ..fs) = {
+#let plot(x, y: none, x-tick: auto, x-ticks: (), y-tick: auto, y-ticks: (), color: blue, ..fs) = {
 	import cetz-plot: plot
 	let (x-min, x-max) = x
 
@@ -62,7 +62,7 @@
 	}
 
 	figcan({
-		plot.plot(axis-style: "school-book", size: (4, 4), x-min: x-min, x-max: x-max, y-min: y-min, y-max: y-max, x-tick-step: x-tick, y-tick-step: y-tick, {
+		plot.plot(axis-style: "school-book", size: (4, 4), x-min: x-min, x-max: x-max, y-min: y-min, y-max: y-max, x-tick-step: x-tick, y-tick-step: y-tick, x-ticks: x-ticks, y-ticks: y-ticks, {
 			for f in fs {
 				if type(f) == "array" {
 					let (domain, f) = f
