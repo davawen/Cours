@@ -122,6 +122,10 @@
 			continue
 		}
 
+		if "i" in elem {
+			elem = apply(intensite, elem.i, rev: elem.at("rev", default: false))
+		}
+
 		let (f, pos: positional, named) = elem
 
 		pos += padding
@@ -169,7 +173,7 @@
 		}
 
 		if u != none {
-			tension("l", "r", (0, -height*0.5 - 1), u, size: width)
+			tension("l", "r", (0, -height*0.5 - 1), u, size: width*0.9)
 		}
 	}
 
@@ -238,13 +242,7 @@ De plus, elle peut prendre des dictionnaire de la forme suivante:
 		} else if "retour" in elem {
 			running.retour = elem.retour
 		} else {
-			if "i" in elem {
-				running.direct.push(apply(intensite, elem.i))
-			} else if "inset" in elem {
-				
-			} else {
-				running.direct.push(elem)
-			}
+			running.direct.push(elem)
 		}
 	}
 
@@ -264,12 +262,9 @@ De plus, elle peut prendre des dictionnaire de la forme suivante:
 	// map les éléments du circuit vers leur représentation (comp, layout)
 	let elems = for (i, elem) in elems.enumerate() {
 		let out = if elem.type == "branch" { // branche du circuit
-			// TODO: let u = elem.elem.at("u", default: none)
-			// tension de branche
-
 			// on créé la branche (note: le padding verticale de la branche est directement dans la série)
 			let name = get_name((:), i)
-			let (comp, layout) = serie((pos, 0), rot: -90deg, name: name, layout: true, ..elem.elem.branch)
+			let (comp, layout) = serie((pos, 0), rot: -90deg, name: name, layout: true, u: elem.elem.u, ..elem.elem.branch)
 
 			// la branche est une série tournée à 90 degré,
 			// donc la taille horizontale de la branche est sa hauteur,

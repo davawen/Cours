@@ -61,9 +61,23 @@ Il est défini par un dictionnaire de la forme:
 	}
 }
 
+#let dots(pos, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
+	import draw: *
+	let comp = {
+		anchor("l", (-0.375, 0))
+		anchor("r", (0.375, 0))
+
+		line((-0.375, 0), (0.375, 0), stroke: (dash: "dotted"))
+	}
+	(comp: comp, layout: (width: 0.75, height: 0))
+})
+
 /// Dessine un resistor de largeur `size` et de hauteur `size/2`
 #let resistor(pos, rot: 0deg, name: none, layout: false, label: none, u: none, size: 1) = construct_component(pos, rot, name, layout, {
 	import draw: *
+
+	let layout = (width: size, height: size/2)
+
 	let comp = {
 		rect((-size/2, -size/4), (size/2, size/4))
 
@@ -71,14 +85,15 @@ Il est défini par un dictionnaire de la forme:
 		anchor("r", (size/2, 0))
 
 		if label != none {
-			content((rel: (0, 1em), to: (0, size/4)), label)
+			layout.height += 0.3
+			content((rel: (0, 0.3), to: (0, size/4)), label)
 		}
 
 		if u != none {
 			tension("l", "r", (0, -size/2 - 0.1), size: size, u)
 		}
 	}
-	(comp: comp, layout: (width: size, height: size/2))
+	(comp: comp, layout: layout)
 })
 
 #let node(pos, name: none, layout: false, offset: (-0.5em, 0.8em), id: none, round: false) = {
@@ -113,17 +128,35 @@ Il est défini par un dictionnaire de la forme:
 #let intensite(pos, intensity, rot: 0deg, name: none, layout: false, rev: false) = construct_component(pos, rot, name, layout, {
 	import draw: *
 	let comp = {
-		anchor("l", (-0.2, 0))
-		anchor("r", (0.2, 0))
-		fil("l", "r")
+		anchor("l", (-0.001, 0))
+		anchor("r", (0.001, 0))
 		if not rev {
-			mark((0, 0), "r", symbol: ">", fill: black)
+			mark((0, 0), "r", symbol: ">", fill: black, anchor: "center")
 		} else {
-			mark((0, 0), "l", symbol: ">", fill: black)
+			mark((0, 0), "l", symbol: ">", fill: black, anchor: "center")
 		}
 		content((0, 0.3), intensity)
 	}
-	(comp: comp, layout: (width: 0.4, height: 0.8))
+	(comp: comp, layout: (width: 0, height: 0.8))
+})
+
+#let interrupteur(pos, rot: 0deg, name: none, layout: false, closed: false, label: none) = construct_component(pos, rot, name, layout, {
+	import draw: *
+	let comp = {
+		anchor("l", (-0.5, 0))
+		anchor("r", (0.5, 0))
+
+		if closed {
+			line("l", "r", stroke: (thickness: 0.8pt))
+		} else {
+			line("l", (rel: (0, 0.3), to: "r"), stroke: (thickness: 0.8pt))
+		}
+
+		if label != none {
+			content((0, 0.4), label)
+		}
+	}
+	(comp: comp, layout: (width: 1, height: 1))
 })
 
 #let ground(pos, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
@@ -288,6 +321,10 @@ Il est défini par un dictionnaire de la forme:
 
 		arc((0, 0), start: -45deg, stop: 45deg, radius: 0.3, anchor: "origin")
 		arc((0, 0), start: 180deg - 45deg, stop: 180deg + 45deg, radius: 0.3, anchor: "origin")
+
+		if u != none {
+			tension("l", "r", (0, -0.7), u)
+		}
 	}
 
 	(comp: comp, layout: (width: 1.2, height: 1))

@@ -11,6 +11,8 @@
 #let template(doc) = {
 	show figure.caption: emph
 
+	set text(lang: "fr")
+
 	set heading(numbering: "1.1.1)")
 	show heading.where(level: 1): h => {
 		h
