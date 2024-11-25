@@ -143,3 +143,80 @@ $ G_"dB" = 20 log_10 (G) $
 
 Le diagramme de Bode, c'est le tracé du gain en décibel, et de la phase,
 en fonction du $log_10 (omega) = log_10 (2 pi f)$
+
+== Cas du circuit $R,C$
+
+On a un circuit de la forme:
+#figcan({
+	carre((0, 0), 
+		branch(u: tenserl($e$), apply(dots)),
+		apply(resistor, label: $R$),
+		branch(u: tenserl($und(s)$), apply(condensateur, label: $C$))
+	)
+})
+
+On a:
+$ und(H) = und(s)/und(e) = (und(Z)_c)/(und(Z)_c + und(Z)_R) = (1/(j C omega))/(1/(j C omega) + R) $
+
+Donc:
+
+
+$ und(H) = 1/(1 + j R C omega) $
+
+$ G = abs(und(H)) = abs(und(s))/(abs(1 + j R C omega)) $
+$ G = 1/(sqrt(1^2 + (R C omega)^2)) $
+
+$ G_"dB" = 20 log_10 G \
+= 20 log_10 (1) - 20 log_10 (sqrt(1 + (R C omega)^2)) \
+= - 20 log_10 (sqrt(1 + R^2 C^2 omega ^2))
+$
+
+On fait un diagramme asymptotique:
+- À basses fréquences $<=> omega -> 0$, on a $ G_"dB" -> 0 $
+- À hautes fréquences $<=> omega -> oo$, on a
+  $ G_"dB" -> -20 log(R C omega) = -20 log ( R C ) - 20 log(omega) $
+
+On a une pente de $-20 "dB/décade"$
+
+En traçant le diagramme de Bode correspondant:
+
+#plot((-10, 10), x-tick: none, y-tick: none,
+	((-10, 2), x => 0),
+	((2, 10), x => -x + 2),
+
+)
+
+On cherche l'intersection des asymptotes:
+$ 0 = -20 log(R C) - 20 log(omega) \
+20 log(R C) = -20 log(omega) \
+20 log(1/(R C)) = 20 log(omega) \
+<=> 1/(R C) = omega
+$
+
+On cherche dorénavant le diagramme de bode.
+
+$ und(H) = 1/(1 + j R C omega) $
+
+$ phi = arg(und(H)) = arg(1) - arg(1 + j R C omega) = 0 - Psi $
+$ Psi = arg(1 + j R C omega) $
+$ cases(tan Psi = (R C omega)/1, cos Psi  "du signe du dénominateur donc" > 0) $
+Donc
+$ Psi = arctan(R C omega) $
+$ phi = - arctan(R C omega) $
+
+- $omega -> 0 => phi -> 0$
+- $omega -> +oo => phi -> -pi/2 $
+
+On a:
+#plot(
+	(-10, 10), x-tick: none, y-tick: none,
+	((-10, 3), x => 0),
+	((0, 10), x => -calc.pi/2),
+	((-10, 10), x => -calc.atan(x).rad()/2 - calc.pi/4)
+)
+
+= Notion de filtrage
+
+== But du filtrage
+
+
