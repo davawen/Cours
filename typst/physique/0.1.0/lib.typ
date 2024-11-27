@@ -42,7 +42,7 @@
 #let titleb(c) = {
 	set document(title: c)
 	align(center, box(text(c, size: 2em), inset: 1em, stroke: black))
-	outline()
+	outline(depth: 1)
 }
 
 #let infobox(symbol: none, info_text: "", color: black) = c => [

@@ -38,7 +38,7 @@
   figure(caption: caption, canvas(body))
 }
 
-#let plot(x, y: none, x-tick: auto, x-ticks: (), y-tick: auto, y-ticks: (), color: blue, ..fs) = {
+#let plot(x, y: none, mode: "lin", x-tick: auto, x-ticks: (), y-tick: auto, y-ticks: (), color: blue, ..fs) = {
 	import cetz-plot: plot
 	let (x-min, x-max) = x
 
@@ -62,11 +62,19 @@
 	}
 
 	figcan({
-		plot.plot(axis-style: "school-book", size: (4, 4), x-min: x-min, x-max: x-max, y-min: y-min, y-max: y-max, x-tick-step: x-tick, y-tick-step: y-tick, x-ticks: x-ticks, y-ticks: y-ticks, {
+		plot.plot(axis-style: "school-book", size: (6, 4), mode: mode, x-min: x-min, x-max: x-max, y-min: y-min, y-max: y-max, x-tick-step: x-tick, y-tick-step: y-tick, x-ticks: x-ticks, y-ticks: y-ticks, {
 			for f in fs {
-				if type(f) == "array" {
+				if type(f) == array {
 					let (domain, f) = f
 					plot.add(style: style, domain: domain, f)
+				} else if type(f) == dictionary {
+					if "vert" in f {
+						plot.add-vline(..f.vert, min: f.at("min", default: auto), max: f.at("max", default: auto), style: style)
+					} else if "horz" in f {
+						plot.add-hline(..f.horz, min: f.at("min", default: auto), max: f.at("max", default: auto), style: style)
+					} else if "stroke" in f {
+						style.stroke = f.stroke
+					}
 				} else {
 					plot.add(style: style, domain: (x-min, x-max), f)
 				}
