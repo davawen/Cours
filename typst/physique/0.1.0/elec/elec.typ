@@ -1,22 +1,101 @@
 #import "utils.typ": *
 #import "composants.typ": *
 
-#let maille(pos, size, rev: false, anchor: none) = {
-	import draw: *
+// #let maille(pos, size, rev: false, anchor: none) = {
+// 	import draw: *
+//
+// 	group({
+// 		set-origin(pos)
+//
+// 		if rev {
+// 			arc((0, 0), start: -60deg, stop: -315deg, radius: size, mark: (end: "straight"), anchor: "origin")
+// 		} else {
+// 			arc((0, 0), start: 45deg, stop: 300deg, radius: size, mark: (end: "straight"), anchor: "origin")
+// 		}
+// 	})
+// }
 
-	group({
-		set-origin(pos)
 
-		if rev {
-			arc((0, 0), start: -60deg, stop: -315deg, radius: size, mark: (end: "straight"), anchor: "origin")
-		} else {
-			arc((0, 0), start: 45deg, stop: 300deg, radius: size, mark: (end: "straight"), anchor: "origin")
-		}
-	})
-}
+= Explication du module
 
-/// Permits to spread both positional and named arguments to a dictionnary
-/// Use this to create components in `serie`, `derivation`, `carre` and `carre2`.
+== Fonctions de positionnement
+
+Les fonctions `serie`, `derivation` et `carre` permettent
+de positionner des dipoles automatiquement.
+
+=== Fonctions d'aide
+
+Typst ne supporte pas de dictionnaires comportant à la fois des clés nommées et indexées.
+
+On utilise donc la fonction `apply`, qui permet de remettre à plus tard l'appel d'une fonction
+à arguments nommés et positionnels.
+
+Exemple:
+```typst
+serie(
+	(0, 0),
+	apply(resistor, label: $R$) // -> renvoit un dictionnaire qui permet à la fonction `serie` d'appeller `resistor`
+)
+```
+
+Les fonctions `branch` et `retour` utilisent le même principe,
+mais ne sont utilisées que par la fonction `carre`.
+
+=== Serie (`serie`)
+
+Place les dipôles qui lui sont donnés en série.
+
+Elle prend en paramètres nommés optionnels supplémentaires:
+- `left` (`str`): le nom du nœud à gauche de la série
+- `right` (`str`): le nom du nœud à droite de la série
+- `u` (`tension`): la tension de part et d'autre de la série
+- `i` (`equation`): l'intensité parcourant la série (placée à gauche et à droite)
+
+=== Dérivation (`derivation`)
+
+Place les dipôles qui lui sont donnés en parallèle.
+
+Elle prend en paramètres nommés optionnels supplémentaires:
+- `left` (`str`): le nom du nœud à gauche de la série
+- `right` (`str`): le nom du nœud à droite de la série
+- `u` (`tension`): la tension de la dérivation
+- `i` (`equation`): l'intensité parcourant la dérivation (placée à gauche et à droite)
+
+=== Carre (`carre`)
+
+Permet de créer un circuit fermé.
+
+La fonction `carre` sera en général de la forme:
+```typst
+carre((0, 0),
+	// branche initiale (coté "gauche" du circuit)
+	branch( /* apply(...), apply(...) */ ), 
+	// dipôles dans la branche principale
+	apply( /* ... */ ),
+	apply( /* ... */ ),
+	// dipôle dans la branche de retour (en bas)
+	retour( /* apply(...), apply(...) */ ),
+	// branche intermédiaire
+	branch( /* ... */ ),
+	/* ... */
+	// branche finale (cote "droit" du circuit)
+	branch( /* ... */ )
+)
+```
+
+La fonction `retour` permet de placer des dipôles entre la prochaine et la précédente branche.
+Elle ne prend en paramètres que les dipôles à placer (entourés de la fonction `apply`).
+
+La fonction `branch` permet d'introduire une branche dans le circuit avec les dipôles donnés.
+Elle prend en paramètres:
+- Les dipôles à placer sur la branche (entourés de la fonction `apply`)
+- `u` (`tension`): la tension parcourant la branche
+- `top` (`str`): le nom du nœud en haut de la branche
+- `bot` (`str`): le nom du nœud en bas de la branche
+
+= Librairie
+
+/// Permet d'envoyer à la fois des arguments nommés et positionnels dans un dictionnaire
 #let apply(f, ..args) = {
 	(f: f, pos: args.pos(), named: args.named())
 }
@@ -180,18 +259,18 @@
 	(comp: comp, layout: (width: width, height: height))
 })
 
-/// Fonction à utiliser avec `carre` et `carre2`
+/// Fonction à utiliser avec `carre`
 /// pour créer une branche dans un circuit
 #let branch(top: none, bot: none, u: none, ..elems) = {
 	(branch: elems.pos(), top: top, bot: bot, u: u)
 }
 
-/// Fonction à utiliser avec `carre2`
+/// Fonction à utiliser avec `carre`
 /// pour placer des composants sur la branche de retour (en bas)
 /// 
 /// # Exemple
 /// ```typst
-/// carre2((0, 0), 
+/// carre((0, 0), 
 ///   branch(),
 ///   apply(resistor),
 ///   retour(apply(condensateur), apply(condensateur)),
@@ -209,12 +288,12 @@
 
 Prend en argument une liste de composants appliqués.
 ```typst
-carre2((0, 0), apply(resistor), apply(resistor))
+carre((0, 0), apply(resistor), apply(resistor))
 ```
 
 De plus, elle peut prendre des dictionnaire de la forme suivante:
-- `(branch: <arguments de carre2...>, [u: tension])`
-- `(i: equation)`
+- `(inset: 1em)` - Rajoute de l'espace vide
+- `(i: equation)` - Rajoute une flèche d'intensité (peut aussi prendre un paramètre `rev` pour inverser le sens)
 
 #let carre(pos, rot: 0deg, name: none, layout: false, ..elems) = construct_component(pos, rot, name, layout, {
 	import draw: *
