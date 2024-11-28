@@ -431,12 +431,10 @@ Donc on calcule $i_3$:
 		(i: $I_3$),
 		apply(resistor, label: $R$),
 		branch(
-			(inset: 1),
-			apply(derivation, inset: 1.2, width: 4,
+			apply(derivation,
 				apply(resistor, label: $2R$),
 				apply(resistor, label: $R$)
 			),
-			(inset: 1.7)
 		)
 	)
 })
