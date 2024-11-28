@@ -41,10 +41,11 @@ Il existe en plus quelques paramètres nommés "standards" des composants:
 
 == Layout
 Le layout d'un composant indique la taille que ce dernier prend,
-de sa borne gauche à sa borne droite, ainsi que sa hauteur (par-rapport au centre),
-dans son espace local (donc toujours de gauche à droite, sans rotation ou échelle appliquée).
+par-rapport à son centre,
+dans les quatres directions cardinales (similairement à un AABB),
+dans son espace local (sans rotation ou échelle appliquée).
 Il est défini par un dictionnaire de la forme:
-`(width: number, height: number)`
+`(left: number, right: number, top: number, bot: number)`
 
 #let construct_component(pos, rot, name, layout, body) = {
 	let (comp, layout: out_layout) = body
@@ -69,14 +70,14 @@ Il est défini par un dictionnaire de la forme:
 
 		line((-0.375, 0), (0.375, 0), stroke: (dash: "dotted"))
 	}
-	(comp: comp, layout: (width: 0.75, height: 0))
+	(comp: comp, layout: (left: 0.375, right: 0.375, top: 0, bot: 0))
 })
 
 /// Dessine un resistor de largeur `size` et de hauteur `size/2`
 #let resistor(pos, rot: 0deg, name: none, layout: false, label: none, u: none, size: 1) = construct_component(pos, rot, name, layout, {
 	import draw: *
 
-	let layout = (width: size, height: size/2)
+	let layout = (left: size/2, right: size/2, top: size/4, bot: size/4)
 
 	let comp = {
 		rect((-size/2, -size/4), (size/2, size/4))
@@ -85,11 +86,12 @@ Il est défini par un dictionnaire de la forme:
 		anchor("r", (size/2, 0))
 
 		if label != none {
-			layout.height += 0.3
+			layout.top += 0.5
 			content((rel: (0, 0.3), to: (0, size/4)), label)
 		}
 
 		if u != none {
+			layout.bot = size/2 + 0.1 + 0.5
 			tension("l", "r", (0, -size/2 - 0.1), size: size, u)
 		}
 	}
@@ -119,7 +121,7 @@ Il est défini par un dictionnaire de la forme:
 	})
 
 	if layout {
-		(comp: comp, layout: (width: 0.1, height: 0.1))
+		(comp: comp, layout: (left: 0.07, right: 0.07, top: 0.3, bot: 0.07))
 	} else {
 		comp
 	}
@@ -137,11 +139,12 @@ Il est défini par un dictionnaire de la forme:
 		}
 		content((0, 0.3), intensity)
 	}
-	(comp: comp, layout: (width: 0, height: 0.8))
+	(comp: comp, layout: (left: 0, right: 0, top: 0.5, bot: 0.3))
 })
 
 #let interrupteur(pos, rot: 0deg, name: none, layout: false, closed: false, label: none) = construct_component(pos, rot, name, layout, {
 	import draw: *
+	let layout = (left: 0.5, right: 0.5, top: 0.3, bot: 0.0)
 	let comp = {
 		anchor("l", (-0.5, 0))
 		anchor("r", (0.5, 0))
@@ -153,10 +156,11 @@ Il est défini par un dictionnaire de la forme:
 		}
 
 		if label != none {
+			layout.top = 0.6
 			content((0, 0.4), label)
 		}
 	}
-	(comp: comp, layout: (width: 1, height: 1))
+	(comp: comp, layout: layout)
 })
 
 #let ground(pos, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
@@ -170,7 +174,7 @@ Il est défini par un dictionnaire de la forme:
 		line((-0.2, -0.6), (0.2, -0.6))
 		line((-0.1, -0.7), (0.1, -0.7))
 	}
-	(comp: comp, layout: (width: 0.6, height: 0.7))
+	(comp: comp, layout: (left: 0.3, right: 0.3, top: 0.1, bot: 0.7))
 })
 
 #let pile(pos, rot: 0deg, name: none, layout: false, rev: false) = construct_component(pos, rot, name, layout, {
@@ -194,11 +198,12 @@ Il est défini par un dictionnaire de la forme:
 		anchor("l", (3*minus, 0))
 		anchor("r", (3*plus, 0))
 	}
-	(comp: comp, layout: (width: 0.6, height: 0.6))
+	(comp: comp, layout: (left: 0.3, right: 0.3, bot: 0.3, top: 0.4))
 })
 
 #let elem-letter(pos, rot: 0deg, name: none, layout: false, u: none, letter: $G$) = construct_component(pos, rot, name, layout, {
 	import draw: *
+	let layout = (left: 0.4, right: 0.4, top: 0.4, bot: 0.4)
 	let comp = {
 		circle((0, 0), radius: 0.4)
 		content((0, 0), letter)
@@ -207,10 +212,11 @@ Il est défini par un dictionnaire de la forme:
 		anchor("r", (0.4, 0))
 
 		if u != none {
+			layout.bot = 1.1
 			tension("l", "r", (0, -0.6), u)
 		}
 	}
-	(comp: comp, layout: (width: 0.8, height: 0.8))
+	(comp: comp, layout: layout)
 })
 
 #let generateur = elem-letter.with(letter: $G$)
@@ -219,6 +225,8 @@ Il est défini par un dictionnaire de la forme:
 
 #let source-ideale(pos, rot: 0deg, name: none, layout: false, label: none, u: none) = construct_component(pos, rot, name, layout, {
 	import draw: *
+
+	let layout = (left: 0.4, right: 0.4, top: 0.4, bot: 0.4)
 	let comp = {
 		circle((0, 0), radius: 0.4)
 
@@ -227,17 +235,21 @@ Il est défini par un dictionnaire de la forme:
 
 		line("l", "r")
 		if label != none {
+			layout.top = 1.1
 			tension("l", "r", (0, 0.6), label, size: 0.4)
 		}
 		if u != none {
+			layout.bot = 1.1
 			tension("l", "r", (0, -0.6), u)
 		}
 	}
-	(comp: comp, layout: (width: 0.8, height: 0.8))
+	(comp: comp, layout: layout)
 })
 
 #let source-ideale-courant(pos, rot: 0deg, name: none, layout: false, label: none, u: none) = construct_component(pos, rot, name, layout, {
 	import draw: *
+
+	let layout = (left: 0.4, right: 0.4, top: 0.4, bot: 0.4)
 	let comp = {
 		circle((0, 0), radius: 0.4)
 
@@ -246,27 +258,33 @@ Il est défini par un dictionnaire de la forme:
 
 		line((0, 0.4), (0, -0.4))
 		if label != none {
+			layout.top = 1.1
 			tension("l", "r", (0, 0.6), label, size: 0.4)
 		}
 		if u != none {
+			layout.bot = 1.1
 			tension("l", "r", (0, -0.6), u)
 		}
 	}
-	(comp: comp, layout: (width: 0.4, height: 0.4))
+	(comp: comp, layout: layout)
 })
 
 #let bobine(pos, rot: 0deg, name: none, layout: false, coils: 4, u: none, label: none) = construct_component(pos, rot, name, layout, {
 	import draw: *
+
 	let width = 0.3*(coils+2)
+	let layout = (left: width/2, right: width/2, top: 0.1, bot: 0.1)
 	let comp = {
 		anchor("l", (-width/2, 0))
 		anchor("r", (width/2, 0))
 
 		if label != none {
+			layout.top = 0.7
 			content((0, 0.5), label)
 		}
 
 		if u != none {
+			layout.bot = 1
 			tension("l", "r", (0, -0.5), u)
 		}
 
@@ -280,11 +298,13 @@ Il est défini par un dictionnaire de la forme:
 			translate((0.3, 0))
 		}
 	}
-	(comp: comp, layout: (width: width, height: 0.2))
+	(comp: comp, layout: layout)
 })
 
 #let condensateur(pos, rot: 0deg, name: none, layout: false, label: none, u: none) = construct_component(pos, rot, name, layout, {
 	import draw: *
+
+	let layout = (left: 0.3, right: 0.3, top: 0.5, bot: 0.5)
 	let comp = {
 		let (plus, minus) = (0.1, -0.1)
 
@@ -298,18 +318,22 @@ Il est défini par un dictionnaire de la forme:
 		anchor("r", (3*plus, 0))
 
 		if label != none {
+			layout.top = 1
 			content((0, 0.8), label)
 		}
 
 		if (u != none) {
+			layout.bot = 1.2
 			tension("l", "r", (0, -0.7), u)
 		}
 	}
-	(comp: comp, layout: (width: 0.6, height: 1))
+	(comp: comp, layout: layout)
 })
 
 #let neon(pos, rot: 0deg, name: none, layout: false, u: none) = construct_component(pos, rot, name, layout, {
 	import draw: *
+
+	let layout = (left: 0.6, right: 0.6, top: 0.5, bot: 0.5)
 	let comp = {
 		anchor("l", (-0.6, 0))
 		anchor("r", (0.6, 0))
@@ -323,9 +347,10 @@ Il est défini par un dictionnaire de la forme:
 		arc((0, 0), start: 180deg - 45deg, stop: 180deg + 45deg, radius: 0.3, anchor: "origin")
 
 		if u != none {
+			layout.bot = 1.2
 			tension("l", "r", (0, -0.7), u)
 		}
 	}
 
-	(comp: comp, layout: (width: 1.2, height: 1))
+	(comp: comp, layout: layout)
 })

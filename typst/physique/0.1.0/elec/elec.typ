@@ -114,7 +114,7 @@ Elle prend en paramètres:
 	let get_name = private_elec_get_name
 	let elems = elems.pos()
 
-	let padding = 0.3
+	let padding = 0.1
 
 	let width = 0
 	let height = 0
@@ -127,19 +127,21 @@ Elle prend en paramètres:
 
 		let (f, pos: positional, named) = elem
 
-		height += padding
+		if i > 0 and i < elems.len()-1 {
+			height += padding*2
+		}
 
 		let name = get_name(named, i)
 		let (comp, layout) = f((0, height), ..positional, ..named, name: name, layout: true)
 
 		let comp = {
-			translate((0, layout.height/2))
+			translate((0, layout.bot))
 			comp
-			translate((0, -layout.height/2))
+			translate((0, -layout.bot))
 		}
 
-		height += layout.height + padding
-		width = calc.max(width, layout.width)
+		height += layout.top + layout.bot
+		width = calc.max(width, layout.left + layout.right)
 
 		((comp: comp, name: name),)
 	}
@@ -149,6 +151,11 @@ Elle prend en paramètres:
 	width += elem-padding*2
 
 	let global-padding = 1
+
+	let layout = (
+		left: width/2 + global-padding, right: width/2 + global-padding,
+		top: height/2, bot: height/2
+	)
 
 	let comp = {
 		anchor("l", (-width/2 - global-padding, 0))
@@ -163,10 +170,6 @@ Elle prend en paramètres:
 		fil("l", "ln", i: i)
 		fil("r", "rn")
 
-		if u != none {
-			tension("l", "r", (0, -height/2), u, size: width)
-		}
-
 		translate((0, -height/2))
 		for elem in elems {
 			elem.comp
@@ -174,9 +177,14 @@ Elle prend en paramètres:
 			fil(elem.name + ".l", "ln")
 			fil(elem.name + ".r", "rn")
 		}
+
+		if u != none {
+			layout.bot += 0.4
+			tension("l", "r", (0, -height/2 - 0.1), u, size: width)
+		}
 	}
 
-	(comp: comp, layout: (width: width + 2*global-padding, height: height))
+	(comp: comp, layout: layout)
 })
 
 #let serie(pos, rot: 0deg, name: none, layout: false, left: none, right: none, u: none, i: none, ..elems) = construct_component(pos, rot, name, layout, {
@@ -185,7 +193,9 @@ Elle prend en paramètres:
 
 	let connections = ("l",)
 	let pos = 0
-	let height = 0
+
+	let top = 0
+	let bot = 0
 
 	let padding = 0.3
 
@@ -214,16 +224,17 @@ Elle prend en paramètres:
 
 		// uncenter component (place the origin on its left anchor)
 		let comp = {
-			translate((layout.width/2, 0))
+			translate((layout.left, 0))
 			comp
-			translate((-layout.width/2, 0))
+			translate((-layout.left, 0))
 		}
 
 		connections.push(name + ".l")
 		connections.push(name + ".r")
 
-		pos += layout.width + padding
-		height = calc.max(height, layout.height)
+		pos += layout.left + layout.right + padding
+		top = calc.max(top, layout.top)
+		bot = calc.max(bot, layout.bot)
 
 		(comp,)
 	}
@@ -235,6 +246,10 @@ Elle prend en paramètres:
 	let width = pos
 
 	let comp = {
+		if u != none and width < 1 {
+			width = 1
+		}
+
 		translate((-width/2, 0))
 
 		anchor("l", (0, 0))
@@ -243,6 +258,11 @@ Elle prend en paramètres:
 		if left != none { node("l", name: left, round: true) }
 		if right != none { node("r", name: right, round: true) }
 
+		if u != none {
+			tension("l", "r", (0, -bot - 0.2), u, size: width*0.9)
+			bot += 0.5
+		}
+
 		for comp in elems {
 			comp
 		}
@@ -250,13 +270,9 @@ Elle prend en paramètres:
 		for (a, b) in connections.chunks(2) {
 			line(a, b)
 		}
-
-		if u != none {
-			tension("l", "r", (0, -height*0.5 - 1), u, size: width*0.9)
-		}
 	}
 
-	(comp: comp, layout: (width: width, height: height))
+	(comp: comp, layout: (left: width/2, right: width/2, top: top, bot: bot))
 })
 
 /// Fonction à utiliser avec `carre`
@@ -349,24 +365,25 @@ De plus, elle peut prendre des dictionnaire de la forme suivante:
 			// donc la taille horizontale de la branche est sa hauteur,
 			// et inversement pour sa taille verticale
 
-			max-height = calc.max(max-height, layout.width)
+			max-height = calc.max(max-height, layout.left + layout.right)
 
 			// les branches du début et de la fin n'ont pas de padding gauche/droit
-			let padding = layout.height + branch-hor-padding*2
+			let left-padding = layout.bot + branch-hor-padding
+			let right-padding = layout.top + branch-hor-padding
 
 			if i == 0 {
-				pos += padding/2
+				pos += left-padding
 			} else if i == elems.len() - 1 {
 				comp = {
-					translate((padding/2, 0))
+					translate((left-padding, 0))
 					comp
 				}
 			} else {
-				pos += padding
+				pos += left-padding + right-padding
 				comp = {
-					translate((padding/2, 0))
+					translate((left-padding, 0))
 					comp
-					translate((-padding/2, 0))
+					translate((-left-padding, 0))
 				}
 			}
 
@@ -382,10 +399,13 @@ De plus, elle peut prendre des dictionnaire de la forme suivante:
 			direct.name = name_direct
 			retour.name = name_retour
 
-			let max-width = calc.max(direct.layout.width, retour.layout.width)
+			let max-width = calc.max(
+				direct.layout.left + direct.layout.right,
+				retour.layout.left + retour.layout.right
+			)
 
 			pos += max-width
-			max-height = calc.max(max-height, direct.layout.height)
+			max-height = calc.max(max-height, direct.layout.top + direct.layout.bot)
 
 			direct.comp = {
 				translate((max-width/2, 0))
@@ -460,5 +480,5 @@ De plus, elle peut prendre des dictionnaire de la forme suivante:
 		draw-connections(connections-retour)
 	}
 
-	(comp: comp, layout: (width: pos, height: max-height))
+	(comp: comp, layout: (left: pos/2, right: pos/2, top: max-height/2, bot: max-height/2))
 })
