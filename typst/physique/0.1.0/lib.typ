@@ -39,10 +39,12 @@
 }
 
 #let resultb(c) = align(center, (box(c, inset: 0.7em, stroke: rgb("#ee3050"))))
-#let titleb(c) = {
+#let titleb(c, show_outline: true) = {
 	set document(title: c)
 	align(center, box(text(c, size: 2em), inset: 1em, stroke: black))
-	outline(depth: 1)
+	if show_outline {
+		outline(depth: 1)
+	}
 }
 
 #let infobox(symbol: none, info_text: "", color: black) = c => [

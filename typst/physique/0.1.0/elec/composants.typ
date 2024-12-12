@@ -177,6 +177,22 @@ Il est défini par un dictionnaire de la forme:
 	(comp: comp, layout: (left: 0.3, right: 0.3, top: 0.1, bot: 0.7))
 })
 
+#let masse(pos, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
+	import draw: *
+	let comp = {
+		anchor("l", (0, 0))
+		anchor("r", (0, 0))
+
+		line((0, 0), (0, -0.3))
+		line((-0.3, -0.3), (0.3, -0.3))
+		for i in range(4) {
+			let i = i/6
+			line((-0.3 + i, -0.5), (-0.2 + i, -0.3))
+		}
+	}
+	(comp: comp, layout: (left: 0.3, right: 0.3, top: 0.1, bot: 0.5))
+})
+
 #let pile(pos, rot: 0deg, name: none, layout: false, rev: false) = construct_component(pos, rot, name, layout, {
 	import draw: *
 	let comp = {
@@ -269,10 +285,10 @@ Il est défini par un dictionnaire de la forme:
 	(comp: comp, layout: layout)
 })
 
-#let bobine(pos, rot: 0deg, name: none, layout: false, coils: 4, u: none, label: none) = construct_component(pos, rot, name, layout, {
+#let bobine(pos, rot: 0deg, name: none, layout: false, coils: 6, u: none, label: none) = construct_component(pos, rot, name, layout, {
 	import draw: *
 
-	let width = 0.3*(coils+2)
+	let width = 0.15*(coils+2)
 	let layout = (left: width/2, right: width/2, top: 0.1, bot: 0.1)
 	let comp = {
 		anchor("l", (-width/2, 0))
@@ -288,15 +304,7 @@ Il est défini par un dictionnaire de la forme:
 			tension("l", "r", (0, -0.5), u)
 		}
 
-		line("l", (-0.3*coils/2, 0))
-		line("r", (0.3*coils/2, 0))
-
-		translate((-0.3*(coils/2) + 0.3, 0))
-
-		for i in range(coils) {
-			arc((0, 0), start: 0deg, stop: 180deg, radius: 0.15)
-			translate((0.3, 0))
-		}
+		cetz.decorations.coil(line("l", "r"), start: 0.15, end: 0.15, amplitude: 0.25, segments: coils)
 	}
 	(comp: comp, layout: layout)
 })
