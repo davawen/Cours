@@ -4,22 +4,6 @@
 
 #titleb[Complément Chapitre 2 - Le produit vectoriel]
 
-#show heading.where(level: 1): it => {
-	align(center, rect(
-		inset: 1.2em,
-		stroke: (thickness: 0.5pt),
-		width: 90%,
-		[
-		#place(top + left, dy: -1.85em,
-			rect(stroke: none, fill: white, 
-				context { numbering("1", ..counter(heading).get()) }
-			)
-		)
-		#it.body
-	]
-	))
-}
-
 = Orientation de l'espace
 
 Deux bases possibles:
