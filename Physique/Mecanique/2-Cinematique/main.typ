@@ -4,11 +4,6 @@
 
 #titleb[Cinématique]
 
-#show heading.where(level: 2): it => {
-	it
-	move(dy: -0.8em, align(center, line(length: 100%, stroke: (paint: gray, thickness: 0.8pt))))
-}
-
 = Description cinématique
 
 == Référentiel et temps absolu

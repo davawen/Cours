@@ -34,6 +34,30 @@
 		it
 	}
 	}
+		
+	// show heading.where(level: 1): it => {
+	// 	align(center, rect(
+	// 		inset: 1.2em,
+	// 		stroke: (thickness: 0.5pt),
+	// 		width: 90%,
+	// 		[
+	// 		#place(top + left, dy: -1.85em,
+	// 			rect(stroke: none, fill: white, 
+	// 				context { numbering("1", ..counter(heading).get()) }
+	// 			)
+	// 		)
+	// 		#it.body
+	// 	]
+	// 	))
+	// }
+	
+	show heading.where(level: 2): it => {
+		stack(
+			spacing: 0.32em,
+			it,
+			align(center, line(length: 100%, stroke: (paint: gray, thickness: 0.8pt)))
+		)
+	}
 
 	doc
 }
@@ -43,7 +67,7 @@
 	set document(title: c)
 	align(center, box(text(c, size: 2em), inset: 1em, stroke: black))
 	if show_outline {
-		outline(depth: 1)
+		outline(title: none, depth: 1)
 	}
 }
 
