@@ -8,16 +8,64 @@
 
 #let half_mark = (end: "straight", pos: -63%)
 
-#let template(doc) = {
+#let template(doc, gloria: true) = {
 	show figure.caption: emph
 
 	set text(lang: "fr")
 
-	set heading(numbering: "1.1.1)")
-	show heading.where(level: 1): h => {
-		h
+	set page(footer: context [
+		#set text(8pt)
+		#if gloria {
+			grid(
+				columns: (1fr, 1fr, 1fr),
+				align: (left, center, right),
+				smallcaps[Glioria sit pingvino],
+				counter(page).display(
+				  "1/1",
+				  both: true,
+				),
+				smallcaps[Lycée du Parc - $upright(H X) i^2$]
+			)
+		} else {
+			set align(center)
+			counter(page).display(
+			  "1/1",
+			  both: true,
+			)
+		}
+	])
+
+	// dumb numbering to force counter reset
+	set heading(numbering: "1.")
+
+	let header_counter(level) = context {
+		counter(heading).display((..nums) => {
+			let c = nums.pos().last()
+			if level == 1 { numbering("I.", c) }
+			else if level == 2 { numbering("1)", c) }
+			else if level == 3 { numbering("a)", c) }
+			else { numbering("i)", c) }
+		})
+	}
+
+	show heading: it => {
+		header_counter(it.level)
+		h(3pt)
+		it.body
+	}
+
+	show heading.where(level: 1): it => {
+		pad(left: 1em, it)
 		// reset equation counter for each chapter
 		counter(math.equation).update(0)
+	}
+	
+	show heading.where(level: 2): it => {
+		stack(
+			spacing: 0.32em,
+			it,
+			align(center, line(length: 100%, stroke: (paint: gray, thickness: 0.8pt)))
+		)
 	}
 
 	show ref: it => {
@@ -50,14 +98,6 @@
 	// 	]
 	// 	))
 	// }
-	
-	show heading.where(level: 2): it => {
-		stack(
-			spacing: 0.32em,
-			it,
-			align(center, line(length: 100%, stroke: (paint: gray, thickness: 0.8pt)))
-		)
-	}
 
 	doc
 }
@@ -87,5 +127,7 @@
 #let hp = infobox(symbol: $alpha$, color: yellow, info_text: text(fill: yellow)[
 	Hors-programme:
 ])
+
+#let theorem = infobox(symbol: $Theta$, color: gradient.linear(..color.map.rainbow), info_text: smallcaps[Théorème: ])
 
 // Sir Lanceléthanol le best <3 -U
