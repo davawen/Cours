@@ -107,6 +107,8 @@ $ R/L = omega_0/Q = 1/(Q sqrt(L C)) <=> Q = L/(R sqrt(L C)) = 1/R sqrt(L/C) $
 
 #def[Régime libre ou régime propre]: régime se mettant en place en l'absence de source, c'est à dire quand $e = 0$, on s'intéressera donc uniquement à la description du régime transitoire.
 
+// Loise was here
+
 == Équation caractérisique - Trois types de régimes
 
 Pour résoudre l'équadiff du second ordre qu'on obtient, on utilise l'équation caractéristique:
