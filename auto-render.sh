@@ -10,7 +10,7 @@ error_exit() {
 }
 
 compileall() {
-    find . -type f \( -name "*.typ" -o -name "*.typst" \) -print -exec typst compile {} \;  
+    find . -type f \( -name "*.typ" -o -name "*.typst" \) ! -path "./typst/*" -print -exec typst compile {} \;
 }
 
 if ! git rev-parse --is-inside-work-tree &> /dev/null; then
@@ -32,7 +32,7 @@ if ! git diff-index --quiet HEAD --; then
     echo "Changes detected, committing and pushing"
     git add .
     git commit -m "Compiled all .typ and .typst files"
-    git push origin "$TARGET_BRANCH"
+    git push origin "$TARGET_BRANCH" --force
 fi
 
 
