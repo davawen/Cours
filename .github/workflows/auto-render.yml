@@ -13,6 +13,10 @@ jobs:
             contents: write
         steps:
         - uses: actions/checkout@v4
+        - name: Setup git
+          run: |
+            git config --global user.name "GitHub Actions"
+            git config --global user.email "auto-render@github.com"
         - uses: actions-rust-lang/setup-rust-toolchain@v1
         - name: Install typst
           run: cargo install --locked typst-cli
