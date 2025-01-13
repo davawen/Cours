@@ -22,7 +22,7 @@ jobs:
           run: cargo install --locked typst-cli
         - name: Symlink library
           run: |
-            mkdir -p ~/.local/share/typst/packages/local/physique 
-            ln -s ./typst/physique ~/.local/share/typst/packages/local/physique
+            mkdir -p ~/.local/share/typst/packages/local 
+            ln -s $(pwd)/typst/physique ~/.local/share/typst/packages/local/physique
         - name: Run auto-render
           run: ./auto-render.sh
