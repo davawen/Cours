@@ -145,49 +145,49 @@ $ arw(f_(2->1)) = G hat(u)_(2->1) (m_1 m_2)/r^2 $
 
 Avec $r = A_1 A_2$, $hat(u) = arw(A_2 A_1)/norm(arw(A_2 A_1))$ le vecteur normalisé de $A_2$ vers $A_1$.
 
-#figcan({
-	import draw: *
-
-	let g = gradient.linear(..color.map.viridis)
-
-	let a = (0, 0)
-	let va = (0, 0)
-	let ma = 10
-	let b = (3, 0)
-	let vb = (0, 0.1)
-	let mb = 2
-
-	let G = 0.01
-	let dt = 0.2
-
-	let N = 400
-
-	for i in range(N) {
-		let color = g.sample(100% * (i / N))
-
-		circle(a, radius: 0.3, stroke: color)
-		circle(b, radius: 0.3, stroke: color)
-
-		let (ax, ay) = a
-		let (bx, by) = b
-		let (dx, dy) = (ax - bx, ay - by)
-		let len = calc.sqrt(dx*dx + dy*dy)
-		let len_cube = len*len*len
-
-		let acc_a = G * mb / len_cube
-		let acc_b = G * ma / len_cube
-
-		let (vax, vay) = va
-		let (vax, vay) = (vax + dt*acc_a*dx, vay + dt*acc_a*dy)
-		va = (vax, vay)
-		let (vbx, vby) = vb
-		let (vbx, vby) = (vbx + dt*acc_b*dx, vby + dt*acc_b*dy)
-		vb = (vbx + dt*acc_b*dx, vby + dt*acc_b*dy)
-
-		a = (ax + vax, ay + vax)
-		b = (bx + vbx, by + vby)
-	}
-})
+// #figcan({
+// 	import draw: *
+//
+// 	let g = gradient.linear(..color.map.viridis)
+//
+// 	let a = (0, 0)
+// 	let va = (0, 0)
+// 	let ma = 20
+// 	let b = (3, 0)
+// 	let vb = (0, 0.2)
+// 	let mb = 2
+//
+// 	let G = 0.01
+// 	let dt = 0.5
+//
+// 	let N = 300
+//
+// 	for i in range(N) {
+// 		let color = g.sample(100% * (i / N))
+//
+// 		circle(a, radius: 0.3, stroke: color)
+// 		circle(b, radius: 0.3, stroke: color)
+//
+// 		let (ax, ay) = a
+// 		let (bx, by) = b
+// 		let (dx, dy) = (ax - bx, ay - by)
+// 		let len = calc.sqrt(dx*dx + dy*dy)
+// 		let len_cube = len*len*len
+//
+// 		let acc_a = G * mb / len_cube
+// 		let acc_b = G * ma / len_cube
+//
+// 		let (vax, vay) = va
+// 		let (vax, vay) = (vax + dt*acc_a*dx, vay + dt*acc_a*dy)
+// 		va = (vax, vay)
+// 		let (vbx, vby) = vb
+// 		let (vbx, vby) = (vbx + dt*acc_b*dx, vby + dt*acc_b*dy)
+// 		vb = (vbx + dt*acc_b*dx, vby + dt*acc_b*dy)
+//
+// 		a = (ax + vax, ay + vax)
+// 		b = (bx + vbx, by + vby)
+// 	}
+// })
 
 === Interaction électromagnétique
 
@@ -202,5 +202,202 @@ $ arw(f)_(2->1) = 1/(4 pi epsilon_0) (q_1 q_2)/(A_1 A_2)^3 arw(A_2 A_1) $
 Très similaire à l'attraction gravitationelle,
 mais la force peut être répulsive si les charges sont de même signe.
 
-===
-===
+$epsilon_0$ est la permissivité électrique du vide avec 
+$epsilon_0 = 8.854 dot 10^(-12) upright(" " F dot m^(-1))$
+
+=== Interaction forte
+
+
+
+=== Interaction faible
+
+== Troisième loi de Newton : principe de l'action et de la réaction ou principe des actions réciproques
+
+#theorem[
+	Si un point matériel $A$ exerce sur un point matériel $B$ une force $arw(f_(A->B))$, alors le point $B$ exerce une force $arw(f_(B->A))$ sur $A$ telle que $arw(f_(A->B)) = -arw(f_(B->A))$
+]
+
+== Deuxième loi de Newton : principe fondamental de la dynamique
+
+#theorem[
+La dérivée de la quantité de mouvement est égale à la somme des forces:
+$ (dif arw(p))/(dif t) = sum_i arw(f)_i $
+]
+
+Si on connaît l'ensemble des actions s'appliquant à un point matériel, on peut en déduire le mouvement.
+
+Souvent, on ne connaît pas toutes les interactions qui agissent sur un point. Avec l'information du mouvement, on peut trouver l'accélération, et de là déterminer certaines des forces qui s'appliquent au point.
+
+== Cas de la statique
+
+Un point est statique si il n'y a pas de mouvement: la vitesse et l'accélération est nulle.
+
+Vitesse nulle et $ sum_i arw(f)_i = 0 $
+
+== Méthode de résolution en quatre étape
+
+Un problème de mécanique se résout en quatres points:
++ Définition du système
++ Définition du référentiel
++ Bilan des forces
++ Résolution par choix d'une méthode, pour l'instant le principe fondamental de la dynamique
+
+= Mouvement dans le champ de pesanteur
+
+== Poids
+
+#def[Poids]: Le poids est la force appliquée par la Terre sur un objet. Il tient compte de l'attraction gravitationelle et de la rotation de la Terre  (donc en général il n'est pas dirigé exactement vers le bas, on le verra en spé). On n'en tiendra pas rigueur, notre poids sera strictement vers le bas.
+
+On pose le poids $arw(P)$
+$ arw(P) = m arw(g) $
+Avec $m$ la masse, et $arw(g)$ l'accélération de pesanteur orientée vers le bas.
+
+== Mouvement d'un point $M$ de masse $m$ dans le champ de pesanteur
+
+On se limite à la pesanteur et on ne considère pas les frottements.
+
+En suivant notre plan de route:
++ On définit le système: c'est le point $M$
++ On prend le référentiel terreste (qu'on suppose galiléen parce qu'on se place sur une intervalle de temps suffisement courte, on ne voit pas l'effet de la rotation terrestre)
++ On fait le bilan des forces: $arw(F) = m arw(g)$
++ On résout avec le principe fondamental de la dynamique:
+  $ (dif arw(p))/(dif t) = m arw(a) (M) = m arw(g) $
+  On obtient l'équation différentielle du mouvement:
+  $ arw(a) = arw(g) $
+
+Par la suite on dinstinguera deux cas:
+- La chute libre, on laisse tomber un objet avec une vitesse initiale nulle 
+- Le tir, on lance un objet et on voit où il tombe
+
+== Mouvement en chute libre
+
+#image("exo1.png", width: 100%)
+
+On a déjà établi l'équation différentielle du mouvement:
+$ arw(a) = arw(g) $
+
+On se place dans les coordonées cartésiennes.
+
+On pose notre équation horaire à partir de notre accelération:
+$ cases(diaer(x) = 0, diaer(y) = 0, diaer(z) = -g) $
+On intègre:
+$ cases(dot(x) = x_0, dot(y) = y_0, dot(z) = -g t + z_0) $
+On utilise les conditions initiales: vitesse nulle à l'origine,
+donc $x_0 = y_0 = z_0 = 0$ \
+Et on intègre à nouveau:
+$ cases(x = x_1, y = y_1, z = -1/2 g t^2 + z_1) $
+On utilise les conditions initiales, on suppose l'origine placé dans le même axe que $M$, et qu'il est placé au niveau du sol. L'objet est laché à une hauteur $h$, d'où:
+$ cases(x = 0, y = 0, z = h - 1/2 g t^2) $
+
+On arrive au sol en $z = 0$, on résout donc:
+$ h - 1/2 g t_s^2 = 0 <=> t_s^2 = 2/g h \ <=> t_s = sqrt((2 h)/g) "car t positif" $
+
+On a la vitesse en tout $t$ avec l'équation horaire.
+On substitue $t_s$:
+$ dot(z) = -g sqrt((2h)/g) = -sqrt(2 h g) $
+
+== Tir dans le vide
+
+#image("exo2.png")
+
+1. On peut séparer le problème en deux partie: l'ascension parfaitement verticale, le moment où la vitesse s'annulle, la chute libre.
+
+On supposera donc $alpha in.not {-1/2, 1/2}$
+
+2. On fait la somme des forces ($arw(a) = arw(g)$):
+
+3.
+$ cases(diaer(x) = 0, diaer(y) = 0, diaer(z) = -g) $
+On intègre, les conditions initiales nous donnent $x_0 = cos(alpha) v_0$, $z_0 = sin(alpha) v_0$, $y_0 = 0$ car on se place dans le plan du lancé.
+$ cases(dot(x) = cos(alpha)v_0, dot(y) = 0, dot(z) = -g t + sin(alpha)v_0 ) $
+D'où (on place notre référentiel au point de lancé):
+$ cases(
+	x = cos(alpha) v_0 t,
+	y = 0,
+	z = sin(alpha)v_0 t -1/2 g t^2
+) $
+
+4. Pour obtenir l'équation de la trajectoire, on veut éliminer la variable $t$:
+$ t = x/(cos(alpha) v_0) (alpha != 0) $
+$ z &= x sin(alpha)/cos(alpha) - 1/2 g x^2/(cos(alpha)^2 v_0^2)
+$
+
+La trajectoire est donc de forme parabolique.
+
+5. On sait que si un extremum est atteint, alors la dérivée de $z$ s'anulle. On cherche donc:
+$ dot(z) = 0 $
+
+On peut soit dériver $z$ avec les équations horaires (par-rapport à $z$), ou avec l'équation de trajectoire (par-rapport à $x$).
+$ - g t + v_0 sin(alpha) = 0 $
+$ t = (v_0 sin(alpha))/g $
+
+On substitue dans les équations horaires:
+$ cases(
+	x = v_0^2 cos(alpha) sin(alpha) 1/g, 
+	z = (sin(alpha)^2 v_0^2)/g - (sin(alpha)^2 v_0^2)/(2 g) = (sin(alpha)^2 v_0^2)/(2 g)
+) $
+
+$z >= 0$, donc cet extremum est un maximum.
+
+6. On cherche le $x_P$ où la balle retombe au sol. On utilise l'équation de la trajectoire:
+$ z = 0 $
+$ -(g)/(2 cos(alpha)^2 v_0^2) x_P^2 + x_P sin(alpha)/cos(alpha) = 0 $
+$ x_P (-(g)/(2 cos(alpha)^2 v_0^2) x_P + sin(alpha)/cos(alpha)) = 0 $
+
+Soit $x_P = 0$ (lancement de la balle), soit:
+$ x_P = sin(alpha)/(cos(alpha)) (2 cos(alpha)^2 v_0^2)/(g) = 2 sin(alpha) cos(alpha) v_0^2/g = sin(2alpha) v_0^2/g $
+
+7. On cherche $alpha_1$ et $alpha_2$ tels que:
+$ x_P (alpha_1) = x_P (alpha_2) $
+$ sin(2 alpha_1) v_0^2/g = sin(2 alpha_2) v_0^2/g $
+$ sin(2 alpha_1) - sin(2 alpha_2) = 0 $
+$ sin(alpha_1) cos(alpha_1) - sin(alpha_2) cos(alpha_2) = 0 $
+$ sin(alpha_1 - alpha_2) = 0 $
+$ alpha_1 eq.triple alpha_2 [pi] "ou" alpha_1 eq.triple - alpha_2 [pi] $
+
+#figcan({
+	import draw: *
+	catmull((0, 0), (3, 1.5), (5.85, 0), mark: (end: ">"), name: "a")
+	catmull((0, 0), (3, 4), (6, 0), mark: (end: ">"), name: "b")
+
+	line("a.80%", (6, 2))
+	content((6.1, 2), [Tir tendu], anchor: "west")
+	line("b.60%", (6, 4))
+	content((6.1, 4), [Tir en cloche], anchor: "west")
+
+	arrow((0, 0), (0, 4))
+	arrow((0, 0), (8, 0))
+
+	cetz.angle.angle((0, 0), "a.1", (1, 0), radius: 1)
+	cetz.angle.angle((0, 0), "b.0.5", (1, 0))
+})
+
+= Influence d'un frottement fluide
+
+== Forces de frottement fluide
+
+Un point dans un fluide sera affecté par ce fluide par deux force:
+- La portance $arw(P)$, la force qui permet aux avions de voler
+- La trainée $arw(T)$, la force de frottement fluide
+
+L'effet du fluide est la somme des deux.
+
+#figcan({
+	import draw: *
+	point((0, 0))
+	arrow((0, 0), (2, 0))
+	arrow((0, 0), (0, 2))
+	arrow((0, 0), (-2, 0))
+
+	content((0, -0.3), [Point matériel $M$], anchor: "north")
+	content((-1.8, -0.3), [Trainée $arw(T)$], anchor: "north-east")
+	content((0, 2.1), [Portance $arw(P)$], anchor: "south")
+	content((2, 0.3), [$arw(v)$])
+})
+
+== Chute avec un frottement fluide
+
+#image("exo3.png")
+
+1. On définit notre système: le point $M$ \
+  On fait un bilan des forces: gravitation $m arw(g)$, et frottement fluide $- k arw(v)$
