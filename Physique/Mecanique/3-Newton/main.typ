@@ -400,4 +400,257 @@ L'effet du fluide est la somme des deux.
 #image("exo3.png")
 
 1. On définit notre système: le point $M$ \
-  On fait un bilan des forces: gravitation $m arw(g)$, et frottement fluide $- k arw(v)$
+  On fait un bilan des forces: gravitation $m arw(g)$, et frottement fluide $- k arw(v)$ \
+  On établit l'équation différentielle du mouvement:
+  $ (dif arw(v))/(dif t) + k/v arw(v) = arw(g) $
+
+2. En sah il y a pas de vitesse horizontale ou en profondeur, donc $v = (dif z)/(dif t)$, \
+  mais on peut juste intégrer les vecteurs.
+
+3. $ arw(v) (t) = arw(v_H) (t) + arw(v_P)(t) $
+  Donc solution particulière de la forme:
+  $ arw(v_H) = arw(V) e^(-k/m t) $
+  On peut poser $tau = m/k$
+  
+  Le second membre est constant, donc on cherche $arw(v_P)$
+  de la forme d'une constante. Donc:
+  $ (dif arw(v_P))/(dif t) = arw(0) $
+  D'où:
+  $ k/m arw(v_P) = arw(g) <=> arw(v_P) = m/k arw(v_P) $
+  $ arw(v) (t) = arw(V) e^(-t/tau) + tau arw(g)  $
+  Pas de vitesse initiale, donc:
+  $ arw(v)(0) = arw(0) = arw(V) + tau arw(g) $
+  Donc $arw(V) = -tau arw(g) = -m/k arw(g)$
+  D'où:
+  $ arw(v)(t) = tau arw(g) (1 - e^(-t/tau))  $
+
+4. Deux manière:
+  + On a la solution, et on a que 
+    $ arw(v)(t) -->_(t -> +oo) tau arw(g) $
+  + Si $arw(v)(t)$ tend vers une constante, alors $(dif arw(v))/(dif t) -> 0$.
+
+    On reporte dans l'équa-diff, et on a $arw(v_cal(l)) = tau arw(g)$
+
+== Chute avec frottement proportionnel au carré de la vitesse
+
+#image("exo4.png")
+
++ On définit notre système: le point $M$, dans un référentiel galiléen terrestre.
+
+  On fait le bilan des forces:
+  - Le poids $m arw(g)$
+  - Le frottement $k v arw(v)$
+  
+  On applique le principe fondamental de la dynamique:
+  $ m (dif arw(v))/(dif t) = m arw(g) + k v arw(v) $
+  
+  On projète sur l'axe $O arw(z)$ (car les autres axes ne servent à rien):
+  $ m (dif v)/(dif t) = m g - k v^2 $
+  
+  On suppose que $v$ tend vers une vitesse limite $v_cal(l)$, donc $(dif v_cal(l))/(dif t) -> 0$, \
+  On remplace:
+  $ m g - k v_cal(l)^2 = 0 $
+  $ v_cal(l) = sqrt((m g)/k) $
+  Mais si $k$ n'a pas d'unité, $v_cal(l)$ n'est pas homogène à une vitesse:
+  il faut changer l'unité de $k$
+  
+  De là, on récupère:
+  $ m g = k v_cal(l)^2 $
+  On remplace:
+  $ m (dif v)/(dif t) = k (v_cal(l)^2 - v^2) $
+  On suppose que la vitesse limite n'est jamais atteinte (pout diviser par $v_cal(l)^2 - v^2$):
+  $ (dif v)/(v_cal(l)^2 - v^2) = k/m dif t $
+  On multiplie par le signe intégral:
+  $ integral (dif v)/(v_cal(l)^2 - v^2) = integral k/m dif t $
+  Ensuite, on résout nos intégrales comme si on avait pas fait
+  des maths de physiciens. \
+  On fait une décomposition en élément simple:
+  $ 1/(v_cal(l)^2 - v^2) &= a/(v_cal(l) - v) + b/(v_cal(l) + v) \
+&= (a(v_cal(l) + v) + v(v_cal(l) - v))/((v_cal(l)+v)(v_cal(l)-v)) \
+&= ((a + b)v_cal(l) + (a - b)v)/((v_cal(l)+v)(v_cal(l)-v))
+  $
+  Donc:
+  $ cases(a = b, (a + b)v_cal(l) = 1) <=> a = b = 1/(2 v_cal(l)) $
+  D'où:
+  $ integral_0^v (dif v)/(v_cal(l)^2 - v^2) &= 
+1/(2 v_cal(l)) (integral_0^v (dif v)/(v_cal(l) + v) + integral_0^v (dif v)/(v_cal(l) - v) ) \
+&= 1/(2 v_cal(l)) ([ln(v_cal(l) + v)]_0^v - [ln(v_cal(l) - v)]_0^v) \
+&= 1/(2 v_cal(l)) (ln((v_cal(l) + v)/(v_cal(l) - v))) \
+$ 
+  En revenant à l'égalité des intégrales, on a égalité avec:
+  $ k/m t $
+  Donc (on dit hassul les bornes c'est les même):
+  $ (v + v_cal(l))/(v_cal(l) - v) = exp(2 v_cal(l) k/m t) = A $
+  $ v + v_cal(l) = A v_cal(l) - A v $
+  $ (A - 1)v_cal(l) = (A + 1)v $
+  $ v = v_cal(l) (A - 1)/(A + 1) $
+  $ v(t) &= v_cal(l) (exp(2 v_cal(l) k/m t) - 1)/(exp(2 v_cal(l) k/m t) + 1) \
+&= v_cal(l) (exp(v_cal(l) k/m t) - exp(-v_cal(l) k/m t))/(exp(v_cal(l) k/m t) + exp(-v_cal(l) k/m t)) \
+&= v_cal(l) tanh(v_cal(l) k/m t)
+$
+
+= Mouvement d'une masse suspendu au bout d'un fil
+
+== Tension d'un fil
+
+#figcan({
+	import draw: *
+
+	arrow((0, 0), (-2, 1))
+	arrow((0, 0), ((0, 0), 1.5, (2, -1)))
+	arrow((0, 0), ((0, 0), 1.5, (1, 2)))
+	circle((0, 0), radius: 0.5, name: "C", fill: white)
+
+	content((0.8, 0), $m$)
+	content((-1, 1), $arw(T)$)
+	content((1, -1), $arw(u_r)$)
+	content((1, 1), $arw(u_theta)$)
+})
+
+La tensionn du fil est:
+- Dans la direction du fil
+- Dans le sens de la masse vers le fil
+- De norme inconnue
+
+Il va donc falloir se débarasser de la norme. On va projeter dans la direction perpendiculaire au fil.
+On prendra donc $arw(u_theta)$ comme projection.
+
+== Oscillations d'un pendule simple
+
+#image("exo5.png")
+#image("exo5-q.png")
+
+1.
+On définit notre système: le point $M$, dans un référentiel galiléen terrestre.
+
+On fait le bilan des forces:
+- Le poids: $m arw(g)$
+- La tension du fil: $arw(R)$
+- Le frottement fluide de fdp: $- k arw(v)$
+
+On applique le principe fondamentale de la dynamique.
+
+$ m arw(a) = m arw(g) + arw(R) - k arw(v) $
+
+On passe par la vitesse:
+$ v = dot(r) arw(u_r) + r dot(theta) arw(u_theta) + underbrace(dot(z) arw(u_r), =0) $
+$ r = l => dot(r) = 0 $
+Donc:
+$ arw(v) = l dot(theta) arw(u_theta) $
+$ arw(a) = dot(arw(v)) = l diaer(theta) arw(u_theta) - l dot(theta)^2 arw(u_r)  $
+
+$arw(R)$ est inconnu, on doit le faire disparaître, on va le projeter $arw(a)$ sur $arw(u_theta)$.
+
+Le terme multiplié par $arw(u_r)$ va disparaître. Pour les autres:
+
+#figcan({
+	import draw: *
+	arrow((0, 0), (0.8, 0.8))
+	line((-1.2, -1.2), (0, 0), stroke: (dash: "dashed"))
+
+	line((-0.8, -0.8), (0, -1.5), stroke: (dash: "dotted"))
+
+	arrow((0, 0), (0, -1.5))
+	content((0, -1.8), $m arw(g)$)
+	content((1, 1), $arw(u_theta)$)
+})
+
+$ cases(
+	m arw(g)\/arw(u_theta) = - m g sin theta,
+	arw(R)\/arw(u_theta) = 0,
+	k arw(v)\/arw(u_theta) = k l dot(theta)
+) $
+
+Donc:
+$ m l diaer(theta) = - m g sin theta - k l dot(theta) $
+$ diaer(theta) + k/m dot(theta) + g/l sin theta = 0 $
+
+2. On projette ensuite sur $arw(u_r)$:
+$ - m l dot(theta)^2 = m g cos theta - R + 0 $
+$ R = m g cos theta + m l dot(theta)^2 $
+
+3. 
+$ diaer(theta) + g/l sin theta = 0 $
+On multiplie par $dot(theta)$
+$ diaer(theta) dot(theta) + g/l sin theta dot(theta) = 0 $
+On intègre:
+$ 1/2 dot(theta)^2 - g/l cos theta = "constante" $
+On a les conditions initiales:
+en $t = 0$, $theta = theta_0$, donc $dot(theta) = 0$
+
+$ 1/2 dot(theta)^2 - g/l cos theta = 0 - g/l cos theta_0 $
+$ dot(theta)^2 = (2 g)/l (cos theta - cos theta_0) $
+$ R = m g cos theta + 2 m g ( cos theta - cos theta_0 ) $
+$ R = m g (3 cos theta - 2 cos theta_0) $
+
+4.
+En supposant $theta$ un angle faible, on peut faire l'approximation $sin theta approx theta$
+
+On a donc notre équation différentielle:
+$ diaer(theta) + g/l theta = 0 $
+C'est l'équation d'un oscillateur harmonique: \
+On a la pulsation $omega_0 = sqrt(g/l)$.
+
+En rajoutant les frottements fluides:
+$ diaer(theta) + k/m dot(theta) + theta = 0 $
+On sait aussi résoudre ce genre d'équation.
+
+= Poussée d'archimède
+
+== Poussée d'archimède
+
+La poussée d'archimède est une force égale à l'opposé du poids du
+fluide déplacé.
+
+Seulement, les points sont infinitésimaux, ils n'ont donc pas de volume.
+Pour parler de poussée d'archimède, on est obligé de considérer le volume déplacé.
+
+On se situe un peu entre la mécanique des points et la mécanique des solides.
+
+#figcan({
+	import draw: *
+	line((-4, 0), (4, 0))
+
+	catmull((1, -1), (2, -1.5), (1.8, -3), (0.3, -2.4), (0, -2), close: true, fill: blue)
+
+	point((1.2, -2))
+	arrow((1.2, -2), (1.2, -3.8))
+	arrow((1.2, -2), (1.2, -0.2))
+	content((1.2, -4.2), [Poids de l'eau de volume $V_"im"$])
+	content((1.4, -0.3), [Poussée d'archimède $arw(pi)$], anchor: "west")
+})
+
+Problème: un solide peut-être à la fois dans l'eau et dans l'air:
+#figcan({
+	import draw: *
+	line((-4, 0), (4, 0))
+
+	line((-1, 1), (1, 1), (1, -1), (-1, -1), close: true, fill: white)
+
+	line((-1, -1), (-1, 0), (1, 0), (1, -1), stroke: none, fill: blue)
+	line((-1, 1), (-1, 0), (1, 0), (1, 1), stroke: none, fill: red)
+})
+
+On a donc à la fois une poussée d'archimède de l'eau, de l'air, et une répartition du volume qui change entre les deux.
+
+== Exemple du glaçon
+
+#image("exo6.png")
+
+1.
+On suppose la poussée d'archimède de l'air négligeable.
+
+Si on ne fait rien, le glaçon finira à l'équilibre.
+Donc le poids du glaçon sera égal à la poussée d'archimède:
+$ m arw(g) + arw(pi) = 0 $
+$ m arw(g) - rho_"eau" V_"im" arw(g) = 0 $
+D'où:
+$ V_"im" = m/rho_"eau" $
+
+2.
+Par conservation de la masse:
+$ rho_"eau" V_"eau" = m $
+Le volume d'eau obtenu est donc:
+$ V_"eau" = m / rho_"eau" = V_"im" $
+
+Donc le verre ne déborde pas :)
