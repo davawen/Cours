@@ -654,3 +654,260 @@ Le volume d'eau obtenu est donc:
 $ V_"eau" = m / rho_"eau" = V_"im" $
 
 Donc le verre ne déborde pas :)
+
+= Action d'un ressort
+
+== Tension d'un ressort
+
+Un ressort est définit par:
+- Une longueur au repos, $l_a$
+- Un coefficient de raideur, $k$
+
+Deux situations pinrcipales d'un ressort:
+#figcan({
+	import draw: *
+
+	line((-4, 0), (4, 0))
+
+	cetz.decorations.coil(
+		line((-2, 0), (-2, -3)),
+		segment-length: 0.3, amplitude: 0.5
+	)
+	circle((-2, -3.2), radius: 0.3)
+	content((-1.2, -3.2), $arw(u)_"ext"$)
+
+	cetz.decorations.coil(
+		line((2, 0), (2, 2)),
+		segment-length: 0.3, amplitude: 0.5
+	)
+	circle((2, 2.2), radius: 0.3)
+
+	arrow((2, 2.2), (2, 3.2))
+	content((2.5, 3.2), $arw(u)_"ext"$)
+
+	content((-2, 0.4), [Tension])
+	content((2, -0.4), [Compression])
+})
+
+On décrit le ressort par une force de rappel appliqué à la masse attachée au bout:
+$ arw(F) = - k (l - l_a) arw(u_"ext") $
+
+== Mouvement horizontal d'une masse attachée à un ressort
+
+#image("exo9.png")
+
+On définit le système: le point $M$ attaché au bout du ressort.
+
+On se place dans le référentiel terrestre galiléen.
+
+On fait le bilan des forces:
+- Poids $m arw(g)$
+- Réaction du ressort $arw(R_N)$,
+  normale au mouvement dû à l'absence de frottements.
+
+#figcan({
+	import draw: *
+	line((0, 0), (0, 1))
+	line((0, 0), (4, 0))
+
+	cetz.decorations.coil(line((0, 0.5), (3, 0.5)), amplitude: 0.4)
+
+	circle((3, 0.5), radius: 0.2)
+
+	arrow((3, 0.5), (4, 0.5))
+	content((4.4, 0.5), $arw(u)_"ext"$)
+
+	arrow((3, 0.5), (3, -1.0))
+	content((3.5, -1), $m arw(g)$)
+})
+
+== Mouvement vertical d'une masse attachée à un ressort
+
+#figcan({
+	import draw: *
+
+	cetz.decorations.coil(line((0, 0), (0, -2)), amplitude: 0.3)
+	circle((0, -2), radius: 0.13, fill: black)
+
+
+	content((-0.7, -1), $l$)
+	content((-0.4, -2), $m$)
+})
+
+#image("exo9-1.png")
+
+#let sus = $ඞ$
+
+On se place dans le référentiel terrestre supposé galiléen. On fait un bilan des forces:
+- Le poids $m arw(g)$
+- La réaction du ressort $arw(F)$
+
+On applique le principe fondamental de la dynamique:
+$ m arw(a) = m arw(g) - k (l - l_a) arw(u)_"ext"  $
+1.
+À l'équilibre, on a:
+$ cases(arw(a) = 0, arw(v) = 0) $
+Donc $m arw(g) - k (l - l_a) arw(u)_"ext" = 0 <=> m arw(g) = k (l - l_a) arw(u)_"ext"$
+
+On projette sur l'axe de $arw(u)_"ext"$: \
+$k (l - l_a) = m g <=> l_a = l - (m g)/k$
+
+2.
+Si on est pas à l'équilibre, on a $arw(a) != 0$, donc:
+- $m diaer(x) = m g - k(l - l_a)$
+- $$
+
+On résout l'équa diff 
+
+==
+== Analogie avec les oscillations électriques
+
+#figure(table(
+	columns: 3,
+	[], [Mécanique], [Electronique],
+	[Équation différentielle],
+	[ $ m diaer(x) + k x = 0 $ $ m diaer(x) + lambda dot(x) + k x = 0 $ ],
+	[ $ L diaer(q) + 1/C q = 0 $ $ L diaer(q) + R dot(q) + 1/C q = 0 $  ],
+	[Variables],
+	[
+	- Élongation $x$ 
+	- Vitesse $dot(x)$
+	- Masse $m$
+	- Coefficient de frottement $lambda$
+	- Ressort de raideur $k$
+	],
+	[ 
+	- Charge $q$
+	- Intensité $i$ = $dot(q)$
+	- Inductance $L$
+	- Résistance $R$
+	- Capacité $C$
+	],
+	[Pulsation], $sqrt(k/m)$, $sqrt(1/(L C))$
+))
+
+= Réaction d'un support solide
+
+== Lois de Coulomb-Amontons du frottement solide
+
+Les lois d'Amontons et de Coulomb s'appliquent plus à des 
+systèmes solides (et non des systèmes points),
+car c'est tout une surface qui va frotter, donc c'est délicat de ramener tout cela à un seul point.
+
+On considère la normale à la surface au point $M$, et le plan tangentiel à la surface au point.
+
+On décompose la force de friction en une force normale, et une force tangente (dans le plan tangentiel):
+#align(center, image("coulomb.png", width: 30%))
+
+$ arw(R) = arw(R_N) + arw(R_T) $
+
+- En l'asbence de frottements solides, on a juste $arw(R_T) = 0$
+- Si on a des frottements, si la vitesse de glissement $arw(v_g)$ (qui dans le cas d'un système point sera juste la vitesse du point, mais différent dans un solide) est non nulle, le frottement tangent $arw(R_T)$ sera opposé (en terme de direction, PAS en terme de norme) à $arw(v_g)$, et on aura $arw(R_T) = f arw(R_N)$, avec $f$ le coefficient de frottement.
+
+
+== Exemple du skieur
+
+#image("exo_skieur.png")
+
+#figcan({
+	import draw: *
+
+	line((-5, 0), (0, 0))
+
+	point((-4, 2), value: $O$)
+	arrow((-4, 2), (1, -0.5))
+	arrow((-4, 2), (-3, 3))
+
+	cetz.angle.angle((0, 0), (-4, 0), (-4, 2), radius: 1)
+	content((-1.2, 0.3), $alpha$)
+})
+
+On définit notre système: $M$.
+On se place dans le référentiel terrestre galiléen.
+On fait un bilan des forces:
+- Le poids $m arw(g)$
+- La réaction
+  - On peut négliger les frottements $arw(R) = arw(R_N)$
+  - Ou ne pas les négliger $arw(R) = arw(R_N) + arw(R_T)$
+
+On applique le principe fondamental de la dynamique:
+$ m arw(a) = m arw(g) + arw(R) $
+
++ On se place dans la situation sans frottement:
+  $ arw(R) = arw(R_N) $
+  On projette sur l'axe qui fait disparaître $arw(R_N)$,
+  donc sur $arw(O_x)$.
+  
+  $ m diaer(x) = m g sin alpha $
+  #note[
+	On sait qu'il n'y a pas de mouvement sur l'axe $arw(O_y)$, donc:
+	$ 0 = - m g cos alpha + R_N $
+	D'où
+	$ R_N = m g cos alpha $
+  ]
+  On a donc:
+  $ diaer(x) = g sin alpha $
+  On intègre:
+  $ dot(x) = t g sin alpha $
+  $ x = 1/2 t^2 g sin alpha $
+
+2. On ne néglige pas les frottements, donc:
+  $ arw(R) = arw(R_N) + arw(R_T) $
+  $arw(R_T)$ est de même directement que l'axe $arw(O_x)$,
+  de sens opposé à $arw(v)$, et de norme
+  $ R_T = f R_N  $
+  On doit projeter sur les deux axes:
+  $ m diaer(x) = m g sin alpha - R_T $
+  $ 0 = - m g cos alpha + R_N $
+  Donc:
+  $ R_N = m g cos alpha $
+  $ R_T = f R_N = f m g cos alpha $
+  D'où:
+  $ diaer(x) = g (sin alpha - f cos alpha) $
+  On intègre:
+  $ dot(x) = t g (sin alpha - f cos alpha) $
+  $ x = 1/2 t^2 g (sin alpha - f cos alpha) $
+
+== Glissement d'un solide
+#image("exo_glissement.png")
+
+#figcan({
+	import draw: *
+
+	line((-5, 0), (0, 0))
+
+	point((-2, 1), value: $M$, anchor: "south-west")
+	arrow((-4, 2), (0, 0))
+	arrow((-4, 2), (-3, 3))
+
+	cetz.angle.angle((0, 0), (-4, 0), (-4, 2), radius: 1)
+	content((-1.2, 0.3), $alpha$)
+
+	content((0, 0.6), $arw(u_x)$)
+	content((-2.6, 3), $arw(u_y)$)
+})
+
+Le système étudié est le point $M$.
+On se place dans le référentiel terrestre galiléen.
+On fait le bilan des forces:
+- Le poids $m arw(g)$
+- La réaction $arw(R) = arw(R_T) + arw(R_N)$
+
+On suppose qu'on est à l'équilibre:
+$ arw(0) = m arw(g) + arw(R_T) + arw(R_N) $
+
+On projette:
+- Sur $arw(u_x)$: $0 = m g sin alpha - R_T + 0$
+- Sur $arw(u_y)$: $0 = -m g cos alpha + 0 + R_N$
+
+D'où:
+$ cases(R_N = m g cos alpha, R_T = m g sin alpha) $
+
+À l'équilibre, quand $arw(v) = arw(0)$:
+$ R_T < f_0 R_N $
+
+On reste à l'équilibre tant que 
+$ R_T < f_0 R_N $
+$ m g sin alpha < f_0 m g cos alpha $
+$ tan alpha < f_0 $
+
