@@ -30,7 +30,7 @@ $ arw(p_(\/R)) (M) = m times arw(v_(\/R)) (M) $
 
 == Ensemble de points matériels
 
-Pour passer de la mécanique d'un point à toute la mécanique d'un système,
+Pour passer de la mécanique du point à la mécanique d'un système,
 on associe à chaque point $M_i$ sa masse $m_i$:
 
 La masse totale du système est donc définit par 
@@ -45,13 +45,11 @@ On appelle $G$ le centre d'inertie.
 #def[Centre d'inertie]: le barycentre de l'ensemble des points du système 
 du système par-rapport à leur masse. (C'est la moyenne poindérée de la position des points).
 
-#let M = "Tartanpion"
-
-$ m_"tot" arw(O G) = sum_(i) m_i arw(O #M _i) $
+$ m_"tot" arw(O G) = sum_(i) m_i arw(O M _i) $
 
 D'où:
-$ m_"tot" arw(O G) = sum_(i) m_i (arw(O G) + arw(G #M _i)) <=>
-sum_i m_i arw(G #M _i) = arw(0) $
+$ m_"tot" arw(O G) = sum_(i) m_i (arw(O G) + arw(G M _i)) <=>
+sum_i m_i arw(G M _i) = arw(0) $
 
 == Quantité de mouvement d'un système de points matériels
 
@@ -68,7 +66,7 @@ $
 
 == Énoncé
 
-#theorem[Il existe des référentiels privilégiés, appellés "référentiels galliléens", dans lesquels un point matériel isolés aura un mouvement rectiligne, uniforme.]
+#theorem[Il existe des référentiels privilégiés, appellés "référentiels galliléens", dans lesquels un point matériel isolé aura un mouvement rectiligne, uniforme.]
 
 C'est un principe d'existence: il y en aura forcément un.
 

@@ -36,11 +36,13 @@ On remplace pour obtenir une équation différentielle en une seule variable:
 On peut les écrires sous la forme:
 $ (dif^2 u)/(dif t) + omega_0^2 u = 0, "avec" omega_0 = 1/sqrt(L C) $
 
-== Solution d'un oscillateur harmonique
-
 #caution[
-	Le plus et le carré dans l'équation sont essentiels pour dire qu'il s'agit d'un oscillateur harmonique.
+	La forme exacte de l'équation est essentielle pour dire qu'il s'agit d'un oscillateur harmonique. Par exemple, une équation du type
+	$ (dif^2 u)/(dif t^2) - omega_0^2 u = 0 $
+	N'est PAS un oscillateur harmonique.
 ]
+
+== Solution d'un oscillateur harmonique
 
 Lorsqu'on est face à un oscillateur harmonique, on peut parachuter la forme de la solution, qui sera:
 $ u(t) &= A cos(omega_0 t) + B sin(omega_0 t) \ &= U cos(omega_0 t + phi) $
@@ -91,7 +93,7 @@ $ e(t) = cases(0 "si" t < 0, E "si" t > 0) $
 On a:
 $ e &= u + u_R + u_L \
 &= u + R i + L (dif i)/(dif t) \
-&= u + R C (dif u)/(dif t) + L (dif t)/(dif t) \
+&= u + R C (dif u)/(dif t) + L (dif i)/(dif t) \
 &= u + R C (dif u)/(dif t) + L C (dif^2 u)/(dif t^2) \
 $
 
@@ -108,6 +110,8 @@ $ R/L = omega_0/Q = 1/(Q sqrt(L C)) <=> Q = L/(R sqrt(L C)) = 1/R sqrt(L/C) $
 #def[Régime libre ou régime propre]: régime se mettant en place en l'absence de source, c'est à dire quand $e = 0$, on s'intéressera donc uniquement à la description du régime transitoire.
 
 // Loise was here
+
+#pagebreak()
 
 == Équation caractérisique - Trois types de régimes
 
@@ -134,7 +138,7 @@ $ Delta = (omega_0/Q)^2 - 4 omega_0^2 = omega_0^2 (1/Q^2 - 4) $
   $ Q = 1/R sqrt(L/C) < 1/2 <=> R > 2 sqrt(L/C) $
   On verra ce régime avec un fort amortissement (grande résistance).
 
-  #image("./simul_aperiodique.png", width: 50%)
+  #figure(caption: [Simulation d'un régime apériodique], image("./simul_aperiodique.png", width: 50%))
 
 - Si $Delta = 0$, $Q = 1/2 <=> R = 2 sqrt(L/C)$
 
@@ -143,25 +147,32 @@ $ Delta = (omega_0/Q)^2 - 4 omega_0^2 = omega_0^2 (1/Q^2 - 4) $
   C'est la limite entre les deux autres régimes.
 
   On a une solution réelle double:
-  $ r_0 = - omega_0/(2 Q) $
+  $ r_0 = - omega_0/(2 Q) = -omega_0 $
   La solution est alors de la forme:
-  $ u(t) = A e^(r_0 t) + B t e^(-r_0 t) = (A + B t) e^(-r_0 t) $
+  $ u(t) = A e^(r_0 t) + B t e^(r_0 t) = (A + B t) e^(r_0 t) $
   
   Le régime critique est le plus rapide dans le retour à zéro.
-  #image("./simul_critique.png", width: 50%)
+  #figure(caption: [Simulation d'un régime critique], image("./simul_critique.png", width: 50%))
 
 - Si $Delta < 0$,
   $ Q > 1/2 <=> R < 2 sqrt(L/C) $
   On a deux solutions complexes conjuguées:
   $ r_(1,2) = - omega_0/(2 Q) plus.minus j omega_0/2 sqrt(4 - 1/Q^2) $
-  #resultb[$ u(t) = A e^(-t omega_0/(2 Q)) e^(j t omega_0/2 sqrt(4 - 1/Q^2)) + B e^(-t omega_0/(2 Q)) e^(-j t omega_0/2 sqrt(4 - 1/Q^2)) $]
+  #resultb[$ u(t) = A e^(r_1 t) + B e^(r_2 t) $]
   #note[On cherche des solutions réelles. On va donc directement écrire $u(t)$ avec des $cos$ et des $sin$]
   $ u(t) = (U_1 cos(omega t) + U_2 sin(omega t)) e^(-t omega_0/(2 Q))
   \ "avec" omega = omega_0/2 sqrt(4 - 1/Q^2) = (omega_0 sqrt(4Q^2 - 1))/(2 Q)
   \ "ou" u(t) = U cos(omega t + phi) e^(-t omega_0/(2 Q))
   $
+  #tip[Pour la forme de la solution:
+	la partie réelle des solutions complexes détermine l'amortissement,
+	la partie complexe détermine la période.
+  ]
   On appellera $omega$ la *pseudo-pulsation*, et ce régime *pseudo-périodique*.
-  #image("./simul_pseudoperiodique.png", width: 50%)
+  #figure(
+	caption: [Simulation d'un régime pseudo-périodique],
+	image("./simul_pseudoperiodique.png", width: 50%)
+  )
   
   On peut ainsi calculer la *pseudo-période*:
   $ T = (2pi)/omega = (4 pi Q)/(omega_0 sqrt(4 Q^2 - 1)) $
@@ -193,7 +204,7 @@ $ Delta = (omega_0/Q)^2 - 4 omega_0^2 = omega_0^2 (1/Q^2 - 4) $
 
 On a pour l'instant résolu l'équadiff dans le régime libre.
 
-Si on applique un échelon de tension, on tend uste vers un régime permanent de tension différente.
+Si on applique un échelon de tension, on tend juste vers un régime permanent de tension différente.
 
 == Aspects énergétiques
 

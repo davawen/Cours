@@ -185,7 +185,7 @@ Pour une onde sinusoïdale, notre fonction est un sinus:
 
 $ u(x, t) &= f(t - x/c) \
 &= U sin(omega (t - x/c) + phi) \
-&= U sin(omega t - omega/c + phi) \
+&= U sin(omega t - x omega/c + phi) \
 $
 
 #note[On a pas réellement besoin de la phase $phi$, car on peut simplement bien choisir notre $t$ initial pour l'annuler.]
