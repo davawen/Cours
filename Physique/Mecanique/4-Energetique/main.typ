@@ -390,7 +390,7 @@ $ f(x, y, z) = ..., f(r, theta, z) = ..., f(r, theta, phi) = ... $
 On définit $grad$ par: 
 $ grad f(M) dot dif arw(O M) = dif f  $
 
-On va se placer dans différents systèmes coordonées:
+On va se placer dans différents systèmes de coordonées:
 
 === Cartésiens
 
@@ -408,5 +408,35 @@ $ grad f(M) dot dif arw(O M)
 &= grad_x f dot dif x + grad_y f dot dif y + grad_z f dot dif z
 $
 
-Donc:
+Donc, par identification (on peut identifier car on est dans une base orthonormée):
 $ grad f(M) = (diff f)/(diff x) arw(u_x) + (diff f)/(diff y) arw(u_y) + (diff f)/(diff z) arw(u_z) $
+
+=== Cylindriques
+
+Avec $f(r, theta, z)$
+$ diff f = (diff f)/(diff r) dif r + (dif f)/(dif theta) dif theta
++ (diff f)/(diff z) dif z
+$
+
+$ grad f &= (grad f)_r arw(u_r) + (grad f)_theta arw(u_theta) + 
+(grad f)_z arw(u_z) $
+$ dif arw(O M) = dif r arw(u_r) + r dif theta arw(u_theta)
++ dif z arw(u_z)
+$
+
+On identifie:
+$ grad f = (diff f)/(diff r) arw(u_theta)
++ 1/r (diff f)/(diff theta) 
++ (diff f)/(diff z) arw(u_z)
+$
+
+=== Sphériques
+$ diff f = (diff f)/(diff r) dif r
++ (diff f)/(diff theta) dif theta
++ (diff f)/(diff phi) dif phi
+$
+
+$ grad f = (grad f)_r arw(u_r)
++ (grad f)_theta arw(u_theta)
++ (grad f)_phi arw(u_phi)
+$

@@ -223,7 +223,7 @@ Un filtrage permet de ne sélectionner qu'une partie des fréquences d'un signal
 
 == Bande passante
 
-Définie à -3 dB par par l'ensemble des $omega$ tels que $G_"dB" <= G_"dB,max"$ ou $G(omega) >= (G_"max")/sqrt(2)$
+Définie à -3 dB par l'ensemble des $omega$ tels que $G_"dB" >= G_"dB,max" - 3 "dB"$ ou $G(omega) >= (G_"max")/sqrt(2)$
 
 #def[Bande passante]: ensemble des fréquences à garder
 
@@ -260,8 +260,8 @@ On peut aussi trouver:
 	x-ticks: ((-2, $log(omega_1 / omega_0)$), (2, $log(omega_2 / omega_0)$)),
 	(horz: (0,), min: -5, max: -2),
 	(horz: (0,), min: 2, max: 5),
-	((-2, 0), x => if x != 0 { 1/( x - 0.5) } else { 1 } + 1/3),
-	((2, 5), x => -x+2),
+	((-2, -1), x => if x != -1 { 1/(x + 1) } else { -100 } + 1),
+	((1, 2), x => if x != 1 { -1/(x - 1) } else { -100 } + 1),
 	(stroke: (dash: "dotted", paint: blue)),
 	(vert: (-2, 2))
 )
@@ -270,15 +270,13 @@ On graphe les abscisses en fonction de $log(omega_0 / omega)$ afin de centrer le
 
 == Ordre des filtres
 
-#def[Ordre du filtre]: degré du polynome de $omega$ au dénominateur de la fonction de transfert (SI moment!)
+#def[Ordre du filtre]: degré du polynome de $omega$ au dénominateur de la fonction de transfert
 
 = Filtre passif de premier ordre
 
 == Définition
 
 Les filtres passifs du premier ordre sont ceux faisant intervenir un puissance $1$ de $omega$ au dénominateur de $und(H)$.
-
-Cela revient à avoir une 
 
 == Filtre passe-bas
 
@@ -292,15 +290,21 @@ $ und(H) = H_0 / (1 + j omega/omega_0) $
 
 === Étude du gain
 
+Le gain $G$ d'un filtre correspond au module de sa fonction de transfert.
+
+$ G = abs(und(H)) = abs(H_0)/(abs(1 + j omega/omega_0)) = H_0/(sqrt(1 + (omega/omega_0)^2)) $
+
+En le passant au $log$, on obtient le gain en décibels:
+
+$ G_"dB" = 20 log G = 20 log abs(H_0) - 20 log sqrt(1 + (omega/omega_0)^2) $
+
 === Fréquence de coupure
 
-$ G = |und(H)| = abs(H_0)/sqrt(1 + (omega/omega_0)^2) $
-$ G_"dB" = 20 log abs(H_0) - 20 log sqrt(1 + (omega/omega_0)^2) $
-
-On utillise la définition de la bande passante:
-$ omega / (G_"dB" (omega)) >= G_"dB,max" - 3 "dB" $
-Ou:
-$ G(omega) >= G_"max" / sqrt(2) $
+La bande passante est définie de deux manières:
+- Pour le gain par:
+  $ omega "tel que" G(omega) >= G_"max" / sqrt(2) $
+- Pour le gain en décibel:
+  $ omega "tel que" G_"dB" (omega) >= G_"dB,max" - 3 "dB" $
 
 Ici, on a:
 - $G_"max" = abs(H_0)$
@@ -310,7 +314,7 @@ Ici, on a:
 <=> omega <= omega_0
 $
 
-La bande passante de ce filtre est dont $[0; omega_0]$.
+La bande passante de ce filtre est donc $[0; omega_0]$.
 
 Dans le cas des hautes fréquences, on a $omega >> omega_0$.
 On a donc:
@@ -545,8 +549,8 @@ On obtient la dérivée de l'entrée, *si la condition sur la fréquence est rem
 
 1. On ne peut pas obtenir de comportements de type passe-bande ou coupe-bande uniquement avec des filtres du premier ordre.
 
-2. En regardant les asymptotes du filtre du premier ordre, on a des asymptotes diagonales à $plus.minus 20 "db/decal"$.
+2. En regardant les asymptotes du filtre du premier ordre, on a des asymptotes diagonales à $plus.minus 20 "dB/decal"$.
   C'est l'écart de pente maximale atteignable avec le premier ordre.
-  C'est aussi l'unité de "base" des filtres. Le $n$-ordre donnera des asymptotes de pente $n 20 "db/decal"$.
+  C'est aussi l'unité de "base" des filtres. Un filtre d'ordre $n$ donnera des asymptotes de pente $20 n "dB/decal"$.
 
 3. En regardant la phase, c'est la même chose, on a une variation de $pi/2$.
