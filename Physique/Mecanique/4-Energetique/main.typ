@@ -27,14 +27,14 @@ La méthode énergétique transforme donc des relations
 vectorielles en relations scalaires.
 On perd de l'information.
 
-- Si $cal(P) > 0$, la force est dite motrice, elle travaille dans le sens
+- Si $cal(P) > 0$, la force est dîte motrice, elle travaille dans le sens
   de la vitesse
-- Si $cal(P) < 0$, la force est résistante, elle s'oppose au mouvement
+- Si $cal(P) < 0$, la force est dîte résistante, elle s'oppose au mouvement
 
 == Travail élémentaire
 
 On sait que la puissance est une énérgie 
-appliqué pendant un certain temps:
+appliquée pendant un certain temps:
 
 $ cal(P) = "énérgie"/"temps" $
 $ "travail" = "grandeur énergétique" $
@@ -362,7 +362,7 @@ $ E_c + E_p = "constante" $
 
 L'énergie totale d'un système est conservée.
 
-On appelle énergie mécanique la somme des énergies cinétiques et de potentiel.
+On appelle énergie mécanique la somme des énergies cinétiques et de potentiel. 
 
 $ E_m = E_c + E_p $
 
@@ -425,8 +425,8 @@ $ dif arw(O M) = dif r arw(u_r) + r dif theta arw(u_theta)
 $
 
 On identifie:
-$ grad f = (diff f)/(diff r) arw(u_theta)
-+ 1/r (diff f)/(diff theta) 
+$ grad f = (diff f)/(diff r) arw(r)
++ 1/r (diff f)/(diff theta) arw(u_theta)
 + (diff f)/(diff z) arw(u_z)
 $
 
@@ -440,3 +440,280 @@ $ grad f = (grad f)_r arw(u_r)
 + (grad f)_theta arw(u_theta)
 + (grad f)_phi arw(u_phi)
 $
+
+$ dif arw(O M) = dif r arw(u_r) 
++ r dif phi arw(u_phi)
++ r sin(theta) dif theta arw(u_theta)
+$
+
+D'où:
+$ grad f = (diff f)/(diff r) arw(u_r)
++ 1/r (diff f)/(diff phi) arw(u_phi)
++ 1/(r sin theta) (diff f)/(diff theta) arw(u_theta)
+$
+
+#pagebreak()
+
+== Énergie potentielle et gradient
+
+#underline[*Proposition*]: \
+Si $arw(f)$ est une force conservative, on peut l'écrire sous la forme
+$arw(f) = - grad E_p$
+
+#underline[*Preuve*]: \
+Si $arw(f)$ est une force conservative, alors par définition:
+$ delta W(arw(f)) = - dif E_p $
+Par le définition du gradient:
+$ dif E_p = grad E_p dot dif arw(O M) $
+On peut reporter $dif E_p$:
+$ delta W (arw(f)) = -grad E_p dot dif arw(O M) $
+Or, par la définition du travail, on a aussi:
+$ delta W(arw(f)) = arw(f) dot dif arw(O M) $
+Donc, par identification:
+#resultb[$ arw(f) = - grad E_p $]
+
+== Exemple de forces conservatives
+
+#tip[
+	Pour montrer qu'une force est conservative, 
+	on montrera que le travail $delta W$ a la forme
+	$- dif (...)$ ou $- grad (...)$, avec $dif$ l'opérateur différentiel
+	et $grad$ le gradient.
+]
+
+=== Poids $m arw(g)$
+
+On oriente l'axe $arw(u_z)$ vers le haut.
+
+On veut montrer que le poids est une force conservative.
+Pour cela, on veut montrer qu'il dépend d'une énergie potentielle.
+
+$ delta W = m arw(g) dot dif arw(O M) $
+Le poids est totalement vertical, donc:
+$ delta W = - m g dif z $
+$m$ et $g$ sont constants, donc on peut les passer dans la différentielle:
+$ delta W = - dif (m g z) $
+On l'identifie à une énergie potentielle (c'est homogène tkt):
+$ delta W = - dif E_p $
+
+Et on a donc l'expression de l'énergie potentielle:
+$ E_p = m g z + C $
+
+=== Force éléctro-statique $arw(f) = q arw(E)$
+
+...avec $q$ la charge électrique et $arw(E)$ le champ électrique.
+
+#note[En première année, on ne s'inquiète pas de la forme
+du champ électrostatique: il est toujours donné.]
+
+#parachute[
+	Le champ électrique $arw(E)$ est de la forme:
+	$ arw(E) = - grad V $
+	Avec $V$ le potentiel électrique. 
+]
+
+On a donc:
+$ arw(f) = q arw(E) = q (- grad V) $
+La charge est une constante, donc on peut la passer dans le gradient:
+$ arw(f) = - grad (q V) $
+Donc $arw(f)$ est une force conservative et l'énergie potentielle
+électro-statique est:
+$ E_p = q V + C $
+
+=== Force du rappel d'un ressort $arw(F) = - k (l - l_0) arw(u_"ext")$
+
+On se place sur l'axe horizontal $arw(u_x)$:
+#figcan({
+	import draw: *
+	cetz.decorations.coil(line((0, 0), (3, 0)), amplitude: 0.5)
+	point((3, 0))
+	arrow((3, 0), (4, 0))
+	content((4.1, 0), $arw(u_"ext")$, anchor: "west")
+})
+
+On prend l'origine des $x$ à la position à vide du ressort,
+avec: $x = l - l_0$
+
+On a donc:
+$ arw(F) = - k x arw(u_x) $
+D'où:
+$ delta W &= arw(F) dot dif arw(O M) \
+&= - k x arw(u_x) dot (dif x arw(u_x) + dif y arw(u_y) + dif z arw(u_z)) \
+&= - k x dif x $
+
+Le $k$ est constant, mais
+on ne peut pas juste sauvagement rentrer le $x$ dans la différentielle.
+On fait un coup de trafalgar:
+$ delta W = - dif (1/2 k x^2) $
+
+D'où l'énergie potentielle:
+$ E_p &= 1/2 k x^2 + C \
+&= 1/2 k (l - l_0)^2 + C $
+
+=== Forces newtoniennes
+
+On appelle force newtonienne une force $arw(f)$ qui est:
+- Centrale, c'est à dire toujours dirigée vers l'origine $O$
+  (on utilisera donc les coordonnées sphériques)
+- Inversement proportionnelle au carré de la distance: $ arw(f) = K/r^2 arw(u_r) $
+  Avec $K$ une constante (dans le cadre du mouvement, mais elle peut changer entre les objets).
+
+La gravitation ($K = -G m_1 m_2$) et 
+l'électromagnétisme quand les charges sont de signe différents ($K = 1/(4 pi epsilon_0) q_1 q_2$ négatif) sont des forces newtoniennes.
+
+On pose le travail:
+$ delta W &= arw(f) dot dif arw(O M) \
+&= K/r^2 arw(u_r) dot (dif r arw(u_r) + r dif theta arw(u_theta) + r sin theta dif phi arw(u_theta)) \
+&= K/r^2 dif r \
+&= - dif (K/r)
+$
+
+Donc:
+$ E_p = K/r + C $
+
+#warn[En général, la constante est nulle (car l'énergie potentielle est nulle à l'infini), mais ce n'est pas tojours le cas dans certains problèmes
+qui traitent d'objets de longueur infinies.]
+
+== Exemple de force non conservative, la force de frottement fluide
+
+On pose la force de frottement fluide proportionel à la vitesse $arw(f) = - lambda arw(v)$, et on calcule le travail:
+$ delta W &= arw(f) dot dif arw(O M) \
+&= - lambda arw(v) dot arw(v) dif t "  (rappel: " dif arw(O M) = arw(v) dif t ")"\
+&= - lambda v^2 dif t $
+
+On a une dépendance temporelle claire: on ne pourra jamais l'exprimer sous la forme d'une énergie potentielle (qui ne dépend que de l'espace)
+
+La force de frottement fluide est donc non conservative.
+
+== Application
+
+On pose trois points $A$, $B$, et $C$.
+
+On pose un champ de force $arw(F) = c^2 r^2 arw(u_theta)$ avec $c$ constant
+
+On veut observer le travail effectué par un point se déplaçant
+au point $C$:
+- En passant par le point $B$, puis par le point $C$ en ligne droite
+- En allant au point $C$ avec un arc de cercle de rayon $R$
+
+#figcan({
+	import draw: *
+
+	point((0, 0), value: "B")
+	point((0, 2), value: "C")
+	point((2, 0), value: "A", anchor: "south-west")
+
+	arrow((2, 0), (0, 0))
+	arrow((0, 0), (0, 2))
+
+	arc((0, 0), start: 0deg, stop: 90deg, radius: 2, anchor: "origin", mark: (end: "straight"))
+})
+
+On calcule le travail avec:
+$ delta W = arw(F) dot dif arw(O M) $
+$dif arw(O M)$ n'aura pas la même expression selon le chemin suivi. \
+- Si on suit le chemin en arc de cercle, on aura:
+  $ dif arw(O M) = R dif theta arw(u_theta) $
+  D'où:
+  $ delta W &= (r^2 c^2 arw(u_theta)) dot (R dif theta arw(u_theta)) \
+  &= R r^2 c^2 dif theta \
+  &= R^3 c^2 dif theta "car on suit le cercle"
+  $
+  On intègre:
+  $ W = integral_0^(pi/2) c^2 R^3 dif theta = c^2 R^3 pi/2 $
+- Si on suit le chemin en ligne droite:
+  on separe le chemin en deux:
+  $ W = W_(A B) + W_(B C) $
+  Pour le chemin $A B$:
+  $ dif arw(O M) = - dif r arw(u_r) $
+  $ delta W_(A B) = - r^2 c^2 arw(u_theta) dot dif r arw(u_r) = 0 $
+  $ W_(A B) = 0 $
+  De même pour le chemin $B C$:
+  $ dif arw(O M) = dif r arw(u_r) $
+  $ delta W_(B C) = 0 $
+  $ W_(B C) = 0 $
+Donc la force $arw(F)$ est évidemment non conservative.
+
+
+Si on change le champ force à $arw(F) = r^2 c^2 arw(u_r)$,
+on a, pour tout chemin:
+$ delta W &= arw(F) dif arw(O M) \
+&= r^2 c^2 arw(u_r) dot (dif r arw(u_r) + r dif theta arw(u_theta)) \
+&= r^2 c^2 dif r \
+&= - dif (-1/3 c^2 r^3) $
+
+Donc la force est conservative.
+
+= Énergie mécanique
+
+== Définition
+
+// Voir @mecanique
+
+On a $E_m = E_c + E_p$, avec $E_c$ l'énergie cinétique et
+$E_p$ l'énergie potentielle, définie par toutes les forces conservatives.
+
+L'energie mécanique permet d'englober
+toute l'énergie conservative.
+
+== Conservation ou non conservation de l'énergie mécanique
+
+L'énergie mécanique se conservera que si l'on est uniquement face
+à des forces conservatives, et elle ne sera modifiée que par les forces
+non conservatives.
+
+== Théorème de l'énergie mécanique
+
+#theorem[
+	Le changement d'énergie mécanique est égal à
+	la somme du travail des forces non conservatrices.
+]
+
+#underline[*Preuve*]: \
+On applique le théorème de l'énergie cinétique:
+
+$ Delta E_c = sum_i W(arw(f_i))
+= sum_i_c W(arw(f_i_c)) + sum_i_"nc" W(arw(f_i_"nc")) $
+
+Or, $sum_i_c W(arw(f_i_c)) = - Delta E_p$, donc:
+$ Delta E_c = - Delta E_p + sum_i_"nc" W(arw(f_i_"nc")) $
+$ Delta E_c + Delta E_p = sum_i_"nc" W(arw(f_i_"nc")) $
+$ Delta E_m = sum_i_"nc" W(arw(f_i_"nc")) $
+
+== Utilisation de la conservation de l'énergie mécanique
+
+#image("exo_mecanique.png")
+
+#figcan({
+	import draw: *
+	
+	point((0, 2), value: "A")
+	point((2, 0), value: "A")
+	arc((2, 2), start: 180deg, stop: 270deg, radius: 2, anchor: "origin")
+	line((2, 0), (4, 0))
+	point((4, 0), value: "C")
+})
+
+On réduit l'enfant à un point $M$ de masse $m$, et on considère ce système.
+On se place dans le référentiel galiléen terrestre.
+
+On fait un bilan des forces:
+- Le poids $m arw(g)$
+- La réaction de la neige $arw(R) = arw(R_N) + arw(R_T)$
+
+On ignore le frottement solide ($arw(R_T) = arw(0)$), et la réaction
+normale ne travaille pas, donc la seul force travaillant
+est le poids, qui est une force conservatrice.
+
+On applique le TEM:
+$ Delta E_m = W(arw(R_N)) + W(arw(R_T)) = 0 $
+Donc l'énergie mécanique reste constante.
+
+On calcul le différentiel d'énergie potentielle entre $A$ et $B$:
+$ Delta E_"pp" (arw(A B)) = -m g R $
+
+Par conservation de l'énergie mécanique:
+$ Delta E_"c" = m g R = 1/2 m v^2 $
+Donc:
+$ v = sqrt(2 g R) $
+Et cette vitesse est la même en $C$.
