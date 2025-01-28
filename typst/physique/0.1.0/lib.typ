@@ -128,6 +128,8 @@
 	Hors-programme:
 ])
 
+#let parachute = infobox(symbol: "🪂", color: navy, info_text: text(fill: navy)[Parachutage: ])
+
 #let theorem = infobox(symbol: $Theta$, color: gradient.linear(..color.map.rainbow), info_text: smallcaps[Théorème: ])
 
 // Sir Lanceléthanol le best <3 -U
