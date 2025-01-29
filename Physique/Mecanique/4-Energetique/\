@@ -817,122 +817,18 @@ quand on s'en écarte un peu, on y revient.
 On a $arw(f) = - grad(E_p) = - dif (E_p)$.
 
 #let smallo(under) = $limits(o)_under$
-#let smalloat(x0, pow) = $smallo(x -> x0) ((x - x0)^pow)$
+#let smalloat(x0, pow) = smallo(x -> x_0) ((x - x_0)^pow)
 
 On fait un DL d'ordre $2$ au voisinnage de la position d'équilibre:
 $ E_p (x) &= E_p (x_0) + (dif E_p)/(dif x) (x_0) (x - x_0)
 + 1/2 (dif^2 E_p)/(dif x^2) (x_0) (x - x_0)^2
-+ smalloat(x_0, 2) \
++ smallo(x -> x_0) ((x - x_0)^2) \
 &= E_p (x_0)
 + 1/2 (dif^2 E_p)/(dif x^2) (x_0) (x - x_0)^2
-+ smalloat(x_0, 2)
++ smalloat(x_0, 1)
 $
 On dérive le DL:
 $ (dif E_p)/(dif x) = (dif^2 E_p)/(dif x) (x_0) (x - x_0)
-+ smalloat(x_0, 1) $
-$ arw(f) = - (dif^2 E_p)/(dif x^2) (x_0) (x - x_0) arw(u_x) $
-
-Donc, si $x$ se déplace un peu par-rapport à $x_0$:
-#figcan({
-	import draw: *
-
-	arrow((-4, 0), (4, 0))
-	point((0, 0), value: $x_0$)
-
-	point((-2, 0), value: $x$)
-	point((2, 0), value: $x$)
-
-	set-style(stroke: red)
-	arrow((-2, 0), (-1, 0))
-	arrow((2, 0), (1, 0))
-
-	content((-1, -0.4), $arw(f)_"rappel"$)
-	content((1, -0.4), $arw(f)_"rappel"$)
-})
-
-Si on se déplace vers la gauche, $x - x_0 < 0$, donc la dérivée seconde doit être positive pour qu'on revienne vers $x_0$.
-
-Si on se déplace vers la droite, $x - x_0 > 0$, donc la dérivée seconde
-doit être positive pour qu'on revienne vers $x_0$.
-
-On est donc sur un équilibre #def[stable] si:
-#resultb[$ (dif^2 E_p)/(dif x^2) (x_0) > 0 $]
-
-== Étude d'un équilibre _via_ son énergie potentielle
-
-#image("exo_equilibre.png")
-
-+ $E_0$ a la dimension d'une énergie
-+ Une position d'équilibre est obtenue si la somme des forces est nulle,
-  or $arw(f) = - dif (E_p)$, donc quand $(dif E_p)/(dif theta) = 0$,
-  donc:
-  $ E_0 + m g R sin theta = 0 $
-  On a:
-  $ -1 <= sin theta <= 1 $
-  $ E_0 - m g R <= (dif E_p)/(dif theta) <= E_0 + m g R $
-  Donc $(dif E_p)/(dif theta)$ ne peut s'annuler que si
-  $E_0 <= m g R $
-+ On cherche les points d'annulation en $theta$. On a:
-  $ sin theta = - E_0 / (m g R) $
-  $ theta = arcsin( - E_0 / (m g R)) $
-  $ theta_1 = - arcsin(E_0 / (m g R)) $
-  $ theta_2 = pi + arcsin(E_0 / (m g R)) $
-+ On calcule la dérivée seconde:
-  $ (dif^2 E_p)/(dif theta^2) = m g R cos theta $
-  On a:
-  $ (dif^2 E_p)/(dif theta^2) (theta_1) 
-  &= m g R cos (arcsin(E_0 / (m g R))) \
-  &= m g R sqrt(1 - underbrace((E_0/(m g R))^2, < 1))
-  $
-  Donc $theta_1$ est un équilibre stable. À l'inverse:
-  $ (dif^2 E_p)/(dif theta^2) (theta_2) 
-  &= - m g R sqrt(1 - (E_0/(m g R))^2)
-  $ 
-  Donc $theta_2$ est un équilibre instable.
-
-= Oscillateurs harmoniques
-
-== Exemples d'oscillateurs harmonique
-
-On a déjà obtenu des oscillateurs harmoniques en mécanique
-dans au moins trois situations:
-- les ressorts (horizontaux et verticaux)
-- les pendules
-
-On regarde le cas où on se place au voisinnage d'une position d'équilibre stable.
-
-On arrive à dire que la résultante des forces qui s'exercent est:
-$ arw(f) = - (dif^2 E_p)/(dif x^2) (x_0) (x - x_0) arw(u_x) $
-
-$arw(f)$ est la force qui s'exerce au voisinnage de la position
-d'équilibre, avec $x_0$ la position d'équilibre.
-
-Comme cette position d'équilibre est stable, on a:
-$ (dif^2 E_p)/(dif x^2) (x_0) > 0 $
-
-On fait un bilan des forces:
-- On a une résultante des forces $arw(f)$ dont on vient de donner
-  l'expression
-
-On applique le principe fondamental de la dynamique:
-$ m arw(a) = arw(f) $
-On projette dans la direction $arw(u_x)$:
-$ m diaer(x) = - (dif^2 E_p)/(dif x^2) (x_0) (x - x_0) $
-$ diaer(x) + 1/m (dif^2 E_p)/(dif x^2) (x_0) (x - x_0) = 0 $
-
-\ \ \ 
-On pose $X = x - x_0$, avec $diaer(X) = diaer(x)$ \
-On obtient l'équation d'un oscillateur harmonique:
-$ diaer(X) + 1/m (dif^2 E_p)/(dif x^2) (x_0) X = 0 $
-
-On résout alors l'équation d'un oscillateur harmonique:
-$ X = A cos(omega_0 t) + B sin(omega_0 t) $
-Avec:
-$ omega_0 = sqrt(1/m ((dif^2 E_p)/(dif x^2) (x_0))) $
-
-Une autre façon de procéder est de développer:
-$ diaer(x) + 1/m ((dif^2 E_p)/(dif x^2) (x_0)) x = 1/m (dif^2 E_p)/(dif x^2) (x_0) x_0 $
-
-Et de résoudre l'équation avec un second membre:
-$ x = A cos(omega_0 t) + B sin (omega_0 t) + x_0 $
-
++ smallo(x -> x_0) (x - x_0) $
+Donc:
+$ arw(f) = -  $
