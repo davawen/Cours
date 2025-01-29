@@ -688,7 +688,7 @@ $ Delta E_m = sum_i_"nc" W(arw(f_i_"nc")) $
 	import draw: *
 	
 	point((0, 2), value: "A")
-	point((2, 0), value: "A")
+	point((2, 0), value: "B")
 	arc((2, 2), start: 180deg, stop: 270deg, radius: 2, anchor: "origin")
 	line((2, 0), (4, 0))
 	point((4, 0), value: "C")
@@ -709,7 +709,7 @@ On applique le TEM:
 $ Delta E_m = W(arw(R_N)) + W(arw(R_T)) = 0 $
 Donc l'énergie mécanique reste constante.
 
-On calcul le différentiel d'énergie potentielle entre $A$ et $B$:
+On calcule le différentiel d'énergie potentielle entre $A$ et $B$:
 $ Delta E_"pp" (arw(A B)) = -m g R $
 
 Par conservation de l'énergie mécanique:
