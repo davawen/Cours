@@ -21,6 +21,45 @@
  })
 }
 
+#let miroir-plan(a, b, invert: true, amplitude: 0.2, padding: 0.05, density: 0.2, ..style) = {
+	if density <= 0 {
+		density = 0.1
+	} 
+	if padding <= 0 and -padding > density {
+		padding = 0
+	}
+
+	import draw: *
+
+	get-ctx(ctx => {
+		let (ctx, a, b) = cetz.coordinate.resolve(ctx, a, b)
+		let (ax, ay, az) = a 
+		let (bx, by, bz) = b
+
+		// let's act like we're in 2d
+		let (dx, dy) = (bx - ax, by - ay)
+
+		let dist = calc.sqrt(dx*dx + dy*dy)
+
+		let (dx, dy) = (dx/dist, dy/dist)
+		let (nx, ny) = if invert { (dy, -dx) } else { (-dy, dx) }
+
+		line(a, b, ..style)
+
+		let t = 0.0
+		while t < dist - density {
+			let px = ax + dx*t
+			let py = ay + dy*t
+			line(
+				(px + nx*amplitude, py + ny*amplitude),
+				(px + dx*density, py + dy*density),
+				..style
+			)
+			t = t + density + padding
+		}
+	})
+}
+
 #let draw_lentil_rays(focal, obj, height: 1) = figure(canvas({
   import draw: *
 

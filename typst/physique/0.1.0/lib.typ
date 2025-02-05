@@ -73,10 +73,10 @@
 		let el = it.element
 		if el != none and el.func() == eq {
 		// Override equation references.
-		numbering(
+		link(el.location(), numbering(
 			el.numbering,
 			..counter(eq).at(el.location())
-		)
+		))
 	} else {
 		// Other references as usual.
 		it
@@ -129,6 +129,8 @@
 ])
 
 #let parachute = infobox(symbol: "🪂", color: navy, info_text: text(fill: navy)[Parachutage: ])
+
+#let tation = infobox(symbol: "🗣️", color: maroon, info_text: text(fill: maroon)[Citation: ])
 
 #let theorem = infobox(symbol: $Theta$, color: gradient.linear(..color.map.rainbow), info_text: smallcaps[Théorème: ])
 
