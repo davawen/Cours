@@ -35,7 +35,7 @@ infinie) d'onde harmoniques avec la transformée de Fourrier.
 
 On va donc simplifier le problème et se limiter à la superposition de deux ondes sinusoïdales.
 
-On peut alors (cf. le chapitre précedent) définir le signal
+On peut alors (#link("../5-Signal/main.pdf")[cf. le chapitre précedent]) définir le signal
 par une simple fonction dépendant du temps.
 
 == Simulation mathématique
@@ -93,7 +93,7 @@ $ X^2 &= (S_1 cos(phi_1) + S_2 cos(phi_2))^2 + (S_1 sin(phi_1) + S_2 sin(phi_2))
 &= S_1^2 (cos^2 (phi_1) + sin^2 (phi_1))
 + S_2^2 (cos^2 (phi_2) + sin^2 (phi_2))
 + 2 S_1 S_2 (cos(phi_1)cos(phi_2) + sin(phi_1) sin(phi_2)) \
-&= S_1^2 + S_2^2 + 2S_1 S_2 sin(phi_1 + phi_2)
+&= S_1^2 + S_2^2 + 2S_1 S_2 cos(phi_1 - phi_2)
 $
 
 #set math.equation(numbering: "Eq. 1")
@@ -112,8 +112,8 @@ dans le plan de Fresnel.
 Le seul paramètre variable est le déphasage $phi = phi_1 - phi_2$ entre les deux ondes.
 
 $ -1 <= (cos(phi_1 - phi_2)) <= 1 $
-$ S_1^2 + S_2^2 - 2 S_1 S_2 <= s(t) <= S_1^2 + S_2^2 + 2 S_1 S_2 $
-$ (S_1 - S_2)^2 <= s(t) <= (S_1 + S_2)^2 $
+$ S_1^2 + S_2^2 - 2 S_1 S_2 <= s^2(t) <= S_1^2 + S_2^2 + 2 S_1 S_2 $
+$ (S_1 - S_2)^2 <= s^2(t) <= (S_1 + S_2)^2 $
 
 Donc $X_max = abs(S_1 + S_2) = S_1 + S_2$ et $X_min = abs(S_1 - S_2)$
 
@@ -122,7 +122,7 @@ Donc $X_max = abs(S_1 + S_2) = S_1 + S_2$ et $X_min = abs(S_1 - S_2)$
 Si $S = S_1 = S_2$, on a l'amplitude $X$:
 $ X^2 = S^2 + S^2 + 2 S^2 cos(phi_1 - phi_2) = 2 S^2 (1 + cos(phi_1 - phi_2)) $
 
-Et on a $X_max = 2 S^2$ et $X_min = 0$
+Et on a $X_max = 2 S$ et $X_min = 0$
 
 == Interférences constructives ou destructives
 
@@ -134,7 +134,7 @@ $ &"   " cos(phi) = cos(phi_1 - phi_2) = 1 \
 $
 
 Pour pouvoir parler de "déphasage" avec des ondes
-un peu plus funky, on reformule les déphasages
+un peu plus funky, on reformule le déphasages
 avec $lambda$ la longueur d'onde et $d_1$, $d_2$ le déphasage en longueur:
 $ phi_1 = (2pi d_1)/lambda $
 $ phi_2 = (2pi d_2)/lambda $
