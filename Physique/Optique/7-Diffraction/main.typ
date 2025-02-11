@@ -71,9 +71,81 @@ et la largeur suit en effet une relation pseudo-linéaire avec $D$:
 
 #figure(caption: [Largeur $L$ en fonction de la largeur $a$ de la fente ou de l'inverse de $a$ pour $D = 1.8upright(" m")$], image("graphe_l_fonc_theta.png"))
 
+$L = K/a$ avec $K = 11.10^(-7) upright(" "m^2)$
+
 === Loi de la diffraction pour une fente
 
 #parachute[
 	Pour $lambda$ la longueur d'onde, $a$ la largeur de la fente:
 	$ sin theta = lambda/a $
 ]
+
+=== Généralisation à une ouverture
+
+#figure(caption: [Figure de diffraction à travers une ouverture], image("./tache_centrale.png", width: 30%))
+
+À travers une double fente, la fentre centrale est deux fois plus grande que la deuxième. Ici, la tache centrale est $1.22$ fois plus grande que la deuxième. (lié aux fonctions de Bessel).
+
+Dans ce cas ci, l'angle de diffraction vérifie donc $sin theta = 1.22 lambda/a$
+
+= Principe et approche qualitative de la diffraction
+
+== Modélisation de la propagation d'une onde plane
+
+On va modélise la propagation d'une onde plane
+(par exemple, une onde crée par un laser)
+par de multiple points emetteurs circulaires.
+
+Si on observe l'avant des ondes émisent, on observe
+en effet une onde quasi-plane: le front d'onde
+
+#figcan(caption: [Front d'onde], {
+	import draw: *
+
+	for i in range(0, 10) {
+		circle((i/5, 0), radius: 0.05)
+		arc((i/5, 0), start: 0deg, stop: 180deg, radius: 2, anchor: "origin", stroke: blue)
+	}
+
+	line((-2, 2.1), (4, 2.1))
+	content((1, 2.5), [Front d'onde])
+})
+
+== Diffraction d'une onde par une fente
+
+On va modéliser la diffraction par une fente par plusieurs
+point sources, positionnés dans la fente, qui vont chacun 
+émettre un signal:
+
+Si la fente est suffisement large, on observe pas de réel changement
+dans le front d'onde:
+#figure(caption: [Diffraction par une fente large], image("diffraction_large.png", width: 40%))
+
+Si la fente est suffisemment fine,
+en additionnant les signaux de chacun des points
+on pourra observer assez d'interférences pour voir une tache.
+
+#figure(caption: [Diffraction par une fente fine], image("diffraction_petite.png", width: 40%))
+
+== Diffraction par un obstacle
+
+Par cette modélisation, on observe que les ondes
+se propagent en contournant les obstacles:
+
+#figure(caption: [Diffraction par un obstacle], image("diffraction_obstacle.png", width: 40%))
+
+= Exemple de phénomènes de diffraction
+
+
+== Diffraction en optique
+
+=== Limitation du pouvoir de résolution
+
+Si on observe la diffraction de deux objets (comme deux fentes),
+il existe plusieurs critères pour nous dire si oui ou non
+on distingue les deux objets dans leur diffraction
+(et pas un seul blob d'interférences).
+
+#figure(caption: [Différents critères de résolution], image("criteres.png", width: 80%))
+
+Voir #underline(link("https://fr.wikipedia.org/wiki/Pouvoir_de_résolution"))
