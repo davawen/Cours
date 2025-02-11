@@ -82,6 +82,8 @@
 		it
 	}
 	}
+
+	show math.equation: it => math.display(it)
 		
 	// show heading.where(level: 1): it => {
 	// 	align(center, rect(
