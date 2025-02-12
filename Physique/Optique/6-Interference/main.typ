@@ -28,6 +28,41 @@ contribue $0$, donc on ne voit aucune interférence.
 
 #figure(caption: [Interférences de deux ondes à la surface de l'eau], image("onde_eau.png", width: 50%))
 
+#figcan(caption: [On visualise en rouge les interférences destructives et en blue les interférences constructives], {
+	import draw: *
+	let A = (0, 1)
+	let B = (0, -1)
+
+	set-style(circle: (radius: 0.1, fill: black))
+
+	circle(A)
+	circle(B)
+	for x in frange(-2, 2, step: 0.2) {
+		for y in frange(-2, 2, step: 0.2) {
+			let samplea = calc.sin(6*distance((x, y), A))
+			let sampleb = calc.sin(6*distance((x, y), B))
+			let sample = samplea + sampleb
+			let t = calc.abs(sample)/2
+			let color = color.mix((red, t), (blue, 1 - t))
+			circle((x, y), radius: 0.1, stroke: color, fill: color)
+		}
+	}
+
+	translate((-5, 0))
+	circle(A)
+	circle(B)
+	for x in frange(-2, 2, step: 0.2) {
+		for y in frange(-2, 2, step: 0.2) {
+			let a = calc.sin(6*distance((x, y), A))
+			let b = calc.sin(6*distance((x, y), B))
+			let a = int(a*128 + 128)
+			let b = int(b*128 + 128)
+			let color = color.rgb(a, int((a + b)/2), b)
+			circle((x, y), radius: 0.1, stroke: color, fill: color)
+		}
+	}
+})
+
 = Somme de deux sinusoïdes de même fréquence
 
 On sait qu'on peut toujours se ramener à une somme (possiblement
@@ -48,8 +83,6 @@ les interférences seront plus on moins constructives ou
 destructives:
 
 #let signal(phi) = (t => calc.sin(t) + calc.sin(t + phi))
-
-#let phi_values = (0, calc.pi/4, calc.pi/2, 3*calc.pi/4, calc.pi)
 
 #plot((-5, 5), x-tick: none, y-tick: none, color: auto,
 	signal(0),
@@ -111,9 +144,9 @@ dans le plan de Fresnel.
 
 Le seul paramètre variable est le déphasage $phi = phi_1 - phi_2$ entre les deux ondes.
 
-$ -1 <= (cos(phi_1 - phi_2)) <= 1 $
-$ S_1^2 + S_2^2 - 2 S_1 S_2 <= s^2(t) <= S_1^2 + S_2^2 + 2 S_1 S_2 $
-$ (S_1 - S_2)^2 <= s^2(t) <= (S_1 + S_2)^2 $
+$ -1 <= cos(phi_1 - phi_2) <= 1 $
+$ S_1^2 + S_2^2 - 2 S_1 S_2 <= X^2(t) <= S_1^2 + S_2^2 + 2 S_1 S_2 $
+$ (S_1 - S_2)^2 <= X^2(t) <= (S_1 + S_2)^2 $
 
 Donc $X_max = abs(S_1 + S_2) = S_1 + S_2$ et $X_min = abs(S_1 - S_2)$
 
@@ -139,10 +172,9 @@ avec $lambda$ la longueur d'onde et $d_1$, $d_2$ le déphasage en longueur:
 $ phi_1 = (2pi d_1)/lambda $
 $ phi_2 = (2pi d_2)/lambda $
 
-(C'est plus facile de dire que deux vagues sont déphasées de 1 m et
-qu'elles sont périodiques sur 2 m, que de dire
-qu'elles sont dephasées de $pi/2$)
+Par exemple, on peut dire que des vagues ont une longueur d'onde (distance crête à crête) de $2$ m, et qu'une vague est en retard sur une autre de 1 m (ce qui correspond à un déphasage de $pi/2$)
 
+\ \
 On a donc:
 $ phi_1 - phi_2 = m 2 pi <=> (d_1 - d_2)/lambda = m $
 
@@ -201,7 +233,7 @@ de manière destructive.
 
 #def[Dispositif des trous d'Young]: \
 Deux trous sont faits à travers une lame.
-Une source lunimeuse ponctuelle est placée sur la médiatrice
+Une source lumineuse ponctuelle est placée sur la médiatrice
 des deux trous $S_1$ et $S_2$.
 On observe la lumière atteignant $M$.
 
@@ -223,20 +255,22 @@ $ (S M) = n v tau
 
 On pose $phi$ le déphasage entre les deux signaux $phi = phi_1 - phi_2$
 
-$ phi = phi_1 - phi_2 = (2pi)/lambda d_1 - (2pi)/lambda d_2 \
-= k d_1 - k d_2 "avec" k = (2pi)/lambda \
-= omega/c d_1 - omega_c d_2 "avec" omega = k c "le vecteur d'onde" \
-= omega/c (d_1 - d_2)
+$ phi &= phi_1 - phi_2 \
+&= (2pi)/lambda d_1 - (2pi)/lambda d_2 \
+&= k d_1 - k d_2 "avec" k = (2pi)/lambda \
+&= k (d_1 - d_2) \
+&= omega/c (d_1 - d_2) "avec" omega = k c "le vecteur d'onde"
 $
 
 On peut ensuite déterminer la distance avec le chemin optique:
 $d_1 = (S S_1 M)$ et
 $d_2 = (S S_2 M)$
 
+On pose en général $delta$ la différence de marche:
+$ delta = d_1 - d_2 = (S S_1 M) - (S S_2 M) $
+
 Ce qui nous permet d'obtenir le déphasage entre les deux signaux:
 $ phi = omega/c delta = (2pi)/lambda delta $
-On appelle $delta$ la différence de marche:
-$ delta = (S S_1 M) - (S S_2 M) $
 
 == Calcul de la différence de marche pour le dispositif des trous d'Young à l'infini
 

@@ -32,6 +32,16 @@
 	else { found.at(1)() }
 }
 
+#let frange(start, end, step: 1) = {
+	let diff = end - start
+	let n = diff / step
+	range(0, int(n)).map(x => x*step + start)
+}
+
+#let distance((x1, y1), (x2, y2)) = {
+	calc.sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2))
+}
+
 = CetZ stuff
 
 #let figcan(body, caption: none) = {
