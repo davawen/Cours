@@ -742,12 +742,12 @@ $ E_m - E_p >= 0 $
 
 Supposons que l'on a trouvé une expression $E_p (M)$ de
 l'énergie potentielle.
-Si on obtient une valeur $E_c$ de l'énergie mécanique, on sait que
+Si on obtient une valeur $E_m$ de l'énergie mécanique (par exemple, avec une position et une vitesse initiale), on sait que
 cette énergie va rester constante, et on sait que
 $E_m >= E_p$ est toujours vérifié.
 
 Cela permet de conclure que tout les points $M$ tels que
-$E_p (M) > E_c$ sont _inatteignable_.
+$E_p (M) > E_m$ sont _inatteignable_.
 
 On parle de #def[mouvement lié] si les posititions accessibles
 sont restreintes à une zone finie
@@ -791,8 +791,7 @@ $ arw(f_i) &= - (diff E_p_i)/(diff x) arw(u_x) \
 $
 
 Donc $x_0$ est une position d'équilibre *potentielle* si,
-pour toutes les forces,
-#resultb[$ (dif E_p_i)/(dif x) (x_0) = 0 $]
+#resultb[$ sum_(i=1)^n (dif E_p_i)/(dif x) (x_0) = 0 $]
 
 #note[
 	Une position d'équilibre potentielle est
