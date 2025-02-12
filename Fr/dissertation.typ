@@ -82,3 +82,9 @@ On doit avoir environ 4 paragraphes dans chaque grande partie:
 Ou:
 - Trois paragraphes de développement
 - Un paragraphe de conclusions
+
+Conseils pour faire une troisième partie:
++ Interroger l'intéraction entre le texte, les œuvres et les auteurs
++ Parlez de la dimension _symboliques_ des choses,
+  comment est représentée la réalité ?
+

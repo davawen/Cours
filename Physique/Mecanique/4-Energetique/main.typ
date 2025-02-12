@@ -45,7 +45,7 @@ On pose le travail élémentaire (infinitésimal):
 $ delta W = cal(P) dif t $
 
 Ainsi que le travail intégral:
-$ W = Delta t $
+$ W = cal(P) Delta t $
 
 On utilise pas les même variables selon les situations:
 
