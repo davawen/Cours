@@ -28,7 +28,7 @@ contribue $0$, donc on ne voit aucune interférence.
 
 #figure(caption: [Interférences de deux ondes à la surface de l'eau], image("onde_eau.png", width: 50%))
 
-#figcan(caption: [On visualise en rouge les interférences destructives et en blue les interférences constructives], {
+#figcan(caption: [On visualise en rouge les interférences destructives et en bleu les interférences constructives], {
 	import draw: *
 	let A = (0, 1)
 	let B = (0, -1)
@@ -247,7 +247,7 @@ $ (S M) = c tau $
 Avec $tau$ le temps mis pour aller de $S$ à $M$ dans le vide.
 
 Si on se déplace dans un milieu d'indice $n$, on a:
-$ n = c/v => v = c n $
+$ n = c/v => c = v n $
 $ (S M) = n v tau
 = integral_(s(0))^(s(tau)) n dif s   $
 
@@ -369,7 +369,7 @@ $ I &= I_0 (1 + cos((2pi)/lambda delta)) \
 
 == Notion d'interfrange
 
-On appelle interfrance $i$ la distance entre deux franges
+On appelle interfrange $i$ la distance entre deux franges
 "blanche" (deux crêtes d'interférences constructive).
 
 On mesure l'écart de déphasage entre deux crêtes:

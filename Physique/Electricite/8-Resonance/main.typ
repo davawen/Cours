@@ -21,7 +21,7 @@ On utilisera donc des impédances.
 
 == Différentes tensions et montages correspondants
 
-#figcan(caption: [Tension au bornes de $C$], {
+#figcan(caption: [Tension aux bornes de $C$], {
 	carre((0, 0),
 		branch(apply(dots), u: tenserl($e$)),
 		(i: $i$),
@@ -33,7 +33,7 @@ On utilisera donc des impédances.
 	)
 }) <figc>
 
-#figcan(caption: [Tension au bornes de $R$], {
+#figcan(caption: [Tension aux bornes de $R$], {
 	carre((0, 0),
 		branch(apply(dots), u: tenserl($e$)),
 		(i: $i$),
@@ -45,7 +45,7 @@ On utilisera donc des impédances.
 	)
 }) <figr>
 
-#figcan(caption: [Tension au bornes de $L$], {
+#figcan(caption: [Tension aux bornes de $L$], {
 	carre((0, 0),
 		branch(apply(dots), u: tenserl($e$)),
 		(i: $i$),
@@ -57,7 +57,7 @@ On utilisera donc des impédances.
 	)
 }) <figl>
 
-#figcan(caption: [Tension au bornes de $L,C$], {
+#figcan(caption: [Tension aux bornes de $L,C$], {
 	carre((0, 0),
 		branch(apply(dots), u: tenserl($e$)),
 		(i: $i$),
@@ -393,3 +393,236 @@ D'où:
 $ (omega - omega_1)(omega - omega_1')(omega - omega_2)(omega - omega_2') <= 0 $
 On fait un tableau de signe, on trouve que la 
 bande passante, est les $omega in [omega_2; omega_1]$
+
+== Déphasage et bande passante
+
+On reprend le même circuit, avec les expressions connues de la fonction de transfert:
+
+$ und(H) = 1/(1 + j 1/R ( L omega - 1/(C omega) )) $
+$ phi = - arctan( 1/R (L omega - 1/(C omega)) ) $
+
+Le gain maximum $G_"max"$ est $1$.
+On sait que $omega_1$ et $omega_2$ sont les limites de la 
+bande passantes, donc
+$ G(omega_1) = G(omega_2) = G_"max"/sqrt(2) = 1/sqrt(2) $
+
+On a donc, pour $omega in {omega_1, omega_2}$:
+$ 1/(sqrt(1 + 1/R^2 (L omega - 1/(C omega))^2)) = 1/sqrt(2) $
+$ <=> 1/R^2 (L omega - 1/(C omega))^2 = 1 $
+#grid(
+	columns: (1fr, 1fr),
+	$ => 1/R (L omega_1 - 1/(C omega_1)) = 1 $,
+	$ => 1/R (L omega_2 - 1/(C omega_2)) = -1 $
+)
+
+En reprenant l'expression de la phase,
+on trouve ainsi la phase à la limite de la bande passante:
+$ phi(omega_1) = - arctan(1) = -pi/4 $
+$ phi(omega_2) = - arctan(-1) = pi/4 $
+
+#todo[
+	Graphique de la phase
+]
+
+== Facteur de qualité et bande passante
+
+On pose $Delta omega = omega_2 - omega_1$ la largeur de la bande passante.
+En reprenant les expressions de $omega_1$ et de $omega_2$,
+on trouve $Delta omega = R/L$ dans ce circuit.
+
+En général, on a $Delta omega = omega_0/Q$.
+On aura une résonnance floue si $Delta omega$ est grand,
+et une résonnance aïgue si $Delta omega$ est petit.
+
+#todo[
+#plot((0, 5), x-tick: none, y-tick: none,
+	x-ticks: ((2, $omega_1$), (3, $omega_0$), (4, $omega_2$)),
+	(x => x)
+)
+]
+
+= Résonance avec bornes de la capacité - Filtre passe-bas du 2#super[nd] ordre
+
+== Étude de l'amplitude
+
+On prend le circuit aux bornes de la capacité (@figc).
+
+On reprend le facteur de qualité et l'expression de l'impédance:
+$ Q = omega_0/(Delta omega) 
+= 1/R sqrt(L/C)
+= L/(R sqrt(L C))
+= (L omega_0)/R
+= sqrt(L C)/(R C) = 1/(R C omega_0)
+$
+
+$ uu_C
+&= (1/(j C omega))/(R + 1/(j C omega) + j L omega) und(e) \
+&= 1/(1 + j R C omega - L C omega^2) und(e)
+$
+
+Avec $omega_0 =  1/sqrt(R C)$ et $Q = 1/R sqrt(L/C)$, on a:
+$ uu_C = 
+ee/(1 + j 1/Q omega/omega_0 - (omega/omega_0)^2)
+$
+
+$ 
+G = 1/sqrt((1 - (omega/omega_0)^2)^2 + 1/Q^2 (omega/omega_0)^2)
+$
+
+Pour alléger la notation, on pose $f(omega) = 1/G^2$:
+$ f(omega) = (1- (omega/omega_0)^2)^2 + 1/Q^2 (omega/omega_0)^2 $
+$ f'(omega)
+&= 2 (1 - (omega/omega_0)^2) (- 2 omega/omega_0^2) + 1/Q^2 (2 omega/omega_0^2) \
+&= (2 omega)/omega_0 (1/Q^2 - 2 + 2 (omega/omega_0)^2)
+$
+
+On a $omega/omega_0 > 0$,
+donc si $1/(Q^2) - 2$ est positif, on somme des valeures strictement positives,
+et on se retrouvera avec une variation croissante.
+
+- 1#super[er] cas, si $1/Q^2 - 2 >= 0$, alors
+  $ 1/Q^2 >= 2 <=> 1/Q >= sqrt(2) <=> Q <= 1/sqrt(2) <=> R >= sqrt((2 L)/C) $
+
+  On aura alors nécéssairement $f'(omega) > 0$, donc $f$ croissante,
+  donc $uu_C$ décroissante.
+
+  La tension ne passe pas par un maximum: on n'observe pas de résonnance.
+
+- 2#super[eme] cas, $1/Q^2 - 2 < 0 <=> Q > 1/sqrt(2)$
+
+  On cherche des solutions pour $f' = 0$, donc pour:
+  $ 2 (omega/omega_0)^2 = 2 - 1/Q^2 $
+  $ <=> omega_r = omega_0 sqrt(1 - 1/(2 Q^2)) $
+
+  On a:
+  - $omega > omega_r <=> f'(omega) > 0 $
+  - $omega < omega_r <=> f'(omega) < 0$
+  Donc $f$ admet un minimum en $omega_r$, et comme on
+  passe à l'inverse, $G$ admet un maximum en $omega_r$.
+
+  On cherche le gain de la résonance (le gain maximum du filtre):
+  $ G(omega_r)
+&= 1/sqrt((1/(2 Q^2))^2 + 1/Q^2 (1 - 1/(2 Q^2))) \ 
+&= 1/sqrt(1/(4 Q^4) + 1/Q^2 - 1/(2 Q^4)) \
+&= 1/sqrt(1/Q^2 (1 - 1/(4 Q^2))) \
+&= (2 Q^2)/sqrt(4Q^2 - 1)
+$
+
+== Filtre passe-bas du 2#super[nd] ordre
+
+On reprend le circuit (@figc).
+On fait une étude asymptotique rapide:
+
+#align(center, table(
+	columns: 3,
+	align: horizon,
+	[Circuit], [Haute fréquence], [Basse fréquence],
+	figcan({ bobine((0, 0)) }),
+	figcan({ fil((0, 0), (1, 0)) }),
+	figcan({ serie((0, 0), apply(interrupteur)) }),
+	figcan({ condensateur((0, 0)) }),
+	figcan({ serie((0, 0), apply(interrupteur)) }),
+	figcan({ fil((0, 0), (1, 0)) }),
+	figcan({
+		carre((0, 0),
+			branch(apply(dots)),
+			apply(bobine, label: $C$),
+			apply(resistor, label: $R$),
+			branch(
+				apply(condensateur, label: $C$)
+			)
+		)
+	}), 
+	figcan({
+		carre((0, 0),
+			branch(apply(dots)),
+			apply(resistor, label: $R$),
+			branch(
+				apply(interrupteur, label: $C$)
+			)
+		)
+	}), 
+	figcan({
+		carre((0, 0),
+			branch(apply(dots)),
+			apply(interrupteur, label: $L$),
+			apply(resistor, label: $R$),
+			branch()
+		)
+	}), 
+	[],
+	$ss = ee$,
+	$ss = 0$
+))
+
+Donc le filtre à l'air d'être passe bas.
+
+On a:
+$ und(H) = 1/(1 + j 1/Q omega/omega_0 - (omega/omega_0)^2) $
+
+$ G = 1/sqrt((1 - (omega/omega_0)^2)^2 + 1/Q^2 (omega/omega_0)^2) $
+
+#let fromage = $omega$
+
+$ G_"dB" &= -20 log sqrt((1 - (omega/omega_0)^2)^2 + 1/Q^2 (omega/omega_0)^2) $
+- Quand $omega -> 0$, $G_"dB" approx - 20 log 1 = 0$,
+  donc on observe une asymptote horizontale en basse fréquences.
+- Quand $fromage -> +oo$, $G_"dB" approx - 20 log sqrt((omega/omega_0)^4) = - 40 log omega/omega_0 $
+  donc on observe une asymptote diagonale en $-40 "dB/décal"$ 
+  en $+oo$.
+
+On analyse la phase
+$ phi = arg und(H) &= arg H_0 - arg(1 - (fromage/fromage_0)^2 + j 1/Q fromage/fromage_0) \
+&= arg H_0 - psi
+$
+
+$ arg H_0 = cases(0 "si" H_0 >= 0, pi "si" H_0 < 0) $
+
+$ tan psi = (1/Q fromage/fromage_0)/(1 - (fromage/fromage_0)^2) $
+$ cos psi "est du signe de " 1 - (omega/omega_0)^2 $
+
+$ 
+phi = cases(0 "si" H_0 >= 0, pi "si" H_0 < 0)
+- cases(
+	arctan((1/Q fromage/fromage_0)/(1 - (fromage/fromage_0)^2))
+	"si" fromage <= fromage_0,
+	pi + arctan((1/Q fromage/fromage_0)/(1 - (fromage/fromage_0)^2))
+	"si" fromage > fromage_0
+)
+$
+
+La phase sera la même qu'il
+y ai résonnance ou non.
+
+
+En visualisant sur un oscilloscope en mode XY la sortie du filtre
+par-rapport à son l'entrée, on observera une ellipse
+(dû à la différence de phase entre les sinus de même fréquence)
+dont les caractéristiques dépendront
+de la fréquence d'entrée, du facteur de qualité
+et du type de résonance du filtre.
+
+#figcan(caption: [Visualisation de l'entrée d'un filtre (en rouge), de sa sortie (en vert) et de l'ellipse formée en prenant commes coordonnées $X$ l'entrée et en $Y$ sa sortie (#link("https://www.desmos.com/calculator/0qapj51vtt")[version interactive])], {
+	import draw: *
+	
+	let phi1 = 1
+	let phi2 = 2
+
+	let s2 = 0.6
+
+	arrow((-4, 0), (4, 0))
+	arrow((0, -2), (0, 2))
+
+	let a(x) = calc.sin(x + phi1)
+	let b(x) = s2 * calc.sin(x + phi2)
+
+	for i in frange(-calc.pi, calc.pi, step: 0.1) {
+		let next = i + 0.1
+
+		line((i, a(i)), (next, a(next)), stroke: red)
+		line((i, b(i)), (next, b(next)), stroke: green)
+
+		line((a(i), b(i)), (a(next), b(next)))
+	}
+})
+
