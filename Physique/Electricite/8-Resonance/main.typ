@@ -602,7 +602,7 @@ dont les caractéristiques dépendront
 de la fréquence d'entrée, du facteur de qualité
 et du type de résonance du filtre.
 
-#figcan(caption: [Visualisation de l'entrée d'un filtre (en rouge), de sa sortie (en vert) et de l'ellipse formée en prenant commes coordonnées $X$ l'entrée et en $Y$ sa sortie (#link("https://www.desmos.com/calculator/0qapj51vtt")[version interactive])], {
+#figcan(caption: [Visualisation de l'entrée d'un filtre (en rouge), de sa sortie (en vert) et de l'ellipse formée en prenant commes coordonnées $X$ l'entrée et en $Y$ sa sortie (voir #link("https://www.desmos.com/calculator/0qapj51vtt")[version interactive])], {
 	import draw: *
 	
 	let phi1 = 1
@@ -616,13 +616,84 @@ et du type de résonance du filtre.
 	let a(x) = calc.sin(x + phi1)
 	let b(x) = s2 * calc.sin(x + phi2)
 
-	for i in frange(-calc.pi, calc.pi, step: 0.1) {
-		let next = i + 0.1
+	for i in frange(-calc.pi, calc.pi + 0.8, step: 0.8) {
+		let next = i + 0.8
 
-		line((i, a(i)), (next, a(next)), stroke: red)
-		line((i, b(i)), (next, b(next)), stroke: green)
+		arrow((i, a(i)), (next, a(next)), stroke: red)
+		arrow((i, b(i)), (next, b(next)), stroke: green)
 
-		line((a(i), b(i)), (a(next), b(next)))
+		arrow((a(i), b(i)), (a(next), b(next)))
 	}
 })
 
+= Résonance aux bornes de l'inductance
+
+On prend la tension aux bornes de l'inductance (@figl)
+
+$ 
+und(H) 
+&= (j L omega)/(R + j (L omega - 1/(C omega))) \
+&= (- L C omega^2)/(j R C omega + (1 - L C omega^2)) \
+&= (- omega^2/omega_0^2)/(1 - (omega/omega_0)^2 + j 1/Q omega/omega_0) \
+&= 1/(1 - (omega_0/omega)^2 + j 1/Q omega_0/omega)
+"(on ne veut pas de" fromage "au numérateur)"
+$
+
+= Filtres coupe-bande ou réjecteur de fréquences
+
+On regarde la tension aux bornes de $L$ et $C$ (@figlc)
+
+== Comportements asymptotiques
+
+#align(center, table(
+	columns: 3,
+	align: horizon,
+	[Circuit], [Haute fréquence], [Basse fréquence],
+	figcan({ bobine((0, 0)) }),
+	figcan({ fil((0, 0), (1, 0)) }),
+	figcan({ serie((0, 0), apply(interrupteur)) }),
+	figcan({ condensateur((0, 0)) }),
+	figcan({ serie((0, 0), apply(interrupteur)) }),
+	figcan({ fil((0, 0), (1, 0)) }),
+	figcan({
+		carre((0, 0),
+			branch(apply(dots)),
+			apply(resistor, label: $R$),
+			branch(
+				apply(bobine, label: $L$),
+				apply(condensateur, label: $C$)
+			)
+		)
+	}), 
+	figcan({
+		carre((0, 0),
+			branch(apply(dots)),
+			apply(resistor, label: $R$),
+			branch(
+				apply(interrupteur, closed: true, label: $L$),
+				apply(interrupteur, label: $C$)
+			)
+		)
+	}), 
+	figcan({
+		carre((0, 0),
+			branch(apply(dots)),
+			apply(resistor, label: $R$),
+			branch(
+				apply(interrupteur, label: $L$),
+				apply(interrupteur, closed: true, label: $C$)
+			)
+		)
+	}), 
+	[],
+	$ss = ee$,
+	$ss = ee$
+))
+
+== Étude du gain
+
+$ 
+und(H) &= R + j L omega + 1/(j C omega) \
+&= ((R + j L omega)(j C omega))/(j C omega) \
+&= (-L C omega)
+$
