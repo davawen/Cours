@@ -48,7 +48,7 @@
   figure(caption: caption, canvas(body))
 }
 
-#let plot(x, y: none, mode: "lin", x-tick: auto, x-ticks: (), y-tick: auto, y-ticks: (), color: blue, ..fs) = {
+#let plot(x, y: none, mode: "lin", x-tick: none, x-ticks: (), y-tick: none, y-ticks: (), color: blue, size: (6, 4), ..fs) = {
 	import cetz-plot: plot
 	let (x-min, x-max) = x
 
@@ -72,11 +72,11 @@
 	}
 
 	figcan({
-		plot.plot(axis-style: "school-book", size: (6, 4), mode: mode, x-min: x-min, x-max: x-max, y-min: y-min, y-max: y-max, x-tick-step: x-tick, y-tick-step: y-tick, x-ticks: x-ticks, y-ticks: y-ticks, {
+		plot.plot(axis-style: "school-book", size: size, mode: mode, x-min: x-min, x-max: x-max, y-min: y-min, y-max: y-max, x-tick-step: x-tick, y-tick-step: y-tick, x-ticks: x-ticks, y-ticks: y-ticks, {
 			for f in fs {
 				if type(f) == array {
 					let (domain, f) = f
-					plot.add(style: style, domain: domain, f)
+					plot.add(style: style, domain: domain, samples: 200, f)
 				} else if type(f) == dictionary {
 					if "vert" in f {
 						plot.add-vline(..f.vert, min: f.at("min", default: auto), max: f.at("max", default: auto), style: style)
