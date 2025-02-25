@@ -335,7 +335,7 @@ $ cases(tan psi = (L omega - 1/(C omega))/R, cos psi "du signe de R donc" > 0) $
 $ phi = arctan((L omega)/R - 1/(R C omega)) $
 
 #note[#def[Forme canonique]: on peut mettre toute les fonctions de transfert du 1#super[er] et du 2#super[nd] ordre sous la même forme:
-$ und(H) = (H_0 (j 1/Q omega/omega_0))/(1 = j 1/Q omega/omega_0 - (omega/omega_0)^2) $
+$ und(H) = (H_0 (j 1/Q omega/omega_0))/(1 + j 1/Q omega/omega_0 - (omega/omega_0)^2) $
 	On peut faire l'étude de la phase et de l'amplitude avec la forme
 	canonique, mais cela est plus laborieux qu'avec la forme précendente.
 	On retombe sur:
@@ -526,7 +526,7 @@ On fait une étude asymptotique rapide:
 	figcan({
 		carre((0, 0),
 			branch(apply(dots)),
-			apply(bobine, label: $C$),
+			apply(bobine, label: $L$),
 			apply(resistor, label: $R$),
 			branch(
 				apply(condensateur, label: $C$)
