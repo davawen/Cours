@@ -239,6 +239,24 @@ Il est défini par un dictionnaire de la forme:
 #let voltmetre = elem-letter.with(letter: $V$)
 #let amperemetre = elem-letter.with(letter: $A$)
 
+#let gbf(pos, rot: 0deg, name: none, layout: false, u: none) = construct_component(pos, rot, name, layout, {
+	import draw: *
+	let layout = (left: 0.4, right: 0.4, top: 0.4, bot: 0.4)
+	let comp = {
+		circle((0, 0), radius: 0.4)
+		content((0, 0), $attach(limits(G), b: ~)$)
+
+		anchor("l", (-0.4, 0))
+		anchor("r", (0.4, 0))
+
+		if u != none {
+			layout.bot = 1.1
+			tension("l", "r", (0, -0.6), u)
+		}
+	}
+	(comp: comp, layout: layout)
+})
+
 #let source-ideale(pos, rot: 0deg, name: none, layout: false, label: none, u: none) = construct_component(pos, rot, name, layout, {
 	import draw: *
 
