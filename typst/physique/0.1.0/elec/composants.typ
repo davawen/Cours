@@ -73,6 +73,25 @@ Il est défini par un dictionnaire de la forme:
 	(comp: comp, layout: (left: 0.375, right: 0.375, top: 0, bot: 0))
 })
 
+#let cable(pos, rot: 0deg, name: none, layout: false, label: none) = construct_component(pos, rot, name, layout, {
+	import draw: *
+
+	let layout = (left: 1/2, right: 1/2, top: 1/4, bot: 1/4)
+	let comp = {
+		anchor("l", (-0.375, 0))
+		anchor("r", (0.375, 0))
+
+		if label != none {
+			layout.top += 0.5
+			content((rel: (0, 0.1), to: (0, 1/4)), label)
+		}
+
+		line((-0.375, 0), (0.375, 0))
+	}
+	(comp: comp, layout: (left: 0.375, right: 0.375, top: 0, bot: 0))
+})
+
+
 /// Dessine un resistor de largeur `size` et de hauteur `size/2`
 #let resistor(pos, rot: 0deg, name: none, layout: false, label: none, u: none, size: 1) = construct_component(pos, rot, name, layout, {
 	import draw: *
