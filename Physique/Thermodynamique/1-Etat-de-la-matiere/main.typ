@@ -51,7 +51,6 @@ un système $Sigma$ en sous-systèmes $(Sigma_n)$, on peut obtenir la
 valeur de $V$ en
 additionnant les valeurs $(V_n)$]
 
-#pagebreak()
 On a deux catégories de variables intensives:
 - Les variables intensives intrinsèques
   - La température, la pression
@@ -416,3 +415,146 @@ ce mélange possédant un certain volume et une certaine température,
 on appelle *pression partielle* de $A$ la pression $P_A$
 qu'aurait $A$ dans les même conditions de pression et de volume que $M$.
 
+On se place dans le cas où
+$ P_i V = n_i R T $
+$ P_i = n_i (R T)/V $
+$ P_"tot" = n_"tot" (R T)/V <=> (R T)/V = P_"tot"/n_"tot" $
+$ P_i = n_i P_"tot"/n_"tot" = underbrace(x_i, "fonction molaire") P_"tot"  $
+
+== Loi de Dalton
+
+On suppose que $n_"tot" = sum_(j) n_j$, d'où:
+$ (P_"tot" V)/(R T) = sum_j (P_j V)/(R T) $
+$ P_"tot" = sum_j P_j $
+
+= Gaz réels - Modèle de Vander Waals
+
+Aucun modèle de gaz parfait n'est vraiment au programme.
+
+Ce qu'il faut retenir, c'est les arguments qu'on
+va utiliser pour expliquer et intepréter les termes correctifs
+qui sont ajoutés au modèle des gaz parfaits dans le modèle de
+Vander Waals.
+
+== Écarts au modèle des gaz parfaits
+
+Aucun gaz réel ne se comporte comme un gaz parfait si les pressions
+ne sont pas évanouissantes.
+
+== Équations de Van Der Waals
+
+On part de l'équation des gaz parfaits:
+$ P V = n R T $
+
+On rajoute un terme $+ (n^2 a)/V^2$ au $P$, et un terme $- n b$ au $V$:
+#figure(caption: [Équation de Van der Waals],
+	$ (P + (n^2 a)/V^2)(V - n b) = n R T $
+)
+
+Les grandeurs $a$ et $b$ sont des constantes qui dépendent du gaz.
+
+On doit vérifier que les caractères intensifs et extensifs sont
+conservés
+
+== Modification du modèle: forces intermoléculaires
+
+L'hypothèse du gaz parfait qu'on retire, c'est l'absence
+d'interactions entre les molécules.
+
+#figure(image("interractions.png", width: 50%))
+
+== Covolume
+
+La particule veut repousser les particules qui viennt proche d'elle.
+
+Pour le traduire au niveau macroscopique, on va considérer
+les particules comme étant des sphères possédant un volume.
+
+On pose donc le volume de gaz comme étant le volume total
+moins le volume pris par les particules.
+
+On considère $r$ le rayon d'une particule,
+et on pose $b$ le co-volume:
+le volume pris par un nombre d'avogadro de particule:
+$ b = cal(N)_a 4/3 pi r^3 $
+
+D'où le terme de volume total:
+$ V - n b $
+
+
+== Pression moléculaire
+
+La pression moléculaire, c'est le terme en:
+$ (n^2 a^2)/V^2 $
+
+Une particule individuelle peut soit:
+- Heurter une paroi et contribuer à la pression $P$
+- Heurter une autre particule, qui va appuyer sur une autre
+  particule, etc... ce qui va éventuellement appliquer une pression sur
+  la surface
+
+Les interactions inter-particules contribuent donc à la pression totale!
+C'est la pression moléculaire.
+
+Les molécules auront plus d'interactions entre elles
+quand le volume est plus petit, et à l'inverse moins d'interactions
+si elles ont plus d'espace.
+
+On divise donc la pression moléculaire par le volume.
+
+On considère $a$ la "quantité d'interaction par nombre d'Avogadro de
+particules".
+
+D'où le terme de pression total:
+$ P + (n^2 a)/(V^2) $
+
+#note[La puissance de deux est complètement empirique.]
+
+= Cas des liquides 
+
+== Influence de la densité moléculaire
+
+Ce qu'on a vu, c'est que le principal point qui importe
+c'est la distance entre deux particules.
+Pour tenir compte des choc, il faut une distance plutot faible.
+Si deux particules se rapprochent trop, elles se repoussent.
+L'idee c'est de se dire "comment est-ce qu'on va pouvoir effictivement
+ce qui se passe en terme de densité moléculaire?"
+
+Par exemple, si on essaye de calculer la pression de l'eau
+avec la loi des gazs parfaits, on trouve:
+une pression de $1300 "atm"$.
+#parachute[Le modèle des gaz parfait n'est donc pas adapté aux liquides.]
+
+Dans un liquide ou un solide, les interactions interparticules
+(qui ne sont qu'un terme correctif dans le model de Van der Waals)
+deviennent préponderantes.
+
+== Masse volumique - Phase condencée
+
+Les liquides sont des centaines de fois plus denses que les
+gazs (en général, selon la température).
+
+De plus, la masse volumique d'un gaz est variable, à l'inverse
+de celle d'un solide ou d'un liquide qui est pseudo-constante.
+
+#figure(image("coefdens.png"))
+
+== Compressibilité et phases condensées.
+
+Les liquides et les solides sont des milliers de fois
+moins compressible que les gazs.
+
+#figure(image("coefcom.png", width: 50%))
+
+== Dilatation et phases condensées
+
+#figure(image("coefdil.png"))
+
+== Modèle du fluide incompressible
+
+Le modèle du fluide incompressible consiste à poser
+le volume $V$ d'un fluide comme une constante.
+
+En thermodynamique, on traitera donc séparément les gazs et
+les "phases condensées" (ce qui inclut les solides et les liquides).
