@@ -153,3 +153,26 @@ Le meilleur régime, selon Spinoza, c'est la démocratie $>$ oligarchie $>$ mona
 
 
 = Lecture détaillée de chacune des parties du texte
+
+== Chapitre 16
+
+Thèse de Spinoza:
+- Les hommes vivent dans la superstition qui les maintien en esclavage
+- Les gouvernement mal intentionnés utilisent la superstition pour 
+- Ça devrait être l'inverse
+
+Si les hommes étaient rationnels et avaient de la chance toute leurs vie,
+alors ils ne viveraient pas dans la superstition.
+
+La plupart des hommes ne savent pas pourquoi ils agissent dans la société.
+(Exemple: Archer, Olenska, Antigone)
+
+Spinoza dit que faire le bien, c'est difficile.
+C'est encore plus dûr de faire en sorte que les hommes
+en général, que la société dans son ensemble, soit bonne.
+
+(C'est l'inverse de Platon, qui dit que faire le bien est "facile")
+
+== Réflexion sur la bible
+
+Le temple a dégénéré en un théâtre
