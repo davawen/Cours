@@ -19,7 +19,7 @@
 			grid(
 				columns: (1fr, 1fr, 1fr),
 				align: (left, center, right),
-				smallcaps[Glioria sit pingvino],
+				smallcaps[Gloria sit pingvino],
 				counter(page).display(
 				  "1/1",
 				  both: true,
