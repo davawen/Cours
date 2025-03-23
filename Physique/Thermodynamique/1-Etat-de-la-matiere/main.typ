@@ -121,7 +121,7 @@ que si ça depend de la personne, ça pose un problème
 puisque l'une des règles scientifiques
 c'est que tout le monde doit pouvoir s'accorder sur la même chose.
 La notion de température c'est justement la variable qui va être
-chargé de trancher, de pouvoir dire: "il fait telle température"
+chargée de trancher, de pouvoir dire: "il fait telle température"
 Et la tout le monde est d'accord, que certains trouve que
 cette température là, elle est chaude, c'est très bien.
 Que d'autre disent: "Non, cette température est froide!", très bien.
