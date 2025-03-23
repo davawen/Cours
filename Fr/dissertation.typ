@@ -68,7 +68,7 @@ et on cite leur nom.
 
 === Développement
 
-Certaines écoles refusent qu'on cite les œuvres au programme (Centrale et CCINP). \
+Certaines écoles refusent qu'on cite les œuvres pas au programme (Centrale et CCINP). \
 Chez X-ENS et Mines-Ponts, on peut citer quelques œuvres extérieurs.
 (Par exemple, citer Flaubert pour Wharton)
 

@@ -58,7 +58,7 @@ que le pouvoir religieux corromp le pouvoir polique,
 Cela fait scandale (l'Europe est pleine de monarchies de droit divin).
 La thèse de Spinoza va à l'encontre de la politique de son temps.
 
-Pour la religion est souverain (pour Spinoza aussi), mais dieu n'est
+Pour la religion dieu est souverain (pour Spinoza aussi), mais dieu n'est
 pas souverain dans la sphère politique. Il donne une indépendance 
 au pouvoir religieux comme au pouvoir polituque.
 
