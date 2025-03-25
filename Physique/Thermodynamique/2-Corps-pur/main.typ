@@ -1,5 +1,7 @@
 #import "@local/physique:0.1.0": *
 
+#import "@preview/fletcher:0.5.7" as fletcher: diagram, node, edge
+
 #show: doc => template(doc)
 
 #show link: underline
@@ -29,18 +31,19 @@ On considère les phases habituelles:
 
 == Définition des transitions de phases
 
-#figcan({
-	import draw: *
+#align(center, diagram(
+	node((-2, 0), [Solide]),
+	edge((2, 0), [Sublimation], "->", bend: 7deg),
+	edge((0, -2), [Fusion], "->", bend: 7deg),
 
-	content((0, 0), [Liquide])
-	rect((-1, -0.5), (1, 0.5))
+	node((2, 0), [Gazeux]),
+	edge((0, -2), [Liquéfaction], "->", bend: -7deg),
+	edge((-2, 0), [Condensation], "->", bend: 7deg),
 
-	content((-4, -1), [Solide])
-	rect((-5, -1.5), (-3, -0.5))
-
-	content((4, -1), [Gazeux])
-	rect((3, -1.5), (5, -0.5))
-})
+	node((0, -2), [Liquide]),
+	edge((-2, 0), [Solidification], "->", label-angle: auto, bend: 7deg),
+	edge((2, 0), [Vaporisation], "->", label-angle: auto, bend: -7deg),
+))
 
 == Retard du changement d'état en état métastable
 
