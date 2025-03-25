@@ -172,7 +172,7 @@ On parle de pression évanouissante quand on est face
 Quelques unités de pression:
 - Le pascal (Pa)
 - Le bar: $1 "bar" = 10^5 "Pa"$
-- L'atmosphère: $1 "atm" = 10135 "Pa"$
+- L'atmosphère: $1 "atm" = 101325 "Pa"$
 - Le millimètre de mercure: $1 "mmhG" = 1/760 "atm"$
 
 == Définition expérimentale du gaz parfait
