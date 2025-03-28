@@ -399,3 +399,46 @@ Il est défini par un dictionnaire de la forme:
 
 	(comp: comp, layout: layout)
 })
+
+#let ali(pos, sym: $oo$, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
+	import draw: *
+
+	let layout = (left: 1, right: 1, top: 1, bot: 1)
+	let comp = {
+		anchor("+", (-1, -0.5))
+		anchor("-", (-1, 0.5))
+		anchor("r", (1, 0.5))
+
+		rect((-1, -1), (1, 1))
+		content((-0.5, -0.5), $+$)
+		content((-0.5, 0.5), $-$)
+		content((0.5, 0.5), $triangle.r$)
+		content((0.5, 0), sym)
+	}
+
+	(comp: comp, layout: layout)
+})
+
+// Cette fonction prend un composant (une fonction)
+// qui ne possède pas de bornes gauches et droites (comme un quadripôle ou un ALI),
+// et elle renvoie un nouveau composant possédant les bornes gauches et droites demandées.
+#let attach(comp, l, r) = (name: none, layout: false, ..params) => {
+	let internal_name = "__attached_" + str(name)
+	let (comp, layout: comp_layout) = comp(..params, layout: true, name: internal_name)
+	let comp = draw.group(name: name, {
+		comp
+		draw.copy-anchors(internal_name)
+		if l != none {
+			draw.anchor("l", l)
+		}
+		if r != none {
+			draw.anchor("r", r)
+		}
+	})
+
+	if layout { 
+		(comp: comp, layout: comp_layout)
+	} else {
+		comp
+	}
+}
