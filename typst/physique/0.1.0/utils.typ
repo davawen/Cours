@@ -76,7 +76,7 @@
 			for f in fs {
 				if type(f) == array {
 					let (domain, f) = f
-					plot.add(style: style, domain: domain, samples: 200, f)
+					plot.add(style: style, domain: domain, samples: 100, f)
 				} else if type(f) == dictionary {
 					if "vert" in f {
 						plot.add-vline(..f.vert, min: f.at("min", default: auto), max: f.at("max", default: auto), style: style)
@@ -86,7 +86,7 @@
 						style.stroke = f.stroke
 					}
 				} else {
-					plot.add(style: style, domain: (x-min, x-max), f)
+					plot.add(style: style, samples: 100, domain: (x-min, x-max), f)
 				}
 			}
 		})

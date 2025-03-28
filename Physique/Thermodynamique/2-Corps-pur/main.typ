@@ -34,10 +34,10 @@ On considère les phases habituelles:
 #align(center, diagram(
 	node((-2, 0), [Solide]),
 	edge((2, 0), [Sublimation], "->", bend: 7deg),
-	edge((0, -2), [Fusion], "->", bend: 7deg),
+	edge((0, -2), [Fusion], "->", bend: 7deg, label-angle: auto),
 
 	node((2, 0), [Gazeux]),
-	edge((0, -2), [Liquéfaction], "->", bend: -7deg),
+	edge((0, -2), [Liquéfaction], "->", bend: -7deg, label-angle: auto),
 	edge((-2, 0), [Condensation], "->", bend: 7deg),
 
 	node((0, -2), [Liquide]),
@@ -222,3 +222,69 @@ de changement de phase:
 	circle((1, 0.8), radius: 0.04)
 	circle((5, 4), radius: 0.04)
 })
+
+== Point triple
+
+Chaque corps pur possède un unique point triple,
+un couple $(P, T)$ où les trois phases coexistent.
+
+Point triple de l'eau:
+$(6.026 times 10^(-3) "atm", -0.01 degree "C")$
+
+== Point critique
+
+== Cas particulier de l'eau
+
+Dans le cas de l'eau,
+l'interface entre solide et liquide possède une pente
+inverse (l'eau prend plus de place sous
+forme solide que sous forme liquide)
+
+= Diagramme de Clapeyron $(P, v)$ de l'équilibre liquide-vapeur
+
+== Description
+
+#figure(image("clapey.png", width: 50%))
+
+On parle d'équilibre liquide-vapeur quand une phase
+liquide et une phase de vapeur coexistent.
+
+On réalise le diagramme de Clapeyron à température fixée.
+
+== Courbe d'ébuillition de rosée et de saturation
+
+On appelle *courbe d'ébullition* la courbe qui relie
+les points pression-température entre
+l'apparition de la première goutte de vapeur
+ou  la disparition de la dernière goutte d'eau.
+
+De même, on appelle *courbe de rosée* la courbe qui relie
+l'apparition de la première goutte d'eau et la disparition
+de la dernière goutte de vapeur.
+
+Ensemble, ces courbes sont appellées courbes de saturation.
+
+== Point critique - Opalescence critique
+
+= Théorème des moments
+
+#figure(image("clapey2.png", width: 70%))
+
+On peut utiliser ce diagramme pour déterminer la composition
+d'un mélange.
+
+Le volume massique de la vapeur et le volume massique du liquide
+caractérise le corps.
+
+On pose le volume total $V = V_l + V_v$ somme des volumes de
+la vapeur et du liquide.
+
+$ underbrace((m_l + m_v), "mass totale") v = m_l v_l + m_v v_v $
+
+$ v = x_l v_l + x_v v_v "avec" x_l = m_l/(m_l + m_v) "le titre massique" $
+
+$ x_l + x_v = 1 <=> x_l = 1 - v_l $
+$ v = (1 - x_v) v_l + x_v v_v  $
+$ v - v_l = x_v (v_v - v_l) $
+$ x_v = (v - v_l)/(v_v - v_l) $
+$ x_v = (A M)/(A B) $
