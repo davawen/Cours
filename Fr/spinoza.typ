@@ -176,3 +176,59 @@ en général, que la société dans son ensemble, soit bonne.
 == Réflexion sur la bible
 
 Le temple a dégénéré en un théâtre
+
+== Le "Droit naturel"
+
+== 
+
+Spinoza distingue 6 régime politiques selon deux critères:
+#figure(table(
+	columns: 4,
+	[], [Un seul dirigeant], [Plusieurs dirigeant], [Peuple dirigeant],
+	[Légitime], [Monarchie], [Aristocratie], [Démocratie],
+	[Non légitime], [Despotisme], [Oligarchie], [Dégagogie]
+))
+
+Spinoza dit que la démocratie est le meilleur mode d'organisation de la société.
+
+Spinoza distingue l'obéissance et l'esclavage.
+Selon lui, la démocratie est le meilleur régime parce que 
+les individus obéissent aux règles et ne sont pas esclaves.
+
+Nous naissons dans un rapport avec dieu: il existe dès notre essence.
+
+On trouve là une contradiction: selon Spinoza, il n'y a pas de dieu dans l'état de nature.
+
+Il y a un droit de dieu qui s'oppose à l'état naturel.
+
+Si l'on obéit au commandement de dieu par le pacte de la révélation, 
+et qu'en même temps on obétie au commandement de l'état par le pacte de l'état,
+quel pacte doit-on suivre?
+
+Selon Spinoza, il faut suivre Dieu avant l'État. Cependant, il faut suivre
+Dieu seulement si on a eu une révélation certaine: si l'on est un prophète.
+
+== Chapitre 17 - Les hébreux
+
+Spinoza s'attache à commenter le texte biblique, d'un point de vue politique.
+
+Les individus ne peuvent pas donner l'entièreté de leur droit naturel au souverain
+n'est pas possible puisqu'une partie de leur droit leur échappe.
+
+D'où la question de Spinoza: «Il faut réfléchir aux moyens de faire obéir
+les hommes aux souverain»
+
+
+À partir de là, Spinoza se demande comment faire que la charge symbolique puisse faire
+le don du droit naturel.
+
+Est-ce que le pacte fait entre le citoyen et dieu, et le pacte avec le souverain est le même?
+Peut-on vivre dans un gouvernement où le gouvernement est dieu.
+
+=== Théocratie
+
+Le dieu de la théocratie se retourne contre les hébreux.
+
+Le pacte étant annulé, le système politique a progressivement disgressé vers un état qui n'était pas durable.
+
+D'où la conclusion du chapitre: pour qu'un état soit durable, il ne doit pas tenir sur un pacte religieux.
