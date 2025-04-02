@@ -104,9 +104,18 @@
   line(p1, p2, mark: (start: "straight", end: "straight"), ..params)
 }
 
-#let arrow(p1, p2, ..params) = {
-  import draw: line
-  line(p1, p2, mark: (end: "straight"), ..params)
+#let arrow(p1, p2, tip: none, pad: 0.3, ..params) = {
+	import draw: line, content
+	line(p1, p2, mark: (end: "straight"), ..params)
+	content(((a, b) =>
+		cetz.vector.add(b,
+			cetz.vector.scale(
+				cetz.vector.norm(cetz.vector.sub(b, a)),
+				pad
+			)),
+		p1, p2),
+		tip
+	)
 }
 
 /// Draws a line going through the two points

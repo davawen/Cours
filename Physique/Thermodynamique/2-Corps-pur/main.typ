@@ -283,7 +283,7 @@ $ underbrace((m_l + m_v), "mass totale") v = m_l v_l + m_v v_v $
 
 $ v = x_l v_l + x_v v_v "avec" x_l = m_l/(m_l + m_v) "le titre massique" $
 
-$ x_l + x_v = 1 <=> x_l = 1 - v_l $
+$ x_l + x_v = 1 <=> x_l = 1 - x_v $
 $ v = (1 - x_v) v_l + x_v v_v  $
 $ v - v_l = x_v (v_v - v_l) $
 $ x_v = (v - v_l)/(v_v - v_l) $

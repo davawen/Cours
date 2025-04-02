@@ -400,18 +400,23 @@ Il est défini par un dictionnaire de la forme:
 	(comp: comp, layout: layout)
 })
 
-#let ali(pos, sym: $oo$, rot: 0deg, name: none, layout: false) = construct_component(pos, rot, name, layout, {
+#let ali(pos, sym: $oo$, rot: 0deg, name: none, layout: false, flip: false) = construct_component(pos, rot, name, layout, {
 	import draw: *
 
 	let layout = (left: 1, right: 1, top: 1, bot: 1)
 	let comp = {
-		anchor("+", (-1, -0.5))
-		anchor("-", (-1, 0.5))
+		if flip {
+			anchor("+", (-1, 0.5))
+			anchor("-", (-1, -0.5))
+		} else {
+			anchor("+", (-1, -0.5))
+			anchor("-", (-1, 0.5))
+		}
 		anchor("r", (1, 0.5))
 
 		rect((-1, -1), (1, 1))
-		content((-0.5, -0.5), $+$)
-		content((-0.5, 0.5), $-$)
+		content((rel: (0.5, 0), to: "+"), $+$)
+		content((rel: (0.5, 0), to: "-"), $-$)
 		content((0.5, 0.5), $triangle.r$)
 		content((0.5, 0), sym)
 	}
