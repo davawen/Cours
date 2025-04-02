@@ -232,3 +232,46 @@ Le dieu de la théocratie se retourne contre les hébreux.
 Le pacte étant annulé, le système politique a progressivement disgressé vers un état qui n'était pas durable.
 
 D'où la conclusion du chapitre: pour qu'un état soit durable, il ne doit pas tenir sur un pacte religieux.
+
+= Chapitre 18
+
+Revient une question qui terminait le chapitre 17:
+Les raisons du dysfonctionnement de la théocratieo
+
+Il revient sur ces raisons en montrant une idée très forte:
+cet épisode politique ne pourra jamais revenir.
+
+Spinoza commence par:
+«Personne ne peut plus le prendre pour modèle, et cela ne serait pas un 
+dessein raisonable.»
+La théocratie est un contre-modèle. Il ne dira jamais dans le TTP que la théocratique
+est un système vertueux.
+
+Donc, pourquoi est-ce que le système s'est écroulé à la mort de Moïse?
+- Les rivalités entre les pontifs et les rois.
+  Spinoza montre que le système ne pouvait pas tenir car il reposait
+  sur l'opposition, sur la rivalité de deux formes de pouvoir
+  (qui ressemble curieusement à la rivalité entre le politique et la religion)
+- L'impuissance des prophètes, mais Spinoza que ces prophètes étaient
+  réduit à l'impuissance ou à la persécution, l'opposé de la liberté d'expression.
+  «Avertis ou chatiés par les rois, ces mêmes hommes étaient faciles à fléchir,
+  à cause de l'autorité qu'ils avaient de dire quels actions étaient pieuses ou impies.»
+  
+  Parenthèse sur Racine:
+    Racine meurt en 1614. Grand dramaturge de la cour de Louis XIV.
+    Homme très pieux, branche très extrême du catholiscisme
+    Or le catholiscisme condamne le théâtre comme un art dégénéré, donc Racine
+    est pris entre deux murs. Racine écrit ses dix première pièces, qui sont des pièces
+    issues de l'Antiquité Grec et Latine. Il reécrit des anciennes tragédies.
+    Après le scucès triomphant de Phèdre, Racine abandonne le théâtre.
+    Il devient historien. Le roi lui demande d'écrire son règne.
+    La thèse moderne est que Racine a utilisé le théâtre comme marche pied vers le pouvoir.
+    Racine va offenser la deuxième femme de Louis XIV, Mme. de Maintenon,
+    et va subir une terrible disgrâce.
+    
+    Apostasie: renoncement au message de Dieu.
+- Spinoza dit qu'il peut il y avoir une église dans l'état, mais que cette
+  église doit accepter d'être une Église DANS l'état, et non pas une Église DE l'état.
+-
+
+== 

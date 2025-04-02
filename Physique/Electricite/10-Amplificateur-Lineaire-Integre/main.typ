@@ -31,8 +31,8 @@ On considérera un ALI comme une boîte noire à huit pattes:
 
 Description des bornes:
 + Réglage offset (normalement nul)
-+ $v_-$ (Entrée)
-+ $v_+$ (Entrée)
++ $v_-$ (Entrée inverseuse)
++ $v_+$ (Entrée non-inverseuse)
 + $V_"cc"^-$ (Alimentation)
 + Réglage offset (normalement nul)
 + $s$ (Sortie)
