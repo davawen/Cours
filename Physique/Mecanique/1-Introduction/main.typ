@@ -490,9 +490,9 @@ Donc: $ hat(u) dot (dif hat(u))/(dif alpha) = 0 $
 $hat(u)$ est un vecteur unitaire, donc ne peut pas être nul. \
 Donc la dérivée d'un vecteur unitaire sera forcément orthogonal à ce vecteur.
 
-== Base de Fresnel
+== Base de Frenet
 
-#def[Base de Fresnel]: Quatrième solution pour se repérer dans l'espace, liée à la trajectoire que l'on va suivre. \
+#def[Base de Frenet]: Quatrième solution pour se repérer dans l'espace, liée à la trajectoire que l'on va suivre. \
 On définit l'abscisse curviligne comme la distance sur la trajectoire que l'on suit. \
 On définit alors un vecteur unitaire $arw(u_t)$ qui va suivre la trajectoire, et un vecteur normal $arw(u_n)$ orthogonal à $arw(u_t)$.
 Le vecteur normal devera toujours pointer vers l'intérieur de la concavité de la courbe.
