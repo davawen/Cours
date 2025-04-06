@@ -26,6 +26,7 @@ fi
 
 git merge --no-ff --no-edit origin/"$MAIN_BRANCH" || error_exit "Failed to merge $MAIN_BRANCH"
 
+rm .gitignore
 compileall
 
 if ! git diff-index --quiet HEAD --; then
