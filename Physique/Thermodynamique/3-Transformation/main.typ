@@ -17,7 +17,7 @@ Le système interagira souvent avec le milieu extérieur.
 == Contraintes et évolution
 
 Généralement, le milieu extérieur va imposer un certain nombre de 
-*contraintes*: des paramètres qu'il impose au système.
+*contraintes*: des paramètres qu'il impose au système
 (par exemple, la pression du milieu extérieur).
 
 Si l'on modifie les contraintes du milieu extérieur, le système
@@ -299,3 +299,30 @@ Pour différentes types transformations:
   &= - n R T [ln V]_"initial"^"final" \
   &= n R T ln (V_"final"/V_"initial") 
 $
+- Polytropique d'ordre $k$: la transformation est quasistatique,
+  et $P V^k$ est constant, donc:
+  $ W = - integral_"init"^"final" P_"ext" dif V 
+  &approx - integral_"init"^"final" P dif V \
+  &= - integral_"init"^"final" P V^k 1/V^k dif V \
+  &= - P V^k integral_"init"^"final" V^(-k) dif V \ $
+  On pose $C = P V^k$, la valeur qui reste constante.
+  On a donc $C = P_"init" V_"init"^k = P_"fin" V_"fin"^k$
+  #grid(
+	columns: (1fr, 1fr),
+	align: center,
+	[Si $k = 1$
+	$ W &= - C [ln (V)]_"init"^"fin" \
+    &= - C ln (V_"fin"/V_"init") \
+	&= C ln (V_"init"/V_"fin") \
+	&= P V ln (V_"init"/V_"fin")
+	$
+    ],
+	[Si $k > 1$
+	$ W &= - C [1/(k-1) V^(1-k)]_"init"^"fin" \
+	&= - C/(k - 1) times (1/V_"fin"^(k-1) - 1/V_"init"^(k-1)) \
+	&= 1/(k-1) times (C/V_"init"^(k-1) - C/V_"fin"^(k-1)) \
+	&= 1/(k-1) times ((P_"init" V_"init"^k)/V_"init"^(k-1) - (P_"fin" V_"fin"^k)/V_"fin"^(k-1)) \
+	&= (P_"init" V_"init" - P_"fin" V_"fin")/(k-1)
+	$
+    ]
+)
