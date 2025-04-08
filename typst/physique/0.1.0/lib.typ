@@ -136,4 +136,9 @@
 
 #let theorem = infobox(symbol: $Theta$, color: gradient.linear(..color.map.rainbow), info_text: smallcaps[Théorème: ])
 
+#let gridpat = tiling(size: (10pt, 10pt))[
+	#place(line(start: (0%, 0%), end: (100%, 100%)))
+	#place(line(start: (0%, 100%), end: (100%, 0%)))
+]
+
 // Sir Lanceléthanol le best <3 -U
