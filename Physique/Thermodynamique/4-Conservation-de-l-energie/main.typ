@@ -20,7 +20,7 @@
 
 == Forme intégrale ou différentielle
 
-Énoncé au-dessus est la forme intégrale du premier principe:
+L'énoncé au-dessus est la forme intégrale du premier principe:
 on étudie la différence entre un état $A$ et un état $B$:
 $ Delta (U + E_m) = Q + W \
 <=> (U + E_m) (B) - (U + E_m) (A) = Q + W \
@@ -31,24 +31,24 @@ Il existe aussi une version différentielle qui observe
 les changements infinitésimaux d'énergie:
 $ d (U + E_m) = delta Q + delta W $
 
-#note[On étend juste les définitions qu'on a vu avec l'énergie mécanique
+#note[On étend juste les définitions qu'on a vues avec l'énergie mécanique
 à l'énergie totale d'un système.]
 
 #note[
 	Comme en mécanique,
 	la variation d'énergie totale "ne dépend pas du chemin suivi",
-	mais les transferts d'énergie en eux même si.
+	mais les transferts d'énergie en eux-mêmes si.
 ]
 
 == Interprétation
 
 Premièrement, l'énergie interne est une fonction d'état,
 et ne dépend donc que de l'état à un moment donné,
-et pas des transformations qui ont étés appliquées jusqu'a ce moment.
+et pas des transformations qui ont été appliquées jusqu'à ce moment.
 (C'est la notion "d'indépendance du chemin suivi")
 
 #tip[
-	Peut-être pratique si:
+	Peut être pratique si:
 	- On étudie une transformation qui fait passer d'un état $A$
 	  à un état $B$
 	- Le calcul de la variation de cette transformation est très compliqué 
@@ -75,13 +75,13 @@ Un système est isolé si il n'y a aucun transfert énergétique.
 
 $ cases(Q = 0, W = 0) => Delta (E_m + Q) = 0 $
 
-=== Systèmes à énergie mécanique constantes
+=== Systèmes à énergie mécanique constante
 
 La majorité des systèmes rencontrés seront dans ce cas.
 On aura alors:
 $ Delta U = W + Q $
 
-On différentie encore deux cas particuliers.
+On différencie encore deux cas particuliers.
 - Dans le cas où $W = 0$,
   la majorité du temps, le seul travail
   présent sera celui des forces de pression, et
