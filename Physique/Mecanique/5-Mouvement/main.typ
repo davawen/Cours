@@ -44,7 +44,7 @@ on trouve un ordre de grandeur de la force magnétique de:
 $ F_"mag" approx e v B = 5 times 10^(-13) " N" $
 
 Si on suppose que $F_"elec"$ est du même ordre de grandeur que $F_"mag"$, \
-on aurait alors $E approx v B approx 3.10^6 " V m"^(-1)$,
+on aurait alors $E approx v B approx 3 dot 10^6 " V m"^(-1)$,
 qui est un énorme champ électrique qui ne sera pas vu en général.
 
 La majorité du temps, la force électrique sera donc négligeable
@@ -436,7 +436,11 @@ $theta$, et les électrons vont atterir sur l'écran à une
 certaine hauteur $d$. \
 En supposant $a << L$, la trajectoire de l'électron à partir
 de la zone $a$ est à peu près un triangle rectangle, et on a donc:
-$ tan theta = (q E a)/(m v^2) approx d/L $
+$ tan theta approx v_y/v = (q E a)/(m v^2) = d/L $
+
+(On note $v$ la vitesse horizontale après la zone $a$ et $v_y$
+la vitesse verticale après la zone $a$. Pour récupérer
+$v_y$, faire un PFD et intégrer)
 
 Dans le deuxième temps de l'expérience, on applique le champ magnétique
 $arw(B)$ en même temps que le champ électrique $arw(E)$.
