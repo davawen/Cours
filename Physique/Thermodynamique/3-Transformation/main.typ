@@ -326,3 +326,225 @@ $
 	$
     ]
 )
+
+== Lien avec la puissance
+
+On rapelle la définition de la puissance en fonction du travail:
+$ cal(P) = (delta W)/(dif t) "(ou " delta W = cal(P) dif t ")"$
+
+On sera parfois amené à parler de puissance des forces de pressions
+plutôt que de travail, il suffit d'appliquer la définition.
+
+= Transferts thermiques
+
+== Origine microscopique
+
+Les transferts thermiques traduisent la non-conservation des transferts mécaniques. \
+Ils se manifestent donc dans le cadre des forces _non-conservatives_.
+
+De la même manière qu'on exprime l'_agitation thermique_ microscopique
+avec la _température_ macroscopique,
+les transferts thermiques expriment de manière macroscopique
+le déplacement de cette agitation.
+
+
+== Puissance et transferts thermiques
+
+On pose $cal(P)_"th"$ la puissance thermique, définie par:
+$ cal(P)_"th" = (delta Q)/(dif t) "ou" delta Q = cal(P)_"th" dif t $
+
+(avec $Q$ la notation pour les transferts thermiques, comme $W$
+est la notation pour les travaux)
+
+#pagebreak()
+
+== Différents types de transferts thermique
+
+On répertorie trois types de transferts thermiques différents:
+
+- #def[Convection thermique]:
+  Déplacement de température pour une raison autre que l'agitation
+  thermique. \
+  Par exemple: on déplace physiquement un objet chaud
+  ou un courant d'air chaud monte.
+- #def[Diffusion thermique]:
+  Diffusion microscopique de la température
+  par l'agitation thermique.
+  #figcan({
+	import draw: *
+	rect((0, 0), (4, 1), fill: gradient.linear(red, blue))
+	content((-0.5, 0.5), $T_1$)
+	content((4.5, 0.5), $T_2$)
+  })
+- #def[Rayonnement]:
+  Création d'ondes électromagnétique par agitation thermique,
+  et création d'agitation thermique par l'interaction
+  entre les ondes électromagnétiques et la matière.
+
+  Exemple: Rayonnement solaire
+  #figcan({
+	import draw: *
+	line((0, 0), (0, 2), stroke: red)
+    
+	content((1.75, 1.8), [Rayonnement \ du corps noir])
+	cetz.decorations.wave(
+		line((0.5, 1), (3, 1), name: "l"),
+		amplitude: .4, stop: 90%, segments: 4
+	)
+	mark((3.2, 1), (3.4, 1), symbol: ">", fill: black)
+	cetz.decorations.wave(
+		line((0.5, 0.3), (3, 0.3), name: "l"),
+		amplitude: .4, stop: 90%, segments: 4
+	)
+	mark((3.2, 0.3), (3.4, 0.3), symbol: ">", fill: black)
+
+	line((3.5, 0), (3.5, 1.5), stroke: blue)
+	content((3.8, 0.75), [Échauffement d'une \ autre surface], anchor: "west")
+  })
+
+== Régime stationnaire - Notion de résistance thermique
+
+Pour chaque concept en électricité, on a des concepts analogues
+pour les transferts thermiques:
+
+#let grad = $arw(op("grad"))$
+
+#figure(table(
+	columns: 3,
+	align: horizon,
+	[Concept], [Électricité], [Thermique],
+	[Différence \ de potentiel],
+	[Notion de tension: $ V_1 - V_2 = U "(volts)" $
+	Énergie potentielle associée:
+	$ arw(E) = - grad V $
+	Et on verra $arw(j)$, \ la densité volumique de courant:
+	$ arw(j) = underbrace(sigma, "conductivité") arw(E) $
+    ],
+	[Différentiel thermique:
+	$ T_1 - T_2 "(kelvins)" $
+	Énergie potentielle associée:
+	$ - grad T $
+	Loi de Fourrier, avec $arw(j_"th")$ \
+	la densité volumique thermique:
+	$ arw(j_"th") = - underbrace(lambda, "conductivité" \ "thermique") grad T $
+    ],
+	[Flux],
+	[
+	  En intégrant la densité de courant:
+	  on obtient le flux total (l'intensité)
+      $ I = integral.double arw(j) dot dif arw(S) "(ampères)" $
+	  (On intègre sur une surface, typiquement un câble)
+    ],
+	[
+	  En intégrant la densité volumique thermique,
+	  on obtient le flux thermique:
+	  $ phi.alt_"th" = integral.double arw(j_"th") dif arw(S) "(watts)" $
+    ],
+	[Résistance],
+    [
+	On définit la résistance electrique par:
+	$ R = U/I "(ohms)" $ 
+	Si on se place sur un cable de section $S$, et de longueur $l$,
+	et de conductivité $sigma$:
+	$ R = 1/sigma l/S = underbrace(rho, "résistivité") l/S $
+    ],
+	[
+	Si on se place sur un objet de longueur $l$,
+	de surface $S$ et de conductivité thermique constant $lambda$,
+	on obtient de même la résistivité thermique:
+	$ R_"th" = 1/lambda l/S "(K" dot "W"^(-1)")" $ ]
+))
+
+De la même manière qu'on peut associer des résistance électriques en série
+ou en parallèle,
+on peut associer des résistances thermiques:
+
+Si on place des objets les uns après les autres
+(par exemple: le double vitrage d'une fenêtre),
+on associe des résistances en série:
+$ phi.alt_"th" "constante et les" Delta T "s'ajoutent." \
+"On prouve de la même manière qu'en électricité que:" \
+R_"th" = sum_i R_("th",i) $
+
+Si on place des objets les uns à cotés des autres
+(par exemple: différents pans de murs),
+on associe des résistances en parallèle:
+$ phi.alt_"th" "s'ajoutent et les" Delta T "restent constante" $
+$ 1/R_"th" = sum_i 1/R_("th",i) $
+
+== Transfert surfacique entre solide et fluide - Loi de Newton
+
+Supposons deux objets de température différente $T_1$ et $T_2$
+qui sont posés l'un contre l'autre.
+
+En général, il y a une petite épaisseur $e$ entre les deux
+(et on retrouve alors une association en série
+comme vu précedemment)
+
+#figcan({
+	import draw: *
+
+	line((-0.1, 0), (-0.1, 2))
+	line((0.1, 0), (0.1, 2))
+
+	content((-1, 1), $T_1$)
+	content((1, 1), $T_2$)
+	content((0, -0.3), $e$)
+})
+
+Si un fluide est posé contre un solide, on suppose qu'il est
+en contact direct:
+#figcan({
+	import draw: *
+
+	line((0, 0), (0, 2))
+
+	content((-1, 1), $T_s$)
+	content((1, 1), $T_f$)
+
+	content((-1, 0), [Solide])
+	content((1, 0), [Fluide])
+
+	line((0, 0.5), (0, 1.5), stroke: (thickness: 3pt, paint: red))
+	content((-0.2, 1), $S$, anchor: "east")
+})
+
+En s'intéressant à la surface de contact $S$, le transfert thermique
+sera de la forme:
+$ cal(P)_("th",s->f) = underbrace(h, "constante de" \ "proportionalité") (T_s - T_f) S $
+
+== Transformation adiabatique
+
+On appelle *transformation adiabatique* une transformation dans
+laquelle aucun transfert thermique ne s'opère.
+
+#tip[
+	On ne dira pas toujours explicitement qu'il n'y a une absence
+	de transferts thermique.
+	Pour savoir si une transformation est adiabatique, faire
+	très attention aux informations de l'énoncé:
+	- Si la transformation s'effectue sur des objets avec des
+	  *parois calorifugées*, aucun transfert thermique ne s'opère.
+	- De même sur des objets avec des *parois athermanes*.
+	  (À l'inverse, des parois _diathermanes_ laissent passer les transferts thermiques)
+	- Si les transferts s'effectuent *rapidement*, on considère
+	  que les transferts thermiques n'ont pas le temps de s'opérer.
+]
+
+== Lien avec les transformation monothermes et isothermes
+
+#caution[
+	Transformation adiabatique *n'est pas* synonyme de transformation 
+	isotherme ou monotherme!
+	Il n'y a _aucune_ implication, ni dans un sens, ni dans l'autre.
+]
+
+Dans une transformation monotherme, l'extérieur
+reste à température constante,
+ce qui implique très souvent un transfert thermique 
+de l'extérieur vers l'intérieur.
+
+De même pour une transformation isotherme, qui de plus
+est quasistatique, et qui doit donc être plutôt
+lente (l'inverse de ce qu'on veut pour observer une transformation
+adiabatique)

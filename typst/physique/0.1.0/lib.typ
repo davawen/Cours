@@ -134,6 +134,8 @@
 
 #let tation = infobox(symbol: "🗣️", color: maroon, info_text: text(fill: maroon)[Citation: ])
 
+#let principe = infobox(symbol: $phi.alt$, color: gradient.linear(..color.map.turbo), info_text: smallcaps[Principe: ])
+
 #let theorem = infobox(symbol: $Theta$, color: gradient.linear(..color.map.rainbow), info_text: smallcaps[Théorème: ])
 
 #let gridpat = tiling(size: (10pt, 10pt))[
