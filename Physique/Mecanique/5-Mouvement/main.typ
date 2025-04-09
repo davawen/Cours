@@ -32,7 +32,7 @@ par le champ magnétique.
 == Ordre de grandeur
 
 Les particules étudiées sont en genéral des particules possédant
-une charge élémentaire (protons ou neutron), donc
+une charge élémentaire (protons ou neutrons), donc
 $ abs(q) = e $
 
 On se place dans un environnement relativiste
@@ -73,7 +73,7 @@ Si $arw(E)$ est uniforme, l'accélération sera constante.
 
 == Étude de la trajectoire
 
-On considère une particule de viteses initiale dans le plan $x,y$:
+On considère une particule de vitesse initiale dans le plan $x,y$:
 
 #figcan({
 	import draw: *
@@ -139,7 +139,7 @@ On sait que la force électrique est une force conservative
 On a donc:
 $ arw(F) = - grad(E_p) "avec" E_p = underbrace(q V, "potentiel électrique") + "constante" $
 
-On a que des force conservatives, donc par
+On n'a que des forces conservatives, donc par
 théorème de l'énergie mécanique:
 $ E_m = E_c + E_p = "constante" $
 
@@ -192,7 +192,7 @@ ressortira avec une vitesse $v_2$ soit plus grande soit plus petite que $v_1$.
 Si on fait l'hypothèse que la vitesse initiale est nulle
 $(v(t = 0) = 0)$, on pose $v_f$ la vitesse finale, alors on a:
 $ 1/2 m (v_f)^2 = - q U $
-$ v_f = sqrt((-2 q u)/m) "si" q "et" u "sont de signe différents, on prend l'opposé sinon" $
+$ v_f = sqrt((-2 q u)/m) "si" q "et" u "sont de signe différent, on prend l'opposé sinon" $
 
 == Déviation d'une particule chargée par un champ électrique
 
@@ -316,7 +316,7 @@ On considère une particule se déplaçant dans le plan perpendiculaire
 
 On applique le principe fondamental de la dynamique:
 $ m arw(a) = q arw(v) and arw(B) $
-Comme le module de la vitesse va rester constante,
+Comme le module de la vitesse va rester constant,
 on aura $(dif v)/(dif t) = 0$. \
 Ainsi, exprimer $arw(a)$ dans la base de Frenet:
 $ arw(a) = (dif v)/(dif t) arw(u_t) + v^2/R arw(u_n) $
@@ -429,7 +429,7 @@ Dans la zone $arw(E_0)$, on applique un champ électrique pour accélerer
 la particule.
 
 Dans le premier temps de l'expérience,
-dans la zone $a$ (entre les pointillés), on applique *pas* le champ magnétique $arw(B)$, seulement le champ électrique $arw(E)$.
+dans la zone $a$ (entre les pointillés), on n'applique *pas* le champ magnétique $arw(B)$, seulement le champ électrique $arw(E)$.
 
 Le champ électrique $arw(E)$ va dévier les électrons d'un certain angle
 $theta$, et les électrons vont atterir sur l'écran à une
@@ -442,13 +442,13 @@ $ tan theta approx v_y/v = (q E a)/(m v^2) = d/L $
 la vitesse verticale après la zone $a$. Pour récupérer
 $v_y$, faire un PFD et intégrer)
 
-Dans le deuxième temps de l'expérience, on applique le champ magnétique
+Dans le second temps de l'expérience, on applique le champ magnétique
 $arw(B)$ en même temps que le champ électrique $arw(E)$.
 
-Donc, une fois arrivé dans la zone $a$, les électrons seront à la fois
+Donc, une fois arrivés dans la zone $a$, les électrons seront à la fois
 affectés par le champ électrique et le champ magnétique.
 
-On va modifier le champ magnétique jusqu'a ce que les deux champs
+On va modifier le champ magnétique jusqu'à ce que les deux champs
 s'annulent complètement (que l'électron suive une ligne droite).
 
 On aura donc $m arw(a) = q E - q V B = 0$. \
@@ -462,7 +462,7 @@ pour différencier les isotopes d'un même élément.
 Deux isotopes possèdent un même nombre de protons et d'électrons,
 donc possèdent une même charge.
 
-Cependant, ils ont un nombre de neutrons différents,
+Cependant, ils ont un nombre de neutrons différent,
 et donc une masse différente.
 
 On devra travailler avec des ions (chargés positivement)
