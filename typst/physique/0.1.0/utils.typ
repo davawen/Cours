@@ -151,3 +151,11 @@
   })
 }
 
+/// Draws a line plot interpolating between different positions
+/// `f` is a function that takes a `t` value as input (a float between 0.0 and 1.0),
+/// and that returns a position (can be any valid CetZ position).
+#let line-plot(f, samples: 30, ..style) = {
+  for i in range(samples) {
+    draw.line(f(i/samples), f((i+1)/samples), ..style)
+  }
+}
