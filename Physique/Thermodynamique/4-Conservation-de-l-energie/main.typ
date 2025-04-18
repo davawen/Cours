@@ -538,7 +538,7 @@ d'enthalpie.
 
 == Exemple
 
-#align(center, image("image0.gif", width: 50%))
+// #align(center, image("image0.gif", width: 50%))
 
 On prend une mole de gaz parfait monoatomique décrivant le cycle suivant:
 $ V_A = 22.4 "L", P_A = 1 "atm", P_B = 5 "atm", V_D = 44.8 "L" $
@@ -821,11 +821,6 @@ appropriée est l'enthalpie.
 On définit l'*enthalpie de changement de phase* comme étant
 l'énergie nécessaire pour effectuer le changement de phase
 de 1kg du corps étudié.
-
-#tip[
-C'est une grandeur extensive.
-#image("thumbsup.png", width: 30%)
-]
 
 Comme $H$ dépend de la température et de la pression
 
