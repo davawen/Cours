@@ -297,7 +297,7 @@ Pour différentes types transformations:
   &approx - integral_"initial"^"final" P dif V \
   &= - integral_"initial"^"final" (n R T)/V dif V \
   &= - n R T [ln V]_"initial"^"final" \
-  &= n R T ln (V_"final"/V_"initial") 
+  &= n R T ln (V_"initial"/V_"final") 
 $
 - Polytropique d'ordre $k$: la transformation est quasistatique,
   et $P V^k$ est constant, donc:
