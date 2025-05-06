@@ -1,0 +1,214 @@
+#import "@local/physique:0.1.0": *
+
+#show: doc => template(doc)
+
+#titleb[Moment cinétique]
+
+= Moment cinétique d'un point matériel
+
+On introduit le moment cinétique, un nouvel outil définit
+à l'aide du produit vectoriel.
+
+Il existe deux moments cinétiques différents:
++ Le moment cinétique par-rapport à un point (le moment cinétique sera vectoriel)
++ Le moment cinétique par-rapport à un axe (le moment cinétique sera scalaire)
+
+== Moment cinétique par-rapport à un point
+
+#let ref = $\/cal(R)$
+
+On note $arw(L_(O ref)) (M)$ ou $arw(sigma_(O ref)) (M)$ le moment cinétique d'un point $M$ par-rapport au point $O$,
+avec $cal(R)$ le référentiel.
+
+On le définit par:
+$ arw(L_(O ref)) (M) &= arw(O M) and arw(P_ref) (M) \
+&= arw(O M) and m arw(v_ref) (M)
+$
+
+== Dépendance du moment cinétique par-rapport au point considéré
+
+Si on prend $O$ et $O'$ deux points différents on a:
+$ arw(L_(O' ref)) (M) &= arw(O' M) and m arw(v_ref) ( M ) \
+&= (arw(O' O) + arw(O M)) and m arw(v_ref) (M) \
+&= arw(O' O) and m arw(v_ref) (M) + arw(O M) and m arw(v_ref) (M) \
+&= arw(O' O) and m arw(v_ref) (M) + arw(L_(O ref))
+$
+
+À moins d'avoir une vitesse nulle ou colinéaire au déplacement $arw(O' O)$,
+on aura $arw(L_(O' ref)) != arw(L_(O ref))$
+
+== Moment cinétique par-rapport à un axe
+
+#let axe = $Delta$
+
+On considère $axe$ un axe passant par $O$ et dirigé par 
+le vecteur unitaire $arw(u_axe)$. \
+On pose le moment cinétique par-rapport à $O$:
+$ arw(L_(O ref)) (M) = arw(O M) and m arw(v_ref) (M) $
+
+On définit le moment cinétique par-rapport à l'axe $axe$ par:
+$ L_(axe ref) (M) = arw(L_(O ref)) (M) dot arw(u_axe) $
+
+#note[
+  Le point $O$ peut-être choisi arbitrairement.
+  Démonstration en reprenant l'expression précedente avec $O'$ un autre point de $axe$:
+  $ arw(L_(O' ref)) (M) dot arw(u_axe)
+  &= (underbrace(arw(O' O) and m arw(v_ref), "perpendiculaire à" arw(u_Delta)) + arw(L_(O ref)) (M)) dot arw(u_axe) \
+  &= arw(L_(O ref)) (M) dot arw(u_axe)
+  $
+]
+
+== Cas d'un mouvement circulaire
+
+On considère un point en mouvement circulaire.
+On se place en coordonées cylindriques avec l'axe $(O_z)$ perpendiculaire
+au plan du mouvement et le point $O$ centre de la trajectoire.
+
+On a donc:
+$ arw(O M) = r arw(u_r) + z arw(u_z) = r arw(u_r) $
+$ arw(v) = dot(r) arw(u_r) + r dot(theta) arw(u_theta) = R dot(theta) arw(u_theta) $
+Comme on est en mouvement circulaire, on a $r = R "constant"$,
+donc $dot(r) = 0$, et $dot(z) = 0$, donc
+
+On calcule le moment cinétique:
+$ arw(L_(O ref)) (M) &= arw(O M) and m arw(v_ref) (M) \
+&= (R arw(u_r) + z arw(u_z)) and m R dot(theta) arw(u_theta) \
+&= R arw(u_r) and m R dot(theta) arw(u_theta) \
+&= m R^2 dot(theta) arw(u_z)
+$
+
+On en déduit le moment cinétique par-rapport à l'axe $axe = (O_z)$
+$ arw(L_(axe ref)) (M) = m R^2 dot(theta) $
+
+== Cas général
+
+On prend un point en coordonées cylindriques:
+$ arw(O M) = r arw(u_r) + z arw(u_z) $
+$ arw(v) = dot(r) arw(u_r) + r dot(theta) arw(u_theta) + dot(z) arw(u_z) $
+
+$ arw(L_(O ref))
+&= arw(O M) and m arw(v_ref) (M) \
+&= (r arw(u_r) + z arw(u_z)) and m (dot(r) arw(u_r) + r dot(theta) arw(u_theta) + dot(z) arw(u_z)) \
+&= m (r^2 dot(theta) arw(u_z) - r dot(z) arw(u_theta) + z dot(r) arw(u_theta)
+- z r dot(theta) arw(u_r)) \
+&= - m r z dot(theta) arw(u_r) + m (z dot(r) - r dot(z)) arw(u_theta) + m r^2 dot(theta) arw(u_z)
+$
+
+#tip[On utilisera jamais cette forme.]
+
+= Moment d'une force
+
+== Définition du moment par-rapport à un point
+
+#let mom = $cal(M)$
+
+De la même manière qu'on a définit le travail d'une force,
+on définit le moment d'une force par:
+$ arw(mom_O) (arw(f)) = arw(O M) and arw(f) $
+
+Si on prend $O'$ un autre point:
+$ arw(mom_O') (arw(f)) &= arw(O' M) and arw(f) \
+&= arw(O' O) and arw(f) + arw(O M) and arw(f) \
+&= arw(O' O) and arw(f) + arw(mom_O) (arw(f))
+$
+De la même manière, à moins que la force soit nulle ou collinéaire
+à $arw(O' O)$, $arw(mom_O') (arw(f)) != arw(mom_O) (arw(f))$
+
+On définit le *bras de levier*, la distance entre le point $O$ et 
+*la droite d'action* de la force $arw(f)$, qui permet
+de calculer la norme du moment de la force:
+
+#figcan({
+  import draw: *
+
+  line((-1, -1), (4, 4), stroke: (paint: gray))
+
+  line((3, -1), (3, 4), stroke: red)
+  content((3.3, -0.5), ["droite d'action" de $arw(f)$], anchor: "west")
+
+  content((1.2, -0.8), ["bras de levier"], anchor: "north")
+
+  point((0, 0), value: $O$, name: "O")
+  point((3, 3), value: $M$, name: "M")
+  point((3, 0), value: $H$)
+
+  arrow("M", (3, 4.5), tip: $arw(f)$)
+  cetz.angle.angle((3, 3), (4, 4), (3, 4))
+  content((3.4, 3.8), $theta$)
+
+  line((0.2, 0), (2.8, 0))
+  content((1.5, -0.2), $d$, anchor: "north")
+})
+
+On a:
+$ norm(arw(mom_O)(arw(f))) = O M times f times sin theta $
+
+Le triangle $O M H$ est triangle en $H$, donc:
+$ sin theta = (O H)/(O M) $
+Donc:
+$ O M sin theta = O H = d "la distance de" O "à la droite d'action de" arw(f) $
+
+== Moment d'une force par-rapport à un axe
+
+On prend un axe $axe$ passant par un point $O$ et de vecteur directeur
+unitaire $arw(u_axe)$, et on définit le moment par-rapport à un axe:
+$ mom_axe (arw(f)) = arw(mom_O) (arw(f)) dot arw(u_axe) $
+
+= Théorème du moment cinétique en référentiel galiléen
+
+== Théorème du moment cinétique par-rapport à un point fixe
+
+#theorem[
+  La dérivée du moment cinétique par-rapport à un point est égale
+  à la somme des moments par-rapport à ce point:
+
+  $ (dif arw(L_(O ref)))/(dif t) = sum arw(mom_O) (arw(f)) $
+]
+
+On repart de la définition du moment cinétique:
+$ arw(L_(O ref)) (M) = arw(O M) and m arw(v_ref) (M) $
+
+$
+(dif arw(L_(O ref)) (M))/(dif t)
+&= (dif)/(dif t) (arw(O M) and m arw(v_ref) (M)) \
+&= underbrace((dif arw(O M))/(dif t), arw(v_ref) (M) "car" O "fixe") and m arw(v_ref) (M)
++ arw(O M) and underbrace((dif)/(dif t) (m arw(v_ref) ( M )), sum arw(f)) \
+&= arw(0) + sum arw(O M) and arw(f) \
+&= sum arw(mom_O) (arw(f))
+$
+
+#note[
+  Si $O$ est mobile, on prend $O'$ un point fixe, on peut décomposer (comme vu précedemment)
+  $arw(L_O)$ en $arw(O' O)$ et en $arw(L_O')$ et on tombe sur:
+  $ (dif arw(L_(O ref)) (M))/(dif t) = (m arw(v_ref) (M) and arw(v_ref) (O)) + sum arw(mom_O) (arw(f)) $
+]
+
+== Théorème du moment cinétique par-rapport à un axe
+
+Soit $O$ un point d'un axe $axe$ fixe.
+Par le théorème du moment cinétique:
+
+$ (dif arw(L_(O ref)) (M))/(dif t) = sum arw(mom_O) (arw(f)) $
+$ (dif arw(L_(O ref)) (M))/(dif t) dot arw(u_axe) = sum arw(mom_O) (arw(f)) dot arw(u_axe) $
+
+#theorem[
+$ (dif L_axe (M))/(dif t) = sum mom_axe (arw(f)) $
+]
+
+= Conservation du moment cinétique
+
+== Conditions de la conservation du moment cinétique
+
+Le moment cinétique se conserve (= est constante)
+si sa dérivé s'annule, donc:
+$ (dif arw(L_(O ref)) (M))/(dif t) = 0 <=> sum arw(mom_O) (arw(f)) = 0 $
+
+En substituant la définition du moment:
+$ sum arw(mom_O) (arw(f)) = sum arw(O M) and arw(f) = arw(O M) and sum arw(f) = arw(O M) and arw(F) $
+
+Donc le moment cinétique est constant si:
+- Le point étudié est confondu avec l'origine
+- La somme des forces est nulle
+- Que $arw(O M)$ et $arw(F)$ soient colinéaires.
+Dans ce dernier cas, on parle de *force centrale*, quand la force totale
+$arw(F)$ est toujours dirigée vers un point fixe $O$.
