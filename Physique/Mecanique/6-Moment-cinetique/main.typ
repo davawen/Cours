@@ -212,3 +212,180 @@ Donc le moment cinétique est constant si:
 - Que $arw(O M)$ et $arw(F)$ soient colinéaires.
 Dans ce dernier cas, on parle de *force centrale*, quand la force totale
 $arw(F)$ est toujours dirigée vers un point fixe $O$.
+
+== Mouvement plan
+
+#let momcin = $arw(L_(O ref))$
+
+Si le moment cinétique est conservé, on a par définition que
+$momcin = arw(O M) and m arw(v_ref) (M) = arw("constante") $
+
+On se place dans la situation où le moment cinétique est non-nul,
+donc les vecteur $arw(O M)$ et $arw(v_ref) (M)$ sont non-colinéaires
+et définissent deux directions différentes:
+
+#grid(columns: (1fr, 1fr), align: (center, left), figcan({
+  import draw: *
+
+  arrow((0, 0, 0), (0, 3, 0))
+
+  point((0, 1.5, 0), value: $O$, name: "O")
+  point((-1, 1.5, 1), value: $M$, name: "M")
+  arrow("O", "M")
+  arrow("M", (0, 1.5, 1), tip: $arw(v)$)
+
+}), 
+  [$M$ évolue dans le plan perpendiculaire à $momcin (M)$
+et passant par $O$
+]
+)
+
+#tip[
+  Il faut d'abords montrer le mouvement plan, puis introduire les coordonnées polaires.
+]
+
+== Constante des aires
+
+#figcan({
+  import draw: *
+
+  arrow((-4, 0), (4, 0), tip: $x$)
+  arrow((0, -2), (0, 2), tip: $x$)
+
+  point((2, 1), value: $M$, name: "M")
+  cetz.angle.angle((0, 0), (1, 0), "M")
+  line((0, 0), "M")
+  content((0.9, 0.8), $r$)
+  content((1, 0.25), $theta$)
+
+  circle((-1, 1.5), radius: 0.2)
+  circle((-1, 1.5), radius: 0.05, fill: black)
+  content((-1, 0.8), $momcin$)
+})
+
+On a:
+$ arw(O M) = r arw(u_r) $
+$ arw(v_ref) (M) = dot(r) arw(u_r) + r dot(theta) arw(u_theta) $
+Donc:
+$ momcin (M) = (r arw(u_r)) and m (dot(r) arw(u_r) + r dot(theta) arw(u_theta))
+= m r^2 dot(theta) arw(u_z)
+$
+
+Comme $momcin$, $m$ et $arw(u_z)$ sont constants, on en déduit que
+$r^2 dot(theta)$ est constant.
+
+On appelle cette quantité la *constante des aires*:
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $arw(u_r)$)
+  arrow((4, 0), (4, 2), tip: $arw(u_theta)$)
+
+  point((0, 0), value: $O$)
+
+  content((2, -0.2), $r$)
+  content((4.4, 1), $r dot(theta)$)
+
+  line((0, 0), (4, 0), (4, 1), closed: true)
+})
+
+= Exemple d'utilisation: le pendule simple
+
+#grid(
+columns: (1fr, 1fr),
+  figcan({
+    import draw: *
+    point((0, 0), value: $O$)
+    point((1, -2))
+    line((0, 0), (1, -2))
+    content((0.5, -0.5), $l$)
+    content((0.5, -2), $M$)
+
+    arrow((1, -2), (1, -3), tip: $arw(p)$, stroke: red)
+    arrow((1, -2), (0.5, -1), stroke: red)
+    content((1, -1.2), $arw(R)$)
+
+    cetz.angle.angle((0, 0), (0, -1), (1, -2))
+    line((0, 0), (0, -2), stroke: (dash: "dotted"))
+    content((0.2, -.8), $theta$)
+
+    arrow((1, -2), ((0, 0), 3, (1, -2)), tip: $arw(u_r)$)
+    arrow((1, -2), (1.6, -1.66), tip: $arw(u_theta)$)
+  }),
+  [
+  On étudie le système du pendule avec le point $M$ de masse $m$
+  dans le référentiel galiléen.
+  On fait un bilan des forces:
+  - Poids: $arw(p) = m arw(g)$
+  - Tension du fil: $arw(R)$
+  ]
+)
+
+On peut résoudre par PFD, par énergétique ou par #emoji.sparkles Théorème du moment cinétique #emoji.sparkles
+
+#tip[Le théorème du moment cinétique est pratique quand on peut faire
+disparaître des forces. Ici, la tension du fil est une force centrale,
+donc son moment des nul: pratique!
+]
+
+$r = l$ est constant, donc:
+$ arw(v) = r dot(theta) arw(u_theta) $
+$ arw(a) = r (diaer(theta)arw(u_theta) - dot(theta)^2 arw(u_r)) $
+
+$ (dif momcin (M))/(dif t) = arw(mom_O) (m arw(g)) + arw(mom_O) (arw(R)) $
+
+On se place dans les coordonnées polaires:
+$ arw(O M) = l arw(u_r) $
+$ arw(v) = l dot(theta) arw(u_theta) $
+
+Donc:
+$ momcin (M) = l arw(u_r) and m l dot(theta) arw(u_theta)
+= m l^2 dot(theta) arw(u_z)
+$
+
+On a:
+$ arw(mom_o) (arw(R)) = arw(O M) and arw(R) = arw(0) "car" arw(R) "colinéaire à" arw(O M) $
+
+On doit ensuite calculer le moment du poids:
+- Première façon, par règle de la main droite pour le signe:
+  $  arw(mom_o) (m arw(g)) &= arw(O M) and m arw(g) \
+&= - l m g sin(theta) arw(u_z)
+$
+- Deuxième façon, par projection:
+  $ m arw(g) = m g cos theta arw(u_r) - m g sin theta arw(u_theta) $
+  $ arw(O M) = l arw(u_r) $
+  $ arw(O M) and m arw(g) &= l arw(u_r) (m g cos theta arw(u_r) - m g sin theta arw(u_theta)) \
+&= - l m g sin theta arw(u_z) 
+$
+- Troisième façon, par bras de levier:
+  $ arw(O M) and m arw(g) = plus.minus m g underbrace(d, "bras de levier") arw(u_z) $
+  #figcan({
+    import draw: *
+    point((0, 0), value: $O$)
+    point((1, -2))
+    line((0, 0), (1, -2))
+    content((0.5, -0.5), $l$)
+
+    arrow((1, -2), (1, -3), tip: $arw(p)$, stroke: red)
+    line((1, -2), (1, 0), stroke: (paint: red, dash: "dashed"))
+    content((1.2, -1), [droite d'action], anchor: "west")
+
+    cetz.decorations.brace((0.9, -2), (0.1, -2))
+    content((0.8, -2.8), [bras de levier $d$], anchor: "east")
+
+    cetz.angle.angle((0, 0), (0, -1), (1, -2))
+    line((0, 0), (0, -2), stroke: (dash: "dotted"))
+    content((0.2, -.8), $theta$)
+  })
+  On a $d = l sin theta$, donc
+  $arw(O M) and m arw(g) = plus.minus l m g sin(theta) arw(u_z) $ \
+  Le poids entraîne le fil dans le sens anti-trigonométrique, donc:
+  $ arw(O M) and m arw(g) = - l m g sin(theta) arw(u_z) $
+ 
+On se retrouve donc avec:
+$ (dif momcin (M))/(dif t) = (dif (m l^2 dot(theta)))/(dif t) 
+= -l m g sin(theta) \
+<=> m l^2 diaer(theta) = - l m g sin(theta) \
+<=> l diaer(theta) + g sin(theta)
+$
+
