@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 mkdir -p rendered
 
 recompiled=0
