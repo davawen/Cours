@@ -409,9 +409,13 @@ pour les transferts thermiques:
 
 #let grad = $arw(op("grad"))$
 
-#figure(table(
+#show table.cell: set block(breakable: false)
+
+#let flux = $phi.alt_"th"$
+
+#table(
 	columns: 3,
-	align: horizon,
+	align: horizon + center,
 	[Concept], [Électricité], [Thermique],
 	[Différence \ de potentiel],
 	[Notion de tension: $ V_1 - V_2 = U "(volts)" $
@@ -421,7 +425,7 @@ pour les transferts thermiques:
 	$ arw(j) = underbrace(sigma, "conductivité") arw(E) $
     ],
 	[Différentiel thermique:
-	$ T_1 - T_2 "(kelvins)" $
+	$ T_1 - T_2 = Delta T "(kelvins)" $
 	Énergie potentielle associée:
 	$ - grad T $
 	Loi de Fourrier, avec $arw(j_"th")$ \
@@ -431,14 +435,14 @@ pour les transferts thermiques:
 	[Flux],
 	[
 	  En intégrant la densité de courant:
-	  on obtient le flux total (l'intensité)
+	  on obtient le flux d'électricité (l'intensité)
       $ I = integral.double arw(j) dot dif arw(S) "(ampères)" $
 	  (On intègre sur une surface, typiquement un câble)
     ],
 	[
 	  En intégrant la densité volumique thermique,
 	  on obtient le flux thermique:
-	  $ phi.alt_"th" = integral.double arw(j_"th") dif arw(S) "(watts)" $
+	  $ flux = integral.double arw(j_"th") dif arw(S) "(watts)" $
     ],
 	[Résistance],
     [
@@ -449,11 +453,13 @@ pour les transferts thermiques:
 	$ R = 1/sigma l/S = underbrace(rho, "résistivité") l/S $
     ],
 	[
+    On définit la résistance thermique par:
+    $ R_"th" = (Delta T)/flux "(kelvins/watts)" $
 	Si on se place sur un objet de longueur $l$,
-	de surface $S$ et de conductivité thermique constant $lambda$,
+	de surface $S$ et de conductivité thermique constante $lambda$,
 	on obtient de même la résistivité thermique:
-	$ R_"th" = 1/lambda l/S "(K" dot "W"^(-1)")" $ ]
-))
+	$ R_"th" = 1/lambda l/S $ ]
+)
 
 De la même manière qu'on peut associer des résistance électriques en série
 ou en parallèle,
@@ -462,14 +468,66 @@ on peut associer des résistances thermiques:
 Si on place des objets les uns après les autres
 (par exemple: le double vitrage d'une fenêtre),
 on associe des résistances en série:
-$ phi.alt_"th" "constante et les" Delta T "s'ajoutent." \
-"On prouve de la même manière qu'en électricité que:" \
-R_"th" = sum_i R_("th",i) $
+
+#grid(
+  columns: (1fr, 1fr),
+  figcan({
+    import draw: *
+
+    let x = 1.5
+    rect((0, 0), (x, 1))
+    rect((x, 0), (3, 1))
+
+    content((0, -0.5), $T_1$)
+    content((x, -0.5), $T_2$)
+    content((3, -0.5), $T_3$)
+
+    cetz.decorations.brace((0, 1.1), (x, 1.1), name: "b")
+    content("b.content", $R_1$)
+    cetz.decorations.brace((x, 1.1), (3, 1.1), name: "b")
+    content("b.content", $R_2$)
+    cetz.decorations.brace((0, 2.0), (3, 2.0), name: "b")
+    content("b.content", $R_3$)
+  }),
+  [
+  $flux$ constant et les $Delta T$ s'ajoutent.
+  $ R_3 = (T_1 - T_3)/flux &= (T_1 - T_2)/flux + (T_2 - T_3)/flux \
+  &= R_1 + R_2  $
+]
+)
+
+On généralise:
+$ R_"th" = sum_i R_("th",i) $
 
 Si on place des objets les uns à cotés des autres
 (par exemple: différents pans de murs),
 on associe des résistances en parallèle:
-$ phi.alt_"th" "s'ajoutent et les" Delta T "restent constante" $
+
+#grid(
+  columns: (1fr, 1fr),
+  figcan({
+    import draw: *
+
+    rect((0, 0), (3, 1))
+    rect((0, -1), (3, 0))
+
+    content((0, -1.5), $T_1$)
+    content((3, -1.5), $T_2$)
+
+    cetz.decorations.brace((-0.1, 0), (-0.1, 1), name: "b")
+    content("b.content", $R_1$)
+    cetz.decorations.brace((-0.1, -1), (-0.1, 0), name: "b")
+    content("b.content", $R_2$)
+    cetz.decorations.brace((3.1, 1), (3.1, -1), name: "b")
+    content("b.content", $R_3$)
+  }),
+  [
+  $flux$ s'ajoutent et $Delta T$ reste constant:
+  $ 1/R_3 = flux/(T_1 - T_2) &= (flux_1)/(T_1 - T_2) + (flux_2)/(T_1 - T_2) \
+  &= 1/R_1 + 1/R_2  $
+]
+)
+On généralise:
 $ 1/R_"th" = sum_i 1/R_("th",i) $
 
 == Transfert surfacique entre solide et fluide - Loi de Newton
@@ -492,7 +550,7 @@ comme vu précedemment)
 	content((0, -0.3), $e$)
 })
 
-Si un fluide est posé contre un solide, on suppose qu'il est
+À l'inverse, si un fluide est posé contre un solide, on suppose qu'ils sont
 en contact direct:
 #figcan({
 	import draw: *
