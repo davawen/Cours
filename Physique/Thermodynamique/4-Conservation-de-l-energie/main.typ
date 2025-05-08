@@ -24,14 +24,14 @@ L'énoncé au-dessus est la forme intégrale du premier principe:
 on étudie la différence entre un état $A$ et un état $B$:
 $ Delta (U + E_m) = Q + W \
 <=> (U + E_m) (B) - (U + E_m) (A) = Q + W \
-<=> U(B) + E_m(B) - (U(A) + E_m(A)) = Q + W 
+<=> U(B) + E_m (B) - (U(A) + E_m (A)) = Q + W 
 $
 
 Il existe aussi une version différentielle qui observe
 les changements infinitésimaux d'énergie:
 $ d (U + E_m) = delta Q + delta W $
 
-#note[On étend juste les définitions qu'on a vues avec l'énergie mécanique
+#note[On étend juste les définitions qu'on a vu avec l'énergie mécanique
 à l'énergie totale d'un système.]
 
 #note[
@@ -83,13 +83,12 @@ $ Delta U = W + Q $
 
 On différencie encore deux cas particuliers.
 - Dans le cas où $W = 0$,
-  la majorité du temps, le seul travail
-  présent sera celui des forces de pression, et
-  toutes les transformations seront alors _isochores_.
-  On aura alors:
-  $ Delta U = Q $
-- Dans le cas où $Q = 0$, toutes les transformations seront aediabatiques, donc:
-  $ Delta U = W $
+  si le seul travail présent est celui des forces de pression,
+  on peut alors affirmer que toutes les transformations sont _isochores_. \
+  (On ne peut pas l'affirmer directement si par exemple une autre force compense le travail des forces de pression)
+- Dans le cas où $Q = 0$, toutes les transformations seront _adiabatiques_. 
+
+#pagebreak()
 
 = Énergie interne
 
@@ -118,43 +117,49 @@ $ dif U = ((diff U)/(diff V))_T dif V + ((diff U)/(diff T))_V dif T $
 
 == Gaz parfait - $1^"ère"$ loi de Joule
 
-Dans un gaz parfait _monoatomique_, on avait posé l'énergie interne:
-$ U = (3/2) n R T $
-L'énergie interne ne dépend alors que de la température.
-
-Cela correspond à la première loi de Joule.
-On dit qu'un système vérifie la première loi de Joule si son
+On dit qu'un système vérifie la *première loi de Joule* si son
 énergie interne ne dépend *que* de la température.
 
-Dans un gaz parfait non-monoatomique, on avait posé:
-$ U = C_V T "avec" C_V >= 3/2 n R $
+Par exemple, on avait parachuté l'énergie interne d'un gaz parfait _monoatomique_ comme étant:
+$ U = 3/2 n R T $
+L'énergie interne ne dépendant que de la température
+les gaz parfaits monoatomiques respectent la première loi de Joule.
 
-Énergie microscopique :
-- Liée uniquement à l'agitation des molécules
-- donc uniquement à la température
-- on néglige les intéractions entre les particules
+#note[
+Les gaz parfait non-monoatomiques la respecte aussi, avec:
+$ U = C_V T "avec" C_V >= 3/2 n R $
+]
 
 == Capacité thermique à volume constant $C_V$
 
-Elle peut être définie pour n'importe quel système
-
-#def[
+La *capacité thermique à volume constant* (aussi appelée *capacité thermique isochore*)
+est une grandeur extensive définie pour n'importe quel système par:
 $ C_V = ((diff U)/(diff T))_V $
-]
+Elle représente la chaleur absorbée par le système à volume constant
+rapportée à la variation de température de la transformation.
 
-$ "On a alors : " dif U = ((diff U)/(diff V))_T dif V + C_V dif T $
+ \
+En reprenant la dérivée de l'énergie interne au-dessus, on a:
+$ dif U = ((diff U)/(diff V))_T dif V + C_V dif T $
 
-Si on se place dans le cas particulier d'un gaz parfait (monoatomique),
-on a alors:
+Dans un système vérifiant la première loi de Joule, l'énergie interne
+ne dépend que de la température, donc pour $T$ fixé:
+$ U(V, T) = "constante" => ((diff U)/(diff V))_T = 0 => dif U = C_V dif T $
+
+Dans le cas d'un gaz parfait monoatomique:
 $ U = 3/2 n R T  $
-On calcule la dérivée partielle de la température par-rapport au volume:
-$ ((diff U)/(diff T))_V = 3/2 n R ==> C_V = 3/2 n R $
+$ C_V = ((diff U)/(diff T))_V = 3/2 n R $
 
 Dans le cas d'un gaz parfait non-monoatomique:
-$ U = C_V T => C_V >= 3/2 n R $
+$ U = A T "avec" A >= 3/2 n R "donc" C_V >= 3/2 n R $
 
-Dans l'hypothèse d'un gaz parfait qui ne dépend que de la température?
-$ dif U = C_V dif T => U(T) = ((diff U)/(diff V))_T = 0  $
+#warn[
+  Dans le cas général, la capacité thermique isochore est une fonction
+  $C_V (n, V, T)$ dépendant de la quantité de matière, du volume, et de la température.
+
+  Les gaz parfaits sont un cas spécifique où elle ne dépend que de
+  la quantité de matière.
+]
 
 == Cas des gaz réels - Modèle de Van der Waals
 
@@ -172,19 +177,19 @@ la pression moléculaire.
 
 == Énergie interne des phases condensées - Capacité thermique
 
-Pour modéliser les phases condensées, on utilise le modèle des fluides incompressibles:
-$ "Comme fluide incompressible : " V = c^("te") => dif V = 0 $
+Pour modéliser les phases condensées, on utilise le modèle des fluides incompressibles.
+$ V = "constante" => dif V = 0 $
 
 L'énergie interne est donc proportionnelle à la température:
 $ U = C T $
 
-= Transformations monobare ou isobare - Enthalpie
+Dans le cas des solides, $C = 3 n R$
+
+= Transformation monobare ou isobare - Enthalpie
 
 Dans le cas des transformations monobares et isobares, on définira une nouvelle fonction d'état : l'enthalpie.
 
 == Transfert thermique et transformation monobare ou isobare
-
-Il faudrait avoir un moyen de calculer les transferts thermiques de manière bien (biennement: de manière bonne et bien).
 
 Une manière de calculer les transferts thermiques est d'utiliser le 
 premier principe: on sait calculer la différence d'énergie interne $Delta U$,
@@ -195,15 +200,14 @@ $ Delta Q = Delta U - Delta W $
 Il serait pratique de pouvoir calculer les transferts thermiques directement.
 ]
 
-Dans le cas d'une transformation isochore : $W = 0$
-On a :
-$ Delta U = cancel(W) + Q = Q $ // faut barer le w
-Dans le cas d'une transformation monobare : $P_("ext") = c^("te")$
-
-On a $
-P_i = P_("ext") "et" P_f = P_("ext")\
-W = -P_("ext")(V_f - V_i)\
-= -P_f V_f + P_i V_i \
+Dans le cas d'une transformation isochore, $W = 0$
+et on a:
+$ Delta U = cancel(W) + Q = Q $ 
+Dans le cas d'une transformation monobare,  $P_("ext") = c^("te")$
+et on a: $
+P_"init" = P_("ext") "et" P_"fin" = P_("ext")\
+W = -P_("ext")(V_"fin" - V_"init")\
+= -P_"fin" V_"fin" + P_"init" V_"init" \
 = -Delta (P V)\
 "Par le premier principe :" Delta U = W + Q \
 Delta U = -Delta(P V) + Q\
@@ -217,8 +221,8 @@ $ delta W = - P_"ext" dif V &approx - P dif V $
 
 Comme $P$ est constante, on peut la rentrer dans la différentielle:
 $
-delta W = - dif (P V)\
-dif U = delta W + delta Q = - dif (P V) + delta Q\
+delta W = - dif (P V) \
+dif U = delta W + delta Q = - dif (P V) + delta Q \
 delta Q = dif U + dif (P V) = dif (U + P V)
 $
 
@@ -226,12 +230,12 @@ $
   Le raisonnement pour les deux transformations est plutôt proche,
   mais dans le cas d'une transformation isobare, l'égalité
   est vraie _à chaque instant_ (et en différentielle),
-  alors que l'égalité est intégrale pour une transformation monobare (Ça marche que pour les $Delta$)
+  alors que l'égalité est intégrale pour une transformation monobare (ne marche que pour les $Delta$)
 ]
 
 == Enthalpie
 
-Définition de l'enthalpie $H$ (en joules):
+On définit l'enthalpie $H$ (en joules) par:
 $ H = U + P V $
 
 L'enthalpie s'exprime uniquement avec des variables d'état. C'est donc une fonction d'état.
@@ -239,40 +243,53 @@ L'enthalpie s'exprime uniquement avec des variables d'état. C'est donc une fonc
 Ainsi, comme pour l'énergie interne:
 - Les variations d'enthalpie ne dépendent
   pas du chemin suivi. (On utilise donc un $Delta$ et un $dif$).
-- $H$ est une grandeur extensive car somme de $U$  et de $P V$ (grandeurs extensives) (C'est cool pour diviser les systèmes)
+- $H$ est une grandeur extensive car somme de $U$  et de $P V$ (grandeurs extensives)
 
-== Cas du gaz parfait
+== Seconde loi de Joule
 
-Il vérifie la première loi de Joule, donc l'énergie interne de dépend que  de la température. 
+Un système respecte la *seconde loi de Joule* si son enthalpie ne 
+dépend que de la température. 
 
-On a : $P V = n R T = f(T)$
-L'enthalpie ne dépend donc que de la température: c'est la *seconde loi de Joule*.
+Dans le cas des gaz parfaits, $P V = n R T$ ne dépend que de la 
+température, et l'énergie interne ne dépend que de la température
+par première loi de Joule, donc les gaz parfaits respectent
+la seconde loi de Joule.
+
 
 == Capacité thermique à pression constante
 
-On repart de l'expression de $H$ qu'on différencie:
+On repart de l'expression de $H$ qu'on différentie:
 $
-H = U + P V\
-dif H = dif U + P dif V + V dif P\
+H = U + P V \
+dif H = dif U + P dif V + V dif P \
 = ((diff U) / (diff V))_T dif V + ((diff U)/(diff T))_V dif T + P dif V + V dif P
 $
 
-On regarde ce qui se passe dans le cas particulier où
-$dif U = delta Q + delta W = delta Q - P dif V$
+On regarde ce qui se passe dans un système à énergie mécanique constante
+(donc $dif U = delta Q + delta W$)
+et d'une transformation quasi-statique (donc $delta W = - P_"ext" dif V approx - P dif V$):
+$ dif U = delta Q - P dif V $
 
-De plus, si on est dans une transformation quasi-statique : $ delta W = - P_("ext") dif V approx - P dif V $
+En substituant:
+$ dif H = delta Q + V dif P $
 
-Comme $ dif U = ((diff U) / (diff T))_ V dif T + ((diff U)/(diff V ))_T dif V 
-= delta Q - P dif V
-$
+#note[Je ne comprends pas à quoi ces calculs servent. Ils sont vrai, mais c'est tout.]
 
-On peut faire disparaître la dépendance en $V$ de $H$ en remplaçant le volume par la pression:
+L'enthalpie est une fonction d'état, on peut donc tout aussi bien la
+définir en fonction de la température et de la pression:
 $ H(T,P) $
 
-Ce qui nous permet d'écrire:
 $ dif H = ((diff H)/(diff T))_P dif T + ((diff H)/(diff P))_T dif P $
-On définit la *capacité thermique à pression constante*:
+On définit la *capacité thermique à pression constante* (aussi appelée
+*capacité thermique isobare*) par:
 $ C_p =((diff H)/(diff T))_P $
+
+Et on note donc:
+$ dif H = C_P dif T + ((diff H)/(diff P))_T dif P $
+
+#note[
+  Et comme pour l'énergie interne, dans un système qui vérifie la seconde loi de joule, $dif H = C_P dif T$
+]
 
 == Remarque sur les capacités thermiques
 
@@ -283,59 +300,63 @@ $ C_V = ((diff U)/(diff T))_V  "et" C_P = ((diff H)/(diff T))_P $
 Ce sont donc des grandeurs extensives aussi.
 On peut dès lors en déduire des grandeurs intensives:
 Les *capacités thermiques massiques* et les *capacités thermiques molaires*:
-$ "Capacité thermique massique:"\ c_V = C_V / m "et" c_p = C_p / m $
-$ "Capacité thermique molaire:"\ c_(V,m) = C_V / n "et" c_(p,m) = C_p / n $ 
+$ "Capacité thermique massique:" c_V = C_V / m "et" c_p = C_p / m $
+$ "Capacité thermique molaire:" c_(V,m) = C_V / n "et" c_(p,m) = C_p / n $ 
 
 #note[
 Il n'y a pas de convention sur les notations des capacités thermiques massiques et molaires. On a ici mis un $m$ pour indiquer la capacité thermique molaire, mais ce ne sera généralement pas le cas.
-Faire attention aux notations de l'énoncé et aux unités ! (homogène donc forcément vrai $checkmark$... ou pas)
+Faire attention aux notations de l'énoncé et aux unités !
 ]
 
 == Fluides réels
 
-Super paragraphe très informatif (il y aura des fluides réels au DS)
+Super paragraphe très informatif 
 
 == Cas des phases condensées
 
+On reprend la définition de l'enthalpie:
 $ H = U + P  V $
-Comme phase condensée, $V = c^"te"$ car fluide incompressible.\
-Loi empirique: $ H &approx U $
-donc
-$ dif H &= dif U $
-La magie des approximations nous permet de dire que le produit $P V$ est toujours négligeable devant $U$. En effet, l'expérience montre que c'est toujours le cas, donc d'après l'absence de contre-exemple CQFD $qed$
+Les phases condensées sont incompressibles, donc le volume reste constant.
 
-"prépondérant" vous voyez c'est un mot que j'utilise beaucoup, on a donc
+\ \
+Loi empirique: dans les phases condensées,
+$P V << U$, donc $H approx U$ et $dif H approx dif U $
+
+Donc:
 $
-((diff H)/(diff T)) &approx ((diff U)/(diff T))\
-C_P &approx C_V => C
+((diff H)/(diff T))_P &approx ((diff U)/(diff T))_V \
+C_P &approx C_V
 $ 
+
+On appelle donc $C = C_P = C_V$ la *capacité thermique* de la phase condensée.
 
 = Premier principe et gaz parfait
 == Relation de Mayer
 
 #tip[
-Il faut connaître les relations et savoir refaire les démonstration ici !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (Elles seront souvent demandées en début d'exo)
+  La démonstration des relations suivantes seront
+  souvent demandées en début d'exo.
 ]
 
-On part de:
+On part de la définition de l'enthalpie:
 $ H = U + P V $
 Or, dans un gaz parfait, $P V = n R T$, donc: $
-H &= U + n R T\
-H(T) &= U(T) + n R T\
+H &= U + n R T \
+H(T) &= U(T) + n R T \
 dif H &= dif U + n R dif T
 $
-Par la première loi de Joule: $
+Par la première et seconde loi de Joule: $
 C_P dif T = C_V dif T + n R dif T\
-dif T ( C_p - C_v - n R) = 0
+dif T ( C_P - C_V - n R) = 0
 $
 Cette relation est valide peut importe la variation $dif T$ (qui est non nulle).
 On en déduit la *relation de Meyer*, qui lie les capacités thermiques:
 $ C_P - C_V = n R  $
 
 On peut l'exprimer avec les capacités thermiques massiques:
-$ c_p - c_V = (n R)/m = R/M "avec M la masse molaire du système." $
+$ c_P - c_V = (n R)/m = R/M "avec" M "la masse molaire du système" $
 Ou molaires:
-$ c_(p,m) - c_(V,m) = R $
+$ c_(P,m) - c_(V,m) = R $
 
 == Coefficient $gamma$ - Expression des capacités thermiques
 
@@ -370,18 +391,16 @@ $
 
 Dans le cas d'une transformation adiabatique, on a par définition:
 $ Q = 0 $ 
-ça c'est la définition d'une transformation adiabatique.
 
 En reportant dans l'expression du premier principe:
 $ Delta U = W + Q ==> Delta U = W $
 
-Dans le cas du gaz parfait:$
+Or, dans le cas du gaz parfait:$
 Delta U = C_V Delta T
-= (n R)/(gamma - 1) Delta T
+= (n R Delta T)/(gamma - 1)
+= (Delta (n R T))/(gamma - 1)
+= (Delta (P V))/(gamma - 1) "par loi des gaz parfaits"
 $
-
-Or, $ n R Delta T = Delta n R T = Delta P V "car gaz parfait" $
-donc $ Delta U = (Delta P V)/(gamma - 1) $
 
 #todo[À réecrire pour cause de _caca_ Badel:
 
@@ -438,14 +457,9 @@ $]
 
 On se place le diagramme de Watt: $P = f(V)$
 
-Dans le cadre d'une transformation isotherme et d'un gaz parfait:
-$P V = n R T = c^("te")$
-
-donc $P = K/V$ avec $K$ une constante
-
-En traçant l'isotherme en fonction du volume d'une
-transformation adiabatique (en rouge) et d'une transformation isotherme (en bleu),
-on obtient des courbes de la forme:
+En traçant la pression en fonction du volume d'une
+transformation adiabatique quasi-statique et d'une transformation isotherme,
+on obtient deux courbes de la forme:
 #figcan({
   import draw: *
 
@@ -459,27 +473,36 @@ on obtient des courbes de la forme:
   point("i.0", name: "p")
   line("p", ("p", "|-", (0, 0)), stroke: (dash: "dotted"))
 
-  content((3.8, 0.5), $Q = 0$, anchor: "west")
-  content((3.8, 1.2), $T = c^"te"$, anchor: "west")
+  content((3.8, 1.2), $T = c^"te" "(isotherme)"$, anchor: "west")
+  content((3.8, 0.5), $Q = 0 "(adiabatique)"$, anchor: "west")
 })
 
-On est adiabatique quasi-statique et gaz parfait, les lois de _*John Laplace*_ s'appliquent.
-$ P = K'/(V^gamma) $
-La question est est-ce que ma courbe est moins pentue ou plus pentue ?
+On cherche à différencier quelle courbe correspond à quelle transformation.
+On va calculer la dérivée de $f$ en fonction du volume
+pour les deux transformations pour trouver celle qui est plus pentue.
 
-On calcule la dérivée et on pourra ainsi affecter la courbe $Q = 0$ et $T = c^("te")$
+=== Cas d'une transformation isotherme
 
-#pagebreak()
+Dans le cadre d'une transformation isotherme et d'un gaz parfait:
+$P V = n R T = c^("te")$
 
-- Isotherme:
-$ P = K V ^(-1) \ (dif P)/(dif V) = -K V^(-2) $
-- Adiabatique quasistatique:
+Donc $P = K_1/V$ avec $K_1$ une constante
+
+$ P = K_1 V ^(-1) \ (dif P)/(dif V) = -K_1 V^(-2) $
+
+=== Cas d'une transformation adiabatique quasi-statique
+
+On étudie une transformation adiabatique sur un gaz parfait, donc les lois de _*Laplace*_ s'appliquent.
+$ P = K_2/(V^gamma) $
+
 $
-P &= K ' V^(-gamma)\
-(dif P)/(dif V) &= -gamma K' V^(-gamma-1)\
-&= -gamma (K' V^(-gamma)) V^(-1)\
+P &= K_2 V^(-gamma)\
+(dif P)/(dif V) &= -gamma K_2 V^(-gamma-1)\
+&= -gamma (K_2 V^(-gamma)) V^(-1)\
 &= -gamma P V ^(-1)
 $
+
+=== Conclusion
 
 Comparons les deux courbes:
 Si on fait le rapport de la pente de la transformation adiabatique sur la pente
@@ -491,48 +514,53 @@ $
 
 Donc la courbe de la transformation adiabatique est plus pentue que celle
 de la transformation isotherme.\
-On est bien d'accord que là on va commencer  être dans la situation où on va tracer des diagrammes, donnez un minimum de justification sur les courbes que vous allez tracer.\
+
+On en déduit:
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $V$)
+  arrow((0, 0), (0, 4), tip: $P$)
+
+  intersections("i", {
+    bezier-through((0.5, 4), (2, 1.5), (3.5, 0.5), stroke: red)
+    bezier-through((0.3, 3.5), (2, 1.5), (3.5, 1.1), stroke: blue)
+  })
+  point("i.0", name: "p")
+  line("p", ("p", "|-", (0, 0)), stroke: (dash: "dotted"))
+
+  content((3.8, 1.2), $T = c^"te" "(isotherme)"$, anchor: "west")
+  content((3.8, 0.5), $Q = 0 "(adiabatique)"$, anchor: "west")
+})
+
+On est bien d'accord que là on va commencer à être dans la situation où on va tracer des diagrammes, donc donnez un minimum de justification sur les courbes que vous allez tracer.\
 Pas besoin de faire un roman mais dire que la pression est constante et que la droite est horizontale fin il y a besoin d'une demi ligne pour dire ça.\
 Encore une fois pas la peine d'en écrire des tartines mais être concis et précis.
-
-$Gamma ' alpha iota quad pi epsilon rho delta upsilon$
-
-
-Et en plus j'ai faim.\
-A Elbereth Gilthoniel,\
-Silivren penna miriel,\
-O menel aglar elennath.\
-Na-chaered palan diriel,\
-O galadhremin elorath.\
-Fanuilos le linnathon,\
-Nef aear, si nef aearon.\
 
 = Calculs de transferts thermiques
 
 == Principe
 
-On a par le premier principe: $ Delta U = Q + W $
+Par le premier principe:
+$ Delta U = Q + W "donc" Q = Delta U - W $
 
-Dans le cas d'une transformation isotrope, on peut aussi utiliser que:
-$ Delta H = Q $
-
-Bien évidemment, l'objectif c'est de déterminer le transfert thermique $Q$
-
-On calcule $Delta U$ à partir de l'expression interne.
+Pour calculer le transfert thermique, 
+on calcule $Delta U$ à partir de l'expression de l'énergie interne
 
 En général, on sera dans une des deux situation suivantes:
-- Cas d'un gaz parfait: $ U = C_V T $
-  On peut alors calculer la variation d'énergie interne:
-  $ Delta U = C_V Delta T $
-- Cas avec un solide ou d'un liquide :  $ U = C T $ 
-  
-On se ramène au calcul du travail $W$ des forces de pression.
+- Cas d'un gaz parfait:
+  $ U = C_V T => Delta U = C_V Delta T $
+- Cas avec un solide ou d'un liquide:
+  $ U = C T => Delta U = C Delta T $ 
 
-La question est comment on interprète les choses.
+Ensuite, on calcule le travail $W$ des forces de pression.
 
-$ Q = Delta U - W  $
-
-À condition de travailler à pression constante : $ Q = Delta H $
+Dans le cas d'une transformation isobare:
+$ Delta H &= Delta U + Delta (P V) \
+&= Q + W + P Delta (V) \
+&= Q - P Delta V + P Delta V "(travail des forces de pression)" \
+&= Q
+$
 On tient compte du travail de la pression dans la variation
 d'enthalpie.
 
@@ -667,13 +695,6 @@ thermiques en l'absence de travail extérieur.
 
 C'est l'aspect expérimental lié à ce qui a été fait auparavant. 
 
-#align(center, text(size: 20pt,
-[#smallcaps[Joseph Perdu]\
-$Iota omicron sigma epsilon phi quad Pi epsilon rho delta upsilon$ \
-#smallcaps[ジェペるづ！]
-]
-))
-
 == Calorimètres
 
 L'objectif encore une fois c'est de limiter au maximum les échanges avec l'extérieur. (Transformation adiabatiques)
@@ -683,10 +704,10 @@ L'objectif encore une fois c'est de limiter au maximum les échanges avec l'ext�
 On mélange de l'eau froide et de l'eau chaude (à deux températures différentes). On met tout ça dans le calorimètre et on attend que ça soit à l'équilibre.
 
 On va considérer le système à pression constante et
-à phase condensée,
-et on considère $c_e$ la capacité thermique massique de l'eau.
+à phase condensée (volume constant),
+on a donc $Delta H = Q$.
 
-On a donc $Delta H = Q$.
+On considère $c_e$ la capacité thermique massique de l'eau (on a $C = m c_e$ la capacité thermique de la phase condensée).
 
 Les parois du système sont calorifugés,
 il n'y a donc pas d'échange avec le milieu extérieur et
@@ -701,9 +722,10 @@ $ Delta H &= Delta H_1 + Delta H_2 \
 &= m_1 c_e (T_"final" - T_1) + m_2 c_e (T_"final" - T_2) \
 &= 0 "(car parois calorifugées)"
 $
-Ainsi: $ T_f = (m_1 T_1 + m_2 T_ 2)/ (m_1 + m_2) $
+Ainsi: $ T_"final" = (m_1 T_1 + m_2 T_ 2)/ (m_1 + m_2) $
 
-Si on tient compte de la capacité du calorimètre, notre système est composé des masses $m_1$ et $m_2$ ainsi que le calorimètre. L'entièreté du système est calorifugé.
+On tient maintenant compte de la capacité thermique du calorimètre.
+Notre système est donc composé des masses $m_1$ et $m_2$ ainsi que du calorimètre. L'entièreté du système reste calorifugé.
 
 Toujours par extensivité:
 $ Delta H = Delta H_1 + Delta H_2 + Delta H_"cal" $
@@ -730,7 +752,7 @@ En général, plutôt que de calculer la capacité du calorimètre,
 on utilise plutôt le rapport $alpha = C_"cal"/c_e$
 
 Homogénéité: $alpha$ est une masse.
-On appelle $alpha$ la valeur en eau du calorimètre.
+On appelle $alpha$ la *valeur en eau* du calorimètre.
 
 $alpha$ représente la masse d'eau qui aurait le même comportement vis-à-vis des échanges thermiques que le calorimètre.
 
