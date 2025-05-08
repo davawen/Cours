@@ -387,36 +387,25 @@ $
   Souvent, on nous donnera seulement la valeur de $gamma$ d'un gaz parfait. 
 ]
 
-== Cas d'une transformation adiabatique
+== Cas d'une transformation adiabatique et quasistatique
 
 Dans le cas d'une transformation adiabatique, on a par définition:
-$ Q = 0 $ 
+$ delta Q = 0 $ 
 
 En reportant dans l'expression du premier principe:
 $ Delta U = W + Q ==> Delta U = W $
 
 Or, dans le cas du gaz parfait:$
-Delta U = C_V Delta T
+W = Delta U = C_V Delta T
 = (n R Delta T)/(gamma - 1)
 = (Delta (n R T))/(gamma - 1)
 = (Delta (P V))/(gamma - 1) "par loi des gaz parfaits"
 $
 
-#todo[À réecrire pour cause de _caca_ Badel:
-
 Or, quand on avait calculé les travaux des forces de pression pour une transformation polytropique d'ordre $k$, on avait trouvé que:
 $ W = Delta(P V)/(k - 1)  $
 
-// Ouais la manière dont elle a fait son raisonnement logique n'a aucun sens
-// Mais oui, c'est clair !
-// TODO -> A réécrire je pense
-Expression de $W$ pour une transformation polytropique d'ordre $gamma$
-(conditions des lois de Laplace) Soit une transformation
-- adiabatique
-- quasistatique
-- impliquant un gaz parfait
-- polytropique d'ordre $gamma ==> P V^gamma = c^("te")$
-]
+On en déduit que la transformation est polytropique d'ordre $gamma$ (raisonnement douteux).
 
 Cette relation nous permet d'éliminer différentes expressions comme constantes.
 On part de $P V^gamma "constante"$.
