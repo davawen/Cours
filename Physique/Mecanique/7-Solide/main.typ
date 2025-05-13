@@ -2,7 +2,7 @@
 
 #show: doc => template(doc)
 
-#let axe = $Sigma$
+#let axe = $Delta$
 
 #show link: it => underline[#it]
 
@@ -299,4 +299,199 @@ $
 == Théorème du moment cinétique par-rapport à un axe fixe pour un solide
 
 On passe d'une sommation discrète à une sommation continue:
-$ $
+
+== Théorème du moment cinétique pour un solide en rotation autour de $axe$
+On a:
+$ (dif L_axe)/(dif t) = (dif (J_axe dot(theta)))/(dif t) = J_axe dot(theta) = sum cal(M)_axe $
+
+== Conservation du moment cinétique
+
+Si la somme du moment des forces est nul, alors le moment cinétique
+(et donc la vitesse angulaire reste constante).
+
+Pour que le système soit à l'équilibre, il faut de plus que la
+vitesse angulaire (et la vitesse de translation) soit nulle.
+
+= Aspects énergétique d'un solide en rotation atuour d'un axe fixé
+
+== Énergie cinétique
+
+On reprend l'expression de l'énergie cinétique:
+$ E_c = 1/2 m v_ref (M)^2 $
+
+On avait vu que pour obtenir l'énergie cinétique d'un système de point, on fait la somme:
+$ E_c = sum_i E_(c,i) = sum_i 1/2 m_i v_ref (M_i)^2 $
+
+Pour obtenir l'énergie cinétique d'un solide, on transforme la somme
+discrète en somme continue:
+$ E_c = intsolid 1/2 (rho dif tau) v_ref (M)^2 $
+
+Exemple: solide en rotation autour de l'axe $(O_z)$:
+si on prend un point $M$ appartenant au solide:
+$ arw(v_ref) (M) = underbrace(dot(r) arw(u_r), "nul car" r "constant dans un solide") + r dot(theta) arw(u_theta) $
+
+Donc:
+$ arw(v_ref) (M) = r dot(theta) arw(u_theta) => v_ref (M)^2 = r^2 dot(theta)^2 $
+
+En reprenant l'expression de l'énergie cinétique:
+$ E_c &= intsolid 1/2 rho dif tau r^2 dot(theta)^2 \
+&= 1/2 dot(theta)^2 underbrace(intsolid rho dif tau r^2, J_axe) \
+&- 1/2 dot(theta)^2 J_axe
+$
+
+== Puissance et travail
+
+On a:
+$ cal(P) = cal(M)_axe dot(theta) "(expression à réétablir avec le mouvement élémentaire)" \
+= (delta W)/(dif t) = cal(M)_axe (dif theta)/(dif t) \
+=> delta W = cal(M)_axe dif theta
+$
+
+On retrouve le théorème de l'énergie cinétique et de l'énergie mécaniuqe:
+$ dif E_c = sum delta W "actions mécaniques" $
+$ dif E_m = sum delta W "actions mécaniuqes non conservatives" $
+
+= Applications
+
+== Équilibre d'une barre reposant sur le sol et maintenue par un filin
+
+#figure(image("exo-physique.png"))
+
+On s'intéresse au système du solide de la barre en équilibre (la barre ne translate pas et ne tourne pas), de masse $m$, de densité homogène et de centre de masse $G$.
+
+#tip[
+  Comme on est à l'équilibre, on peut prendre n'importe quel axe.
+  Dans ce genre de situation, on peut prendre le meilleur axe pour les calculs.
+]
+
+On se place dans le référentiel terrestre supposé galiléen,
+on fait un bilan des *actions mécaniques*:
+- Le poids de la barre $m arw(g)$, appliqué en $G$
+- La réaction du support $arw(R_N) + arw(R_T)$, appliqué en $A$
+- La tension du filin $arw(T)$, appliqué en $B$
+
+On est à l'équilibre donc:
+- Le solide ne translation pas: la somme des forces et nulle.
+- Le solide ne tourne pas, donc la somme des moment des forces est nul:
+  $ sum cal(M)_axe = 0 "(avec "axe "un axe quelconque)" $
+  
+Donc:
+$ m arw(g) + arw(T) + arw(R_N) + arw(R_T) = 0 $
+- On projette verticalement: $arw(R_N) = -m arw(g)$
+- On projette horizontalement: $arw(R_T) = -arw(T)$
+
+Pour les moments, on prend l'axe $axe = (A_y)$
+(on se place orthogonal au plan étudié, et on fait disparaître
+le moment de la réaction), donc:
+$ cal(M)_axe (arw(R_N)) = cal(M)_axe (arw(R_T)) = 0 $
+Comme on est à l'équilibre:
+$ cal(M)_axe (m arw(g)) + cal(M)_axe (arw(T)) = 0
+=> cal(M)_axe (m arw(g)) = - cal(M)_axe (arw(T))
+$
+
+On calcule le moment cinétique:
+$ cal(M)_axe (m arw(g)) = cal(M)_A (m arw(g)) dot arw(u_axe)
+= - m g A G cos alpha = - m g (A B)/2 cos alpha
+$
+$ cal(M_axe) (arw(T)) = T A B sin alpha $
+D'où:
+$ T = (m g)/(2 tan alpha) = 61.7 "N" $
+
+On en déduit:
+$ R_T = T = 61.7 "N" "et" m g = R_N = 9.81 times 15 = 147.15 "N" $
+
+On peut calculer le coefficient de frottement sec:
+$ f = R_T/R_N approx 0.4 $
+
+== Pendule pesant
+
+#figure(image("exo-pendule-pesant.png", width: 90%))
+
+=== 
+
+On définit le système du solide, dans le référentiel terrestre
+supposé galiléen, on fait un bilan des actions mécaniques:
+- Le poids $m arw(g)$
+- La liaison pivot supposée parfaite
+
+On fait un théorème du moment cinétique:
+$
+(dif L_axe)/(dif t) = cal(M)_axe ("liaison pivot") + cal(M)_axe (m arw(g)) $
+
+$ J_axe diaer(theta) = 0 + cal(M)_axe (m arw(g)) $
+$ momforce (m arw(g)) = arw(O G) and m arw(g) \
+= a arw(u_r) and (m g cos theta arw(u_r) - m g sin theta arw(u_theta))
+= - m g a sin theta arw(u_z)
+$
+
+Donc:
+#resultb[$ J_axe diaer(theta) = - m g a sin theta $]
+
+===
+
+On pose l'énergie cinétique:
+$ E_c = 1/2 J_axe dot(theta)^2 $
+$ delta W(m arw(g)) &= m arw(g) dot dif arw(O G) \
+&= m arw(g) dot a dif theta arw(u_theta) \
+&= - m g sin theta a dif theta \
+&= -d (- M g a cos theta)
+$
+
+On pose l'energie potentielle:
+$ E_p = - m g a cos theta + "constante" $
+$ E_c + E_p = "constante car pas d'actions mécaniques non conservatives" $
+$ 1/2 J_axe dot(theta)^2 - m g a cos theta = "constante" $
+On dérive:
+#resultb[$ J_axe diaer(theta) dot(theta) + m g a sin theta = 0 $]
+
+===
+
+On fait une approximation des petits angles:
+$ sin theta approx theta $
+Donc:
+$ J_axe diaer(theta) + m g a theta = 0 $
+Et on obtient l'équation différentielle du mouvement:
+$ diaer(theta) + (m g a theta)/(J_axe) = 0 $
+
+On reconnait un oscillateur harmonique et on identifie la pulsation:
+$ omega_0^2 = (m g a)/J_axe => T_0 = 2 pi times sqrt(J_axe/(m g a)) $
+
+=== Cas du pendule simple
+
+On assimile $G$ à $M$, $a$ à $cal(l)$, $J_axe = m l^2$,
+on annule les variables et on se retrouve avec l'équation différentielle:
+
+== Pendule de torsion
+
+#figure(image("exo-pendule-torsion.png", width: 80%))
+
+=== Équation différentielle du mouvement
+
+On étudie le système solide de la barre, de masse $m$, de densité
+homogène, de longueur $L$ suspendue en $O$ dans le référentiel
+terrestre supposé galiléen.
+On fait un bilan des actions mécaniques:
+- Le poids $m arw(g)$ appliqué en $O$
+- Liaison pivot parfaite au fil
+- Le couple de rappel $- C alpha$
+On applique le théorème du moment cinétique:
+$ (dif L_axe)/(dif t) = J diaer(alpha) = underbrace(cal(M)_axe (m arw(g)), = 0 "car dans l'axe") + underbrace(cal(M)_axe ("liaison"), = 0 "pour la même" \ "raison") - C alpha $
+Donc:
+#resultb[$ J diaer(alpha) + C alpha = 0 $]
+
+=== Période des oscillation
+
+$ diaer(alpha) + (C alpha)/J = 0 $
+On retrouve un oscillateur harmonique, on identifie:
+$ omega_0^2 = C/J => T_0 = 2pi sqrt(J/C) $
+
+=== Relation entre $alpha$ et $diaer(alpha)$
+
+On applique le théorème de l'énergie mécanique:
+$ Delta(E_c + E_p) = W_"non conservative" = 0 $
+On calcule l'énergie potentielle du couple de rappel:
+$ cal(P) = - C alpha dot(alpha) => delta W = C alpha d alpha = - dif (underbrace(1/2 C alpha^2, E_p)) $
+On utilise l'expression de l'énergie cinétique:
+$ E_c = 1/2 J dot(alpha)^2 $
+$ E_c + E_p = "constante" $
+$ => 1/2 J dot(alpha)^2 + 1/2 C alpha^2 = "constante"  $
