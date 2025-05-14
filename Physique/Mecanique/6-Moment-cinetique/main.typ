@@ -8,6 +8,8 @@
 
 On introduit le moment cinétique, un nouvel outil définit
 à l'aide du produit vectoriel.
+Le moment cinétique est à la rotation ce que la quantité de mouvement est
+à la translation.
 
 Il existe deux moments cinétiques différents:
 + Le moment cinétique par-rapport à un point (le moment cinétique sera vectoriel)
@@ -20,10 +22,11 @@ Il existe deux moments cinétiques différents:
 On note $arw(L_(O ref)) (M)$ ou $arw(sigma_(O ref)) (M)$ le moment cinétique d'un point $M$ par-rapport au point $O$,
 avec $cal(R)$ le référentiel.
 
-On le définit par:
-$ arw(L_(O ref)) (M) &= arw(O M) and arw(P_ref) (M) \
+On le définit (avec $arw(p)$ la quantité de mouvement) par:
+$ arw(L_(O ref)) (M) &= arw(O M) and arw(p_ref) (M) \
 &= arw(O M) and m arw(v_ref) (M)
 $
+
 
 == Dépendance du moment cinétique par-rapport au point considéré
 
@@ -36,6 +39,8 @@ $
 
 À moins d'avoir une vitesse nulle ou colinéaire au déplacement $arw(O' O)$,
 on aura $arw(L_(O' ref)) != arw(L_(O ref))$
+
+Donc le moment cinétique dépend du point utilisé.
 
 == Moment cinétique par-rapport à un axe
 
@@ -67,8 +72,8 @@ au plan du mouvement et le point $O$ centre de la trajectoire.
 On a donc:
 $ arw(O M) = r arw(u_r) + z arw(u_z) = r arw(u_r) $
 $ arw(v) = dot(r) arw(u_r) + r dot(theta) arw(u_theta) = R dot(theta) arw(u_theta) $
-Comme on est en mouvement circulaire, on a $r = R "constant"$,
-donc $dot(r) = 0$, et $dot(z) = 0$, donc
+(Comme on est en mouvement circulaire, on a $r = R "constant"$,
+donc $dot(r) = 0$, et $dot(z) = 0$)
 
 On calcule le moment cinétique:
 $ arw(L_(O ref)) (M) &= arw(O M) and m arw(v_ref) (M) \
@@ -94,7 +99,8 @@ $ arw(L_(O ref))
 &= - m r z dot(theta) arw(u_r) + m (z dot(r) - r dot(z)) arw(u_theta) + m r^2 dot(theta) arw(u_z)
 $
 
-#tip[On utilisera jamais cette forme.]
+#tip[On utilisera très peu cette forme, sauf dans quelques calculs
+  de cours. Il est _en général_ possible de trouver une expression plus jolie.]
 
 = Moment d'une force
 
@@ -111,8 +117,10 @@ $ arw(mom_O') (arw(f)) &= arw(O' M) and arw(f) \
 &= arw(O' O) and arw(f) + arw(O M) and arw(f) \
 &= arw(O' O) and arw(f) + arw(mom_O) (arw(f))
 $
-De la même manière, à moins que la force soit nulle ou collinéaire
-à $arw(O' O)$, $arw(mom_O') (arw(f)) != arw(mom_O) (arw(f))$
+Donc comme pour les moment cinétiques, à moins que la force soit nulle ou collinéaire
+à $arw(O' O)$, la valeur du moment dépend du point de référence choisit.
+
+=== Calcul du moment d'une force avec le bras de levier
 
 On définit le *bras de levier*, la distance entre le point $O$ et 
 *la droite d'action* de la force $arw(f)$, qui permet
