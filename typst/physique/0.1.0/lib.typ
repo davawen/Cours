@@ -66,6 +66,8 @@
 			it,
 			align(center, line(length: 100%, stroke: (paint: gray, thickness: 0.8pt)))
 		)
+		// reset equation counter for each sub-chapter
+		counter(math.equation).update(0)
 	}
 
 	show ref: it => {

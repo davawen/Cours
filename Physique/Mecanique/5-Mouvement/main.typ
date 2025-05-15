@@ -410,12 +410,7 @@ On ne pourra jamais suivre une trajectoire circulaire avec un champ
 	arrow((0, 0, 1), (1, 0, 1), tip: $arw(v)_(o,y)$, stroke: green, pad: 0.5)
 	arrow((0, 0, 1), (0, 1, 1), tip: $arw(v)_(o,z)$, stroke: green, pad: 0.5)
 
-	for i in range(80) {
-		let t = i/4 - calc.pi/2
-		let tp = (i+1)/4 - calc.pi/2
-		line((calc.cos(t), t/6 + calc.pi/12, calc.sin(t) + 2), (calc.cos(tp), tp/6 + calc.pi/12, calc.sin(tp) + 2), stroke: red)
-	}
-
+	line-plot(t => (calc.cos(t*20 - calc.pi/2), t*20/6, calc.sin(t*20 - calc.pi/2) + 2), samples: 80, stroke: red)
 })
 
 = Mouvement dans le champ électromagnétique, applications

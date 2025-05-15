@@ -88,3 +88,4 @@ Conseils pour faire une troisième partie:
 + Parlez de la dimension _symboliques_ des choses,
   comment est représentée la réalité ?
 
+
