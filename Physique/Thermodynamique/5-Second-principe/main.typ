@@ -464,22 +464,139 @@ On définit l'*entropie créée* $S_"créée"$ et l'*entropie échangée* $S_"é
 $ S_"éch" = sum_i Q_i/T_(th,i) "et" S_"créée" = Delta S - S_"éch" $
 
 On a:
-$ Delta S >= sum_i (Q_i)/T_(th,i) $
-Donc:
-$ Delta S - sum_i (Q_i)/T_(th,i) = S_"créée" >= 0 $
+$ Delta S >= sum_i (Q_i)/T_(th,i) => Delta S - sum_i (Q_i)/T_(th,i) = S_"créée" >= 0 $
 
-*L'entropie créée* est donc positive.
+*L'entropie créée* est donc positive. C'est le second principe 
+appliqué aux systèmes non calorifugés.
 
 #caution[
-  On utilise la même lettre et le même nom pour les deux concepts différents:
+  On utilise la même lettre et le même nom pour deux concepts différents:
   #grid(
     columns: (1fr, 1fr),
+    column-gutter: 5pt,
     [*L'entropie* est une fonction d'état. Elle ne dépend pas du chemin suivi. On a donc:
     - Forme intégrale: $Delta S$
     - Forme différentielle: $dif S$],
-    [*L'entropie créée* et *échangée* sont analogue au travail.
+    [*L'entropie créée* et *échangée* sont analogues au travail.
     *Elles dépendent du chemin suivi*. 
     - Forme intégrale: $S$
     - Forme différentielle: $delta S$]
   )
 ]
+
+== Bilans d'entropie
+
+Pour déterminer si une transformation est réversible, on doit calculer
+l'entropie créée. On fait un *bilan d'entropie*:
+- On calcule le $dif S$ (ou $Delta S$) du système à l'aide des identités
+  thermodynamiques
+- On calcule l'entropie échangée avec les thermostats extérieurs:
+  $ dif S_("ch",i) = (delta Q_i)/(T_(th,i)) "ou" S_("ch",i) = (Q_i)/(T_(th,i)) $
+- On en déduit l'entropie créée:
+  $ delta S_"créée" = dif S - sum_i delta S_("ch",i) "ou" S_"créée" = Delta S - sum_i S_("ch",i) $
+  #tip[Un $S_"créée"$ négatif signifie que la transformation étudiée
+  est *impossible* dans le sens étudié.]
+
+= Quelques calculs d'entropie
+
+== Cas d'un gaz parfait
+
+On rappelle les identités thermodynamiques:
+$ dif U = T dif S - P dif V $
+$ dif H = T dif S + V dif P $
+
+Par la première loi de joule :
+$ dif U = C_V dif T = T dif S - P dif V $
+$ => dif S = C_v (dif T)/T + P/T dif V \
+=> dif S = C_V (dif T)/T + n R (dif V)/V
+$
+On intègre:
+$ Delta S_(A->B) = C_V ln (T_B/T_A) + n R ln (V_B/V_A) $
+Ainsi:
+$ S = C_V ln T + n R ln V + "constante" $
+
+Par la seconde loi de joule:
+$ dif H = C_P dif T = T dif S + V dif P $
+$ => dif S = C_P (dif T)/T + V/T dif P  \
+=> dif S = C_P (dif T)/T + n R P/(dif P)
+$
+On intègre et de même:
+$ S = C_P ln T + n R ln P + "constante" $
+
+== Retour sur les lois de Laplace
+
+On avait comme conditions pour les lois de Laplace:
+- Le système est un gaz parfait
+- La transformation étudiée est quasistatique
+- La transformation étudiée est adiabatique
+On rajoute l'hypothèse plus forte que la transformation est *réversible*.
+
+On reprend la variation d'entropie:
+$ Delta S = underbrace(S_"éch", = 0 \ "car adiabatique") + underbrace(S_"créée", = 0 \ "car réversible") $
+En reprenant l'expression de la différence d'entropie calculée précedemment:
+$ C_V ln T_2/T_1 + n R ln V_2/V_1 = 0 $
+$ => C_V ln T + n R ln V = "constante" $
+$ ln (T^(C_V) V^(n R)) = "constante" $
+$ T^(C_V) V^(n R) = "constante" $
+Comme $C_V = (n R)/(gamma - 1)$:
+$ T^((n R)/(gamma - 1)) V^(n R) = "constante" => T V^(gamma - 1) = "constante" $
+
+On retombe sur les lois de Laplace.
+On peut faire la même chose en partant de l'entropie.
+
+== Cas d'une phase condensée
+
+Par la première identité thermodynamique:
+$ dif U = T dif S - P dif V $
+Or dans une phase condensée, le volume est constant, donc:
+$ dif U = T dif S = C dif T $
+
+Donc:
+$ dif S = C (dif T)/T => Delta S = C ln T_B/T_A $
+
+== Remarques sur ces calculs
+
+On a surtout parlé de variations d'entropie.
+On peut fixer l'origine de l'entropie avec le troisième principe
+de la thermodynamique, mais cela n'est pas très utile, donc on 
+ne le fait pas (être à une constante près suffit)
+
+= Transitions de phase et 2#super[nd] principe
+
+== Entropie massique - Théorème des moments
+
+On suppose que le système étudié possède deux phases.
+Par extensivité:
+$ S = S_1 + S_2 $
+
+$ m_"tot" s = m_1 s_1 + m_2 s_2 $
+$ s = x_1 s_1 + x_2 s_2 "(avec" x_1 = m_1/m_"tot" "et" x_2 = m_2/m_"tot" ")" $
+Or $x_1 + x_2 = 1$, donc:
+$ s = x_1 s_1 + (1 - x_1) s_2
+=> x_2 = (s - s_1)/(s_2 - s_1)
+$
+
+== Entropie de changement d'état
+
+On considère $1 "kg"$ de corps pur, changeant d'un état $1$ 
+d'entropie massique $s_1$ en un état $2$ d'entropie massique $s_2$.
+
+On a donc $s_(1->2) (T) = s_2 (T) - s_1 (T)$ l'entropie de changement d'état.
+
+#align(center)[#text(size: 13.2pt)[_*L'entropie de changement d'état, c'est la différence d'entropie
+entre deux états.*_]]
+
+On prend la deuxième identité thermodynamique:
+$ dif H = T dif S + V dif P $
+Un changement d'état se passe toujours à pression constante (équilibre entre deux phases), donc $dif P = 0$, donc:
+$ dif H = T dif S $
+Et *quand on est à température constante*:
+$ Delta H = T Delta S $
+$ m h_(1->2) = T (m s_(1->2)) $
+$ s_(1->2) = (h_(1->2))/T $
+#caution[
+  L'entropie de changement d'état dépend de la température.
+]
+
+$ dif S = s_(1->2) dif m $
+$ dif S = (h_(1->2))/T dif m $
