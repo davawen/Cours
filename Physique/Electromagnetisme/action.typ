@@ -304,4 +304,3 @@ $ mom = I a b arw(n) and B arw(u_x) = arw(cal(M)) and arw(B)
 = I B arw(n)
 $
 
-

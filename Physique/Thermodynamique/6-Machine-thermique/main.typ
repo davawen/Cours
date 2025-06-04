@@ -1,4 +1,5 @@
 #import "@local/physique:0.1.0": *
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
 #show: doc => template(doc)
 
@@ -220,7 +221,7 @@ $ Q_F <= - T_F/T_C Q_C < 0 => Q_F < 0 $
 == Efficacité / Rendement
 
 La grosse différence entre les moteurs et les autres machines thermiques, c'est que le rendement d'un moteur sera toujours inférieur à $1$.
-Les pompes à chaleur et les réfrégirateurs permettent eux un
+Les pompes à chaleur et les réfrigérateurs permettent eux un
 rendement supérieur à $1$ (le travail est utilisé pour transférer la chaleur)
 
 On définit le rendement par:
@@ -230,3 +231,446 @@ Ici, le travail étant négatif et $Q_C$ étant positif, on pose:
 $ r = - W/Q_C $
 
 == Maximum théorique d'efficacité - Théorème de Carnot
+
+On étudie un moteur, donc:
+- $W < 0$
+- $Q_C > 0$
+- $Q_F < 0$
+
+Par le premier principe:
+$ W + Q_C + Q_F = 0 $
+Par le second principe:
+$ Q_C/T_C + Q_F/T_F <= 0 $
+
+On pose le rendement:
+$ e = -W/Q_C $
+
+En reformulant le premier principe:
+$ W = -Q_C - Q_F $
+Donc en reprenant le rendement:
+$ e = (Q_C + Q_F)/Q_C = 1 + Q_F/Q_C $
+Donc:
+$ Q_F <= -T_F/T_C Q_C $
+
+On obtient donc le théorème de Carnot, qui correspond au rendement
+maximal obtenable avec un moteur:
+#resultb[
+  $ e <= 1 - T_F/T_C = e_C "le rendement de Carnot" $
+]
+
+== Cycle de Carnot
+
+On étudie un gaz parfait.
+
+On pose le cycle suivant, avec
+deux transformations isothermes (avec $P V = "constante"$)
+et deux transformations adiabatiques (avec $P V^gamma = "constante"$):
+
+#figcan({
+  import draw: *
+  arrow((0, 0), (4, 0), tip: $V$)
+  arrow((0, 0), (0, 4), tip: $P$)
+
+  catmull((1, 3), (2, 1.5), (4, 1), (3, 2.5), (1, 3))
+  // bezier-through((1, 3), (1.5, 2), (2, 1.5))
+
+  point((1, 3), value: $A$)
+  point((2, 1.5), value: $D$, anchor: "north-east")
+  point((4, 1), value: $C$, anchor: "north-west")
+  point((3, 2.5), value: $C$, anchor: "south-west")
+})
+
+On veut calculer le travail et le transfert thermique pour chacune
+des transformations, afin de calculer le rendement de ce cycle:
+- Pour les transformations isothermes,
+  $ Delta U = Q + W = 0 "par 1"^"ere" "loi de joule" $
+  $ W = - n R T ln (V_"f")/V_"i" $
+  - Pour la transformation à température chaude:
+    $ W = - n R T_C ln (V_B/V_A) $
+    $ => Q_C = n R T_C ln (V_B/V_A) $
+  - Pour la transformation à température froide
+    $ W = - n R T_F ln (V_D/V_C) $
+    $ Q_F = n R T_F ln (V_D/V_C) $
+- En utilisant les transformations adiabatiques, on peut calculer
+  les volumes:
+  $ P V^gamma = "constante" <=> T V^(gamma-1) = "constante" $
+  $ => T_C V_A^(gamma-1) = T_F V_D^(gamma-1) => V_D = V_A (T_C/T_F)^(1/(gamma-1)) $
+  $ "et" V_C = V_B (T_C/T_F)^(1/(gamma-1)) $
+Donc:
+$ Q_F = n R T_F ln ((V_A (T_C/T_F)^(1/(gamma-1)))/(V_B (T_C/T_F)^(1/(gamma-1)))) = - n R T_F ln (V_B/V_A)  $
+Donc:
+$ e = 1 + Q_F/Q_C = 1 - T_F/T_C = e_C $
+
+#resultb[Il existe donc une transformation
+moteur qui permet d'obtenir un rendement de Carnot.]
+
+Dans le diagramme $(S, T)$, le cycle de Carnot est un rectangle:
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $S$)
+  arrow((0, 0), (0, 4), tip: $T$)
+  rect((1, 1), (3, 3))
+})
+
+
+== Autres cycles
+
+=== Cycle de Rochas / Otto
+
+#tip[Si on nous demande de faire un tracé, il faut
+justifier l'allure des courbes]
+
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $P$)
+  arrow((0, 0), (0, 4), tip: $V$)
+
+  bezier-through((1, 3), (2, 2.3), (3, 2))
+  line((3, 2), (3, 0.5))
+  bezier-through((1, 1.5), (2, 0.8), (3, 0.5))
+  line((1, 3), (1, 1.5))
+
+  content((1, -0.5), $V_"min"$)
+  content((3, -0.5), $V_"max"$)
+
+  content((2.5, 2.8), $Q = 0$)
+  content((1.3, 0.6), $Q = 0$)
+})
+
+En notant $a = V_"max"/V_"min"$, on a:
+$ e = 1 - a^(1-gamma) $
+
+#todo[
+  À reprouver (exercice)
+]
+
+Le cycle de Rochas/Otto est celui sur lequel sont basés
+les moteurs thermiques à essence.
+
+=== Le cycle Desiel
+
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $V$)
+  arrow((0, 0), (0, 4), tip: $P$)
+
+  line((1, 3), (2, 3))
+  bezier-through((2, 3), (2.5, 2.2), (3, 2))
+  line((3, 2), (3, 1))
+  bezier-through((1, 3), (2, 1.2), (3, 1))
+
+  content((3, 2.8), $Q = 0$)
+  content((1, 1), $Q = 0$)
+
+  content((1, -0.5), $V_B$)
+  content((2, -0.5), $V_C$)
+  content((3, -0.5), $V_A$)
+})
+
+Le cycle de __ est celui sur lequel sont basés les moteurs thermiques
+diesel.
+
+On pose:
+$ alpha = V_A/V_B "et" beta = V_A/V_C $
+Le rendement est alors de la forme:
+$ e = 1 - (alpha^(-gamma) - beta^(-gamma))/(gamma  (alpha^(-1) - beta^(-1))) $
+
+=== Le cycle de Brayton
+
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $V$)
+  arrow((0, 0), (0, 4), tip: $P$)
+
+  line((1, 3), (2.5, 3))
+  bezier-through((2.5, 3), (3, 1.7), (4, 1))
+  line((2, 1), (4, 1))
+  bezier-through((1, 3), (1.5, 1.5), (2, 1))
+
+  content((3.5, 2), $Q = 0$)
+  content((0.7, 1.5), $Q = 0$)
+})
+
+$ a = P_max/P_min $
+$ e = 1 - a^((-1 - gamma)/gamma) $
+
+=== Le cycle de Stirling (qu'on fera en TP)
+
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $V$)
+  arrow((0, 0), (0, 4), tip: $P$)
+
+  line((1, 3), (1, 1.5))
+  bezier-through((1, 3), (2, 2.2), (3, 2))
+  bezier-through((1, 1.5), (2, 0.7), (3, 0.5))
+  line((3, 2), (3, 0.5))
+
+  content((2, 2.5), $T_C$)
+  content((1.5, 0.5), $T_F$)
+})
+
+Il possède le même rendement que le cycle de Carnot:
+$ e = 1 - T_F/T_C = e_C $
+
+= Machines frigorifiques
+
+Le principe d'une machine frigorifique est de maintenir une source
+froide à sa température.
+
+On considère qu'une source froide se réchauffe de manière spontanée
+(par transfert thermique avec la source chaude)
+
+La machine reçoit un transfert thermique $Q_F$ de la source froide, 
+un travail extérieur et
+un transfert thermique $Q_C$ de la source chaude:
+- $W > 0$, $Q_F > 0$, $Q_C < 0$
+#warn[
+  Ici, on suppose que $Q_C$ représente le transfert reçu de la source
+  chaude. Comme la machine frigorifique envoit un transfert vers la
+  source chaude, le transfert reçu est négatif. Faire attention
+  aux conventions.
+]
+
+== Efficacité
+
+On rappelle qu'on définit l'efficacité par:
+$ e = "utile"/"couteux" = Q_F/W $
+
+= Théorème de Carnot
+
+Pour le théorème de carnot, on a:
+Par le premier principe:
+$ W + Q_C + Q_F = 0 $
+$ => W = - Q_C - Q_F $
+Alors:
+$ e = Q_F/(- Q_C - Q_F) = (-1)/(1 + Q_C/Q_F) $
+
+Par le second principe:
+$ Q_F/T_F + Q_C/T_C <= 0 $
+$ 1 + Q_C/Q_F <= 1 - T_C/T_F $
+On passe à l'inverse:
+$ 1/(1 + Q_C/Q_F) >= 1/(1 - T_C/T_F) $
+Donc:
+$ e = (-1)/(1 + Q_C/Q_F) <= 1/(T_C/T_F - 1) = T_F/(T_C - T_F) = e_C $
+
+= Pompe à chaleur
+
+== Principe
+
+Le principe d'une pompe à chaleur est de maintenir une source
+chaude à sa température en ponctionnant de la chaleur
+dans une source froid.
+
+La machine reçoit un transfert thermique $Q_F$ de la source froide, 
+un travail extérieur et
+un transfert thermique $Q_C$ de la source chaude:
+- $W > 0$, $Q_F > 0$, $Q_C < 0$
+
+== Efficacité
+
+$ e = "utile"/"couteux" = -Q_C/W $
+
+== Théorème de Carnot
+
+Par le premier principe:
+$ W + Q_C + Q_F = 0 $
+$ => W = - Q_C - Q_F $
+Alors:
+$ e = Q_C/W = Q_C/(-Q_C-Q_F) = 1/(1+(Q_F/Q_C)) $
+
+Par le second principe:
+$ Q_F/T_F + Q_C/T_C <= 0 $
+$ <=> Q_F <= - T_F/T_C Q_C  $
+$ <=> 1 + Q_F/Q_C >= -T_F/T_C + 1 $
+D'où:
+#resultb[
+$ e = 1/(1 + (Q_F/Q_C)) <= 1/(1 - T_F/T_C) = T_C/(T_C-T_F) = e_C $
+]
+
+#pagebreak()
+
+= Machines réelles
+
+== Quelques exemples de rendements pour des machines courantes
+
+#{
+set text(10pt)
+align(center, table(
+  columns: 5,
+  [Machine], [Source Froide], [Source chaude], [Rendement de Carnot],
+  [Rendement Réel],
+  [Moteur de voiture], [Atmosphère, $300 "K"$],
+  [Combustion de gaz, $3000 "K"$],
+  $approx 90 "%"$, [Entre $15$ et $36$ %],
+  [Centrale thermique], [Eau, $300 "K"$],
+  [Au plus $600 "K"$], $approx 50 "%"$, [Entre 30 et 40 %],
+  [Réfregirateur], [$-15 degree "C"$],$20 degree "C"$,[5],[Environ 2],
+  [Pompe à chaleur], [$7 degree "C"$], [$35 degree "C"$],
+  $11$, [Entre 3 et 5]
+))
+}
+
+== Cogénération
+
+L'idée de la cogénération est d'utiliser la chaleur générée
+par un système réfrigérateur ou moteur comme source chaude
+pour un autre système.
+
+On considère le système suivant:
+- Un moteur de travail utile $W_U < 0$
+- Une soruce chaude (combustion) $Q_C > 0$
+- On récupère un transfert thermique utile $Q_U$
+
+On définit le *rendement global*:
+$ r_G = (abs(W_U) + abs(Q_U))/abs(Q_C)  $
+Ainsi que le *rapport chaleur force*:
+$ C_F = abs(Q_U)/abs(W_U) $
+
+=== Exemple d'exercice de cogénération
+
+#figure(image("exo1.png", width: 100%))
+
+#figure(caption: [Diagramme des transferts énergitiques], diagram(
+  node-stroke: 1pt,
+  edge((-1, -1), "<|-", $cal(P)_C = 1.5 "GW" $),
+  node((0, 0), "Moteur"),
+  edge((0, 1), "-|>", $cal(P) = 900 "MW"$),
+  edge("-|>", $cal(P)_(F 1)$),
+  node((2, 0), [Système de chauffage]),
+  edge((4, 0), "-|>", [$80 "%"$ de $cal(P)_(F 1)$]),
+  node((0, 1), [Pertes]),
+  edge((0, 2), "-|>", $cal(P)_U = "90 %" cal(P)$)
+))
+
++ On a:
+  $ Delta U = 0 = Q_C - Q_(F 1) - W $
+  $ 0 = cal(P)_C - cal(P)_(F 1) - cal(P) $
+  $ cal(P)_(F 1) = cal(P)_C - cal(P) = 600 "MW" $
+  
++ $ cal(P)_U = "90 %" times cal(P) = 810 "MW" $
+  $ cal(P)_("th,U") = "80 %" times cal(P)_(F 1) = 480 "MW" $
++ $ r_g = (cal(P)_U + cal(P)_"th,U")/(cal(P)_C) = 86 "%" $
++ $ r = cal(P)_U/cal(P)_C = "54 %" $
++ $ C_F = (cal(P)_"th,U")/(cal(P)_U) = "59 %" $ 
+
+== Moteur à explosion
+
+On rappelle le modèle théorique du moteur à explosion, le cycle
+Rochas/Otto:
+
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $P$)
+  arrow((0, 0), (0, 4), tip: $V$)
+
+  bezier-through((1, 3), (2, 2.3), (3, 2))
+  line((3, 2), (3, 0.5))
+  bezier-through((1, 1.5), (2, 0.8), (3, 0.5))
+  line((1, 3), (1, 1.5))
+
+  content((1, -0.5), $V_"min"$)
+  content((3, -0.5), $V_"max"$)
+
+  content((2.5, 2.8), $Q = 0$)
+  content((1.3, 0.6), $Q = 0$)
+})
+
+Dans la réalité, on ajoute des étapes en plus:
+- On a une phase d'admission: on doit faire rentrer les gaz à brûler
+- Une phase d'allumage (on a besoin d'un transfert thermique)
+- Une phase de combustion
+- Une phase d'éjection (on doit faire sortir les gazs de combustion)
+
+On ajoute donc deux étapes au cycle de Rochas/Otto, au début et à la fin,
+correspondant à la phase d'admission et d'éjection:
+
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $P$)
+  arrow((0, 0), (0, 4), tip: $V$)
+
+  bezier-through((1, 3), (2, 2.3), (3, 2), mark: (end: "straight"))
+  line((3, 2), (3, 0.5), mark: (end: "straight"))
+  bezier-through((1, 1.5), (2, 0.8), (3, 0.5), mark: (start: "straight"))
+  line((1, 3), (1, 1.5), mark: (start: "straight"))
+
+  line((3, 0.5), (1, 0.5), mark: (start: "straight", end: "straight"))
+
+  content((1, -0.5), $V_"min"$)
+  content((3, -0.5), $V_"max"$)
+
+  content((2.5, 2.8), $Q = 0$)
+  content((1, 0.8), $Q = 0$)
+})
+
+Ou, dans la vrai vie:
+#figcan({
+  import draw: *
+
+  arrow((0, 0), (4, 0), tip: $P$)
+  arrow((0, 0), (0, 4), tip: $V$)
+
+  // bezier-through((1, 3), (2, 2.3), (3, 2), mark: (end: "straight"))
+  // line((3, 2), (3, 0.5), mark: (end: "straight"))
+  // bezier-through((1, 1.5), (2, 0.8), (3, 0.5), mark: (start: "straight"))
+  // line((1, 3), (1, 1.5), mark: (start: "straight"))
+  //
+  // line((3, 0.5), (1, 0.5), mark: (start: "straight", end: "straight"))
+
+  catmull((3, 0.5), (2, 0.4), (1, 0.5), (2, 0.6),
+    (3, 0.5), (1, 1.5), (1, 3), (3, 2), (3, 0.5),
+    name: "c"
+  )
+
+  mark("c.10%", "c.11%", symbol: "straight")
+  mark("c.24%", "c.25%", symbol: "straight")
+  mark("c.47%", "c.48%", symbol: "straight")
+  mark("c.57%", "c.58%", symbol: "straight")
+  mark("c.78%", "c.79%", symbol: "straight")
+  mark("c.93%", "c.94%", symbol: "straight")
+})
+
+== Réfrigérateur à fréon
+
+Les étapes d'un réfrigérateur sont:
++ Détente isenthalpique de joule thomson $ A B$ diminuant la
+  température du fluide
++ Vaporisation à pression et température constante $B C$ en recevant $Q_F$,
+  de source froide (contenu du réfrigérateur)
++ Compression calorifugée $C D$
++ Évolution isotherme et isobare dans condenseur cédant $Q_C$ à source
+  chaude (air de la pièce)
+
+#figure(image("diag_frigo.png", width: 60%))
+
+#figure(image("tab.png", width: 40%))
+
+Exercice: caluler l'efficacité.
+
+==  Machine de Sterling
+
+(On verra en TP)
+
+= Tableau récapitulatif
+
+#figure(table(
+  columns: 4,
+  align: horizon,
+  inset: 8pt,
+  [], [Moteurs], [Frigo], [Pompe à chaleur],
+  $W$, $<0$, $> 0$, $> 0$,
+  $Q_C$, $>0$, $< 0$, $< 0$,
+  $Q_F$, $< 0$, $>0$, $>0$,
+  [Grandeur utile], $W$, $Q_F$, $Q_C$,
+  [Grandeur coûteuse], $Q_C$, $W$, $W$,
+  [Efficacité], $-W/Q_C$, $Q_F/W$, $-Q_C/W$,
+  [Eff. de Carnot], $1 - T_F/T_C$, $T_F/(T_C - T_F)$, $T_C/(T_C - T_F)$
+))
