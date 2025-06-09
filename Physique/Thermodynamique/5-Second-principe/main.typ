@@ -136,10 +136,10 @@ On définit:
   align: center,
   [
   La *température thermodynamique*:
-  $ T = ((diff U)/(diff S))_V dif S $
+  $ T = ((diff U)/(diff S))_V $
   ],
   [La *pression thermodynamique*:
-  $ P = - ((diff U)/(diff V))_S dif V $
+  $ P = - ((diff U)/(diff V))_S $
   ]
 )
 #note[
@@ -337,7 +337,7 @@ sont fixes, donc $delta Q = 0$ et $delta W = 0$
 Donc $dif U = 0$, et par @Uextensif2
 $ dif U_2 = - dif U_1 $ <memeU>
 
-Par la second identité thermodynamique:
+Par la première identité thermodynamique:
 $ dif S_1 = (dif U_1)/T_1 + (P_1)/T_1 dif V_1 $
 $ dif S_2 = (dif U_2)/T_2 + (P_2)/T_2 dif V_2 $
 
@@ -363,7 +363,7 @@ Dans la partie suivante, on enlève l'hypothèse de calorifugeage du système.
 
 Comme le système n'est plus calorifugé, lors d'une transformation
 on observera très probablement un transfert thermique,
-donc mếme lors d'une transformation réversible, l'entropie risque de changer.
+donc même lors d'une transformation réversible, l'entropie risque de changer.
 
 (Cependant, on s'attend à ce que l'expression de l'entropie soit de la forme $dif S = dif S_"calorifugé" + delta Q $)
 
@@ -428,7 +428,7 @@ On pose donc $ Q = -Q_th $
 On s'intéresse à la variation d'entropie du système $Delta S_th$.
 Par la première identité thermodynamique:
 $ dif U_th = T_th dif S_th - P_th dif V_th $
-$ dif S_th = (dif U_th)/T_th - P_th/T_th V_th $
+$ dif S_th = (dif U_th)/T_th + P_th/T_th dif V_th $
 On suppose que le thermostat est très grand, afin de pouvoir encaisser n'importe quel transfert thermique (donc $V_th >> V$, donc $dif V_th = - dif V << V_th$).
 
 On a:

@@ -297,10 +297,13 @@ $ mom (arw(F)_(Q P)) = arw(O J) and arw(F)_(Q P)
 $
 $ mom (arw(F)_(N M)) = - a/2 sin alpha I b B arw(u_z) $
 
-On calcule le moment total:
-$ mom = - a sin alpha I b B arw(u_z) $
-
-$ mom = I a b arw(n) and B arw(u_x) = arw(cal(M)) and arw(B)
-= I B arw(n)
-$
-
+On calcule le couple:
+$ arw(Gamma) &= mom (arw(F)_(Q P)) + mom(arw(F)_(N M)) \
+&= - a sin alpha I b B arw(u_z) $
+Comme l'angle entre la normale $arw(n)$ et l'axe $arw(u_x)$ vaut
+$alpha$, et que $(arw(n), arw(u_x), arw(u_z))$ forme une base indirecte,
+on a:
+$ arw(n) and arw(u_x) = - sin alpha arw(u_z) $
+Donc:
+$ arw(Gamma) = I a b B (arw(n) and arw(u_x)) = I a b (arw(n) and arw(B))
+= arw(cal(M)) and arw(B) "avec" arw(cal(M)) = I a b arw(n) $
