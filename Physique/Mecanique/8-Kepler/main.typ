@@ -131,7 +131,7 @@ perpendiculaires au vecteur $momcin$, qui est constant.
   point $O$, et ce plan est perpendiculaire à $momcin$.
 Dans les deux cas, le point $M$ évolue dans un plan qui reste fixe.
 On peut donc se placer en coordonnées polaires:
-$ M = r arw(u_r) $
+$ arw(O M) = r arw(u_r) $
 
 == Constante des aires
 
@@ -343,7 +343,7 @@ $ E_m = E_p + E_c = 1/2 E_p $
   columns: (1fr, 1fr, 1fr),
   inset: 10pt,
   [], [Circulaire], [Elliptique],
-  $E_m$, $ - (G M)/(2 R) $, $ - (G M)/(2 a) $,
+  $E_m$, $ - (G M m)/(2 R) $, $ - (G M m)/(2 a) $,
   [3#super[eme] Loi de Kepler], $ T^2/R^3 = (4 pi^2)/(G M) $,
   $ T^2/a^3 = (4 pi^2)/(G M) $
 )
