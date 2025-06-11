@@ -158,8 +158,8 @@ La courbe aura donc une allure exponentielle:
 Dans le cas d'une transformation isobare avec un gaz parfait:
 $ dif H = C_P dif T = T dif S + V dif P $
 $ dif S = C_P (dif T)/T - V/T dif P $
-$ dif S = C_P (dif T)/T - n R dif P $
-$ Delta S = C_P ln (T_f/T_i) - n R ln P_f/P_i = C_P ln (T_f/T_i) $
+$ dif S = C_P (dif T)/T - n R (dif P)/P $
+$ Delta S = C_P ln (T_f/T_i) - n R ln (P_f/P_i) = C_P ln (T_f/T_i) $
 Donc la courbe possède la même allure:
 #figcan({
   import draw: *
@@ -174,7 +174,7 @@ Donc la courbe possède la même allure:
 == Interprétation de l'aire d'un cycle dans le diagramme entropique
 
 On se rapelle le diagrame $(P, V)$. Si la transformation étudiée est
-quasistatique, l'air dans le diagramme $(P, V)$ correspond au travail des forces de pression du système ($delta W = - P_"ext" dif V approx - P dif V$).
+quasistatique, l'aire dans le diagramme $(P, V)$ correspond au travail des forces de pression du système ($delta W = - P_"ext" dif V approx - P dif V$).
 
 Pour un même cycle, si on le parcours dans le sens inverse, le travail
 est opposé (on peut fournir ou recevoir du travail en inversant
@@ -271,19 +271,28 @@ et deux transformations adiabatiques (avec $P V^gamma = "constante"$):
   arrow((0, 0), (4, 0), tip: $V$)
   arrow((0, 0), (0, 4), tip: $P$)
 
-  catmull((1, 3), (2, 1.5), (4, 1), (3, 2.5), (1, 3))
-  // bezier-through((1, 3), (1.5, 2), (2, 1.5))
+  // catmull((1, 3), (2, 1.5), (4, 1), (3, 2.5), (1, 3))
+  bezier-through((1, 3), (1.5, 2), (2, 1.5))
+  bezier-through((2, 1.5), (3, 1.1), (4, 1))
+
+  bezier-through((1, 3), (2, 2.6), (3, 2.5))
+  bezier-through((3, 2.5), (3.5, 1.5), (4, 1))
+
+  content((0.7, 2), $Q = 0$)
+  content((4.1, 2), $Q = 0$)
+  content((2.1, 3), $T = T_C$)
+  content((3.1, 0.6), $T = T_F$)
 
   point((1, 3), value: $A$)
-  point((2, 1.5), value: $D$, anchor: "north-east")
+  point((3, 2.5), value: $B$, anchor: "south-west")
   point((4, 1), value: $C$, anchor: "north-west")
-  point((3, 2.5), value: $C$, anchor: "south-west")
+  point((2, 1.5), value: $D$, anchor: "north-east")
 })
 
 On veut calculer le travail et le transfert thermique pour chacune
 des transformations, afin de calculer le rendement de ce cycle:
 - Pour les transformations isothermes,
-  $ Delta U = Q + W = 0 "par 1"^"ere" "loi de joule" $
+  $ Delta U = Q + W = 0 " par 1"^"ere" "loi de joule" $
   $ W = - n R T ln (V_"f")/V_"i" $
   - Pour la transformation à température chaude:
     $ W = - n R T_C ln (V_B/V_A) $
@@ -324,8 +333,8 @@ justifier l'allure des courbes]
 #figcan({
   import draw: *
 
-  arrow((0, 0), (4, 0), tip: $P$)
-  arrow((0, 0), (0, 4), tip: $V$)
+  arrow((0, 0), (0, 4), tip: $P$)
+  arrow((0, 0), (4, 0), tip: $V$)
 
   bezier-through((1, 3), (2, 2.3), (3, 2))
   line((3, 2), (3, 0.5))

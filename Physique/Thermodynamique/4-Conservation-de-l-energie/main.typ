@@ -122,7 +122,7 @@ On dit qu'un système vérifie la *première loi de Joule* si son
 
 Par exemple, on avait parachuté l'énergie interne d'un gaz parfait _monoatomique_ comme étant:
 $ U = 3/2 n R T $
-L'énergie interne ne dépendant que de la température
+L'énergie interne ne dépendant que de la température,
 les gaz parfaits monoatomiques respectent la première loi de Joule.
 
 #note[
@@ -152,6 +152,12 @@ $ C_V = ((diff U)/(diff T))_V = 3/2 n R $
 
 Dans le cas d'un gaz parfait non-monoatomique:
 $ U = A T "avec" A >= 3/2 n R "donc" C_V >= 3/2 n R $
+
+#caution[
+  La capacité thermique isochore n'est défini qu'à *volume constant*.
+  Elle ne permet pas de
+  calculer l'énergie interne quand le volume change.
+]
 
 #warn[
   Dans le cas général, la capacité thermique isochore est une fonction

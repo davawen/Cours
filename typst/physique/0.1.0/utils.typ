@@ -118,6 +118,27 @@
 	)
 }
 
+#let cross(pos, size: 0.075) = {
+  import draw: *
+
+  line((rel: (-size, -size), to: pos), (rel: (size, size), to: pos))
+  line((rel: (size, -size), to: pos), (rel: (-size, size), to: pos))
+}
+
+#let vecout(pos, ct, offset) = {
+  import draw: *
+  circle(pos, radius: 0.2)
+  circle(pos, radius: 0.075, fill: black)
+  content((rel: offset, to: pos), ct)
+}
+
+#let vecin(pos, ct, offset) = {
+  import draw: *
+  circle(pos, radius: 0.2)
+  cross(pos)
+  content((rel: offset, to: pos), ct)
+}
+
 /// Draws a line going through the two points
 /// The line stops at the edges of the box, degined by the top-left and the bot-right corner 
 /// If the line is outside the box or grazes, this may not compile

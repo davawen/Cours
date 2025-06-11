@@ -191,3 +191,46 @@ Page 269 - Elle ne reconnaît plus son visage dans le miroir.
 Page 274 - Elle arrive au moment où elle a commencé à écrire.
 Comme elle était entrain d'écrire, elle est toujours un peu en
 avance.
+
+== La question de la frontière entre l'homme et la nature
+
+Haushofer creuse trois frontières entre l'homme et la nature:
+
+=== Entre l'humain et l'animal
++ Lynx
++ La vache
++ Le taureau
+
+=== Entre l'humain et l'objet
+
+Il y a des objets fétichisés, qu'elle traite presque comme des humains.
+
+// La question du végétal n'est pas très importante dans le texte.
+
+=== Entre l'humain et dieu
+
+Elle atteint un rang de créature divine.
+
+= La fin du livre
+
+Dans la mythologie romaine,
+les corneilles sont des oiseaux qui annoncent la mort.
+
+Page 279 - Elle observe les corneilles "si j'étais morte dans la ...,
+elles m'auraient dévoré et déchiquetée"
+
+La fin du livre est une évocation de ces corneilles, elle se dit
+qu'elle va bientôt mourir.
+Un terme correspond bien: les corneilles sont des "psychopompe"
+
+Page 280 - "Par moments, j'avais l'impression que la nature
+ne constituait pour ces créatures qu'un immense piège"
+
+Elle a l'impression que la nature va imminement reprendre ses droits sur
+la civilisation humaine.
+
+La nature est éternelle, par-rapport au humains qui ne le sont pas bouh
+
+Dernier paragraphe - "À présent, je suis calme,
+il m'est possible de voir un peu plus loin dans l'avenir, je vois que
+ce n'est pas terminé"
