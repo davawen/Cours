@@ -1,3 +1,5 @@
+Acheter l'édition GF
+
 = Jules Vernes - Vingt mille lieux sous les mers
 
 Jules Vernes (1828 - 1905), publie VMLSLM en 1869
@@ -65,3 +67,7 @@ En culture générale (et évenement politique dont jules vernes à
 entendu parler):
 
 Dans le texte de Jules Vernes, il y a l'embryon d'une conscience écologique.
+
+== Chapitre 18
+
+Arrivée de monstres qui attaquent le bateau
