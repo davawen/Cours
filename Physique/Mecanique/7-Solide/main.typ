@@ -302,7 +302,7 @@ On passe d'une sommation discrète à une sommation continue:
 
 == Théorème du moment cinétique pour un solide en rotation autour de $axe$
 On a:
-$ (dif L_axe)/(dif t) = (dif (J_axe dot(theta)))/(dif t) = J_axe dot(theta) = sum cal(M)_axe $
+$ (dif L_axe)/(dif t) = (dif (J_axe dot(theta)))/(dif t) = J_axe dot.double(theta) = sum cal(M)_axe $
 
 == Conservation du moment cinétique
 
