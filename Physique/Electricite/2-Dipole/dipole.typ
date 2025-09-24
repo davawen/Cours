@@ -81,7 +81,6 @@ On met des élément les uns après les autre:
     apply(resistor, u: tenserl($u_1$)),
     apply(resistor, u: tenserl($u_2$)),
     apply(resistor, u: tenserl($u_3$)),
-    apply(resistor, u: tenserl($u_4$)),
   )
 })
 
@@ -93,14 +92,13 @@ Si on rencontre un (vrai!) nœud, on n'est pas en série.
 
 == En parallèle
 
-On met des éléments en parallèles les un aux autres:
+On met des éléments en parallèles les un des autres:
 
 #figcan({
   derivation((0, 0), i: $i$, u: tenserl($u$),
-    apply(resistor),
-    apply(resistor),
-    apply(resistor),
-    apply(resistor),
+    apply(serie, (i: $i_1$), apply(resistor)),
+    apply(serie, (i: $i_2$), apply(resistor)),
+    apply(serie, (i: $i_3$), apply(resistor)),
   )
 })
 
@@ -123,9 +121,9 @@ Ici, on a deux droites, on peut le résoudre analytiquement.
 
 Il faut faire la distinction entre le composant (résistor) et sa caractéristique (résistance).
 
-Bon, on appelle tout une résistance.
+#note[La différence réside dans le fait qu'un résistor (qui est un composant réel) peut avoir des comportements chelou (particulièrement à haute tension ou intensité, ou dans un champ magnétique, etc...) qui ne peuvent pas être modélisés par la caractéristique résistance (qui est une approximation linéaire "parfaite")]
 
-#note[Un résistor peut quand-même avoir des comportements un peu chelou qui ne peuvent pas être modélisés par la caractéristique résistance]
+En électricité, on parlera presque exclusivement de résistance.
 
 Schéma:
 #figcan(resistor((0, 0)))
@@ -162,7 +160,8 @@ $ R_"eq" = sum_k R_k $
 === Association en parallèle
 
 #figcan({
-	derivation((0, 0), i: $i$, left: "A", right: "B", u: tenserl($u$),
+	derivation((0, 0), i: $i$, left: "A", right: "B",
+        u: tenserl($u$),
 		apply(resistor),
 		apply(resistor),
 		apply(resistor),
@@ -174,9 +173,6 @@ $ i &= i_1 + i_2 + i_3 \
 &= u_1/R_1 + u_2/R_2 + u_3/R_3 \
 &= underbrace((1/R_1 + 1/R_2 + 1/R_3), "1/R_eq") u
 $
-
-#caution[On fait très attention à l'homogénéité. On ne peut pas juste poser
-$R = 1/R_1 + 1/R_2 + 1/R_3$, car les unités ne fonctionnent pas.]
 
 On pose $G$ la conductance avec $G = 1/R$.
 Ici, on a:
@@ -199,6 +195,7 @@ Donc $cal(P)_"reçue" > 0$ en convention récepteur.
 
 == Bobine d'inductance $L$
 
+Schéma:
 #figcan({
   bobine((0, 0), u: tenserl($u$))
 })
@@ -209,6 +206,19 @@ $ u = L (dif i)/(dif t) $
 La bobine est un fil enroulé autour d'un truc. Le fil possède très probablement une résistance.
 La majorité du temps, on représentera une bobine par une inductance ET une résistance.
 On ne peut pas exclure un comportement de type condensateur dans une bobine.
+
+#note[
+  On distingue encore une fois l'*inductance*, qui est la caractéristique
+  parfaite qu'on trouve dans les schémas d'électricité, et la *bobine*,
+  qui est un composant réel. Une bobine réelle sera _presque toujours_ 
+  représentée par une inductance _et_ une résistance interne:
+  #grid(
+    columns: (1fr, 1fr, 1fr),
+    align: horizon + center,
+    image("bobine.jpg", width: 70%), $<==>$, 
+    figcan(serie((0, 0), apply(resistor, label: $r$), apply(bobine, label: $L$)))
+  )
+]
 
 === Association en série
 
@@ -279,6 +289,10 @@ Schéma:
   draw.content((0.3, -0.6), $-q$)
 })
 
+#note[
+  Même remarque sur la différence entre condensateur et capacité...
+]
+
 Un condensateur est composé de deux plaques conductrices séparée par un matériau di-électrique (isolant).
 
 En tirant de la charge d'un coté du condensateur, elle est accumulée de l'autre coté.
@@ -327,7 +341,7 @@ $
 En parallèle, les capacité s'ajoutent:
 $ C_"eq" = sum_k C_k $
 
-#caution[Les règles d'ajout des tensions/intensités sont inversées entre les capaciteurs et les autres dipôle]
+#caution[Les règles d'ajout des tensions/intensités sont inversées entre les capaciteurs et les autres dipôle.]
 
 === Puissance
 

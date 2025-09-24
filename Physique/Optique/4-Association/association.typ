@@ -1,6 +1,5 @@
 #import "@local/physique:0.1.0": *
 #import optique: *
-#import xarrow: xarrow
 
 #show: doc => template(doc)
 
@@ -29,7 +28,6 @@ Mis à part les deux cas particuliers qu'on va voir (système afocal et lentille
 Dans un système afocal, l'infini est conjugué à l'infini:
 
 $ oo -->^(lc_1) F'_1 -->^(lc_2) ... --> F'_n -->^(lc_n) oo  $
-
 
 Dans le cas particulier de deux lentilles, on a:
 $ oo -->^(lc_1) F'_1 = F'_2 -->^(lc_2) oo $
@@ -133,7 +131,7 @@ Le PR est proche de l'œil, on ne peut pas voir au-delà.
 
 Pour rectifier la miopie, on place une lentille divergente (dîte correctrice) avant le cristallin afin d'envoyer les rayons à l'infini sur le PR de l'œil myope:
 
-$ oo -->^(lc_c) "PR" xarrow("œil myope") "rétine" $
+$ oo -->^(lc_c) "PR" -->^("œil myope") "rétine" $
 
 === Hypermétropie
 

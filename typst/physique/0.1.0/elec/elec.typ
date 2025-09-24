@@ -127,7 +127,7 @@ Elle prend en paramètres:
 
 		let (f, pos: positional, named) = elem
 
-		if i > 0 and i < elems.len()-1 {
+		if i >= 0 and i < elems.len() {
 			height += padding*2
 		}
 

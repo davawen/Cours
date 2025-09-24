@@ -191,6 +191,9 @@ on peut court-circuiter des éléments en la plaçant à deux endroits à la foi
 
 Si on place une autre terre:
 
+(Par exemple, en essayant de faire une mesure à l'oscilloscope,
+la masse de l'oscilloscope étant toujours reliée à la terre)
+
 #figcan({
   resistor((1, 0), name: "d1")
   resistor((2, -1), rot: 90deg, name: "d2")
@@ -202,7 +205,7 @@ Si on place une autre terre:
   fil("d1.l", "d3.r", "d1.r", "d2.r", "d2.l", "g", "g", "d3.l")
 })
 
-Par contre, on peut:
+En réalité, on a connecté les deux nœuds!
 
 #figcan({
   resistor((1, 0), name: "d1")
@@ -210,9 +213,10 @@ Par contre, on peut:
   resistor((0, -1), rot: 90deg, name: "d3")
 
   ground((2, -2), name: "g")
-  ground((0, -2), name: "g2")
 
   fil("d1.l", "d3.r", "d1.r", "d2.r", "d2.l", "g", "g", "d3.l")
+  fil((0, 0), (-1, 0), (-1, 0), "g", rev: true)
+
 })
 
 = Approximation des régimes quasi-stationnaires (#smallcaps[ARQS])
@@ -231,19 +235,20 @@ Par exemple, dans un régime continu, si on mesure la tension entre deux dipôle
 
 == ARQS
 
-La question va être: dans un régime variable, peut-on continuer à appliquer les lois valides dans un régime continu?
+Dans un régime variable, peut-on continuer à appliquer les lois valides dans un régime continu?
 
 Si on change un paramètre dans un circuit, l'information ne se propage pas de manière instantané. Il y aura donc un temps de propagation entre la source des variations et le reste du circuit. \
 On va comparer deux temps:
 - $tau$, le temps de propagation de l'information dans le circuit
-- $T$, le temps caractéristique du régime variable
+- $T$, le temps caractéristique du régime variable (qu'on peut
+  comprendre comme le temps que les composants en eux même mettent à réagir à la propagation d'information)
 
 On va se placer dans l'approximation des régimes quasi-stationnaires quand $tau << T$
 
 Autre manière de le voir: les signaux électriques (électromagnétiques donc) se propagent à la vitesse de la lumière.
 On peut donc utiliser une notion de distance plutôt que de temps:
 - $L = c tau$, la longueur du circuit
-- $lambda = c T$, La longueur caractéristique du circuit
+- $lambda = c T$, la longueur caractéristique du circuit
 
 On se place dans l'ARQS quand $L << lambda$.
 
@@ -263,8 +268,6 @@ $ s(t) = S cos(omega t + phi) $
 
 Avec $S$ l'amplitude, $omega$ la pulsation et $phi$ la phase initiale.
 
-#def[Régime quasi-stationnaire]: 
-
 Le signal est trivialement variable, mais
 si ces caractéristiques restent constantes, il sera dit stationnaire/permanent.
 
@@ -281,42 +284,31 @@ Tout ce qui n'est pas stationnaire ou permanent sera dit transitoire.
 == Terminologie des circuits
 
 #figcan({
-  serie((0, 0), name: "D", left: "A", right: "C",
-    apply(resistor, label: $X$), apply(resistor)
+      // apply(node, name: "A", round: true),
+  carre((0, 0),
+    branch(top: "A", bot: "D", apply(resistor), apply(node, name: " ")),
+    apply(resistor, label: $X$),
+    apply(resistor),
+    retour(apply(resistor)),
+    branch(top: "B", bot: "E", apply(resistor)),
+    apply(resistor),
+    apply(resistor),
+    branch(top: "C")
   )
-
-  node((0, 0), offset: (0, 0.8em), name: "B", round: true)
-
-  resistor((0, -1.5), rot: -90deg, name: "d1")
-  node((0, -3), offset: (0, -0.8em), name: "E", round: true)
-  serie((0, -3), left: "D", right: "F", name: "D2",
-    apply(resistor), apply(resistor)
-  )
-
-  node((0, -4), offset: (0, -0.8em), name: "G", round: true)
-  serie((0, -4), name: "D3", apply(resistor), apply(resistor))
-
-  resistor((1.5, -1.5), rot: 45deg, name: "d2")
-
-  fil((-2.725, 0), (-2.725, -4))
-  fil((2.725, 0), (2.725, -4))
-
-  fil("B", "d1.l", "d1.r", "E")
-  fil("E", "d2.l", "d2.r", (2.725, 0), straight: false)
 })
 
 #def[Dipôle]: Un  élément qui a deux bornes \
   Exemple: $X$
 
 #def[Nœud]: Point où sont connectés plus de deux dipoles ($>= 3$) \
-  Exemples: $B, C, D, E, F$
+  Exemples: $B, C, E$ ($C$ et $E$ représentent le même nœud)
 
 #def[Branche]: Portion de circuit entre deux nœuds successifs \
-  Exemples: $B A D, E F, C F, G D$
+  Exemples: $B C, B A D E, B E$
 
-#def[Maille]: Ensemble de branches partant d'un nœud pour revenir à ce nœud, *sans paser deux fois par la même branche*. \
+#def[Maille]: Ensemble de branches partant d'un nœud pour revenir à ce nœud, *sans passer deux fois par la même branche*. \
 En clair: on part d'un point, et on fait une boucle pour revenir au même point. \
-  Exemples: $E B C F, D A B E, E B C, E C F$
+  Exemples: $B A D E, B C E, B C E D A$
 
 #note[Un même circuit a plusieurs représentation équivalentes. Utiliser celle qui marche le mieux pour soi.]
 
@@ -328,7 +320,7 @@ Dans un régime continu:
 
 $ sum_k epsilon_k i_k = 0 $
 
-Avec: $ epsilon_k = cases(1 "si ik arrive", -1 "si ik part") $
+Avec: $ epsilon_k = cases(1 "si" i_k "arrive", -1 "si" i_k "part") $
 
 ]
 
@@ -352,36 +344,22 @@ Dans un régime continu et dans une maille:
 #resultb[*La somme des potentiels dans le sens de la maille est égale à la somme des potentiels dans le sens inverse à la maille.*
   $ sum_k epsilon_k u_k = 0 $
 Avec:
-  $ epsilon_k = cases(+1 "si uk dans le sens de la maille", -1 "si uk dans le sens opposé à la maille") $
+  $ epsilon_k = cases(+1 "si" u_k "dans le sens de la maille", -1 "si" u_k "dans le sens opposé à la maille") $
 ]
 
+Exemple:
+
 #figcan({
-  node((-3, 0), name: "A")
-  node((0, 0), name: "B")
-  node((3, 0), name: "C")
-
-  node((3, -2), name: "D")
-  node((0, -4), name: "F")
-  node((-3, -4), name: "G")
-
-  resistor((-1.5, 0), name: "d1", u: tenselr($u_1$))
-  resistor((1.5, 0), name: "d2", u: tenserl($u_2$))
-
-  resistor((3, -1), rot: -90deg, name: "d3")
-  resistor((3, -3), rot: -90deg, name: "d4")
-
-  resistor((-1.5, -4), name: "d5")
-  resistor((1.5, -4), name: "d6")
-
-  resistor((-3, -2), rot: -90deg, name: "d7")
-
-  fil("A", "d1.l", "d1.r", "d2.l", "d2.r", "C")
-  fil("C", "d3.l", "d3.r", "d4.l", "d4.r", "d6.r", rev: 1)
-  fil("d6.l", "d5.r", "d5.l", "d7.r", "d7.l", "A")
+  carre((0, 0),
+    branch(apply(resistor, u: tenselr($u_5$)), apply(resistor, u: tenserl($u_6$))),
+    apply(resistor, u: tenserl($u_1$)),
+    apply(resistor, u: tenselr($u_2$)),
+    retour(apply(resistor, u: tenserl($u_4$))),
+    branch(apply(resistor, u: tenserl($u_3$)))
+  )
 })
 
-$ u_1 + u_4 + u_7 = u_2 + u_3 + u_5 + u_6 $
-$  $
+$ u_1 + u_5 + u_3 = u_6 + u_4 + u_2 $
 
 == Lois de Kirchhoff
 
@@ -430,7 +408,7 @@ underbrace(V_B i dif t, "perdue") =
 i dif t underbrace((V_A - V_B), "tension") $
 $ dif E = u i dif t $
 
-On sait que la puissane est $"energie"/"durée"$, donc:
+On sait que la puissance est $"energie"/"durée"$, donc:
 $ cal(P) = (dif E)/(dif t) = u dot i $
 
 == Récepteurs ou générateurs
