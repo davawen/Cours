@@ -1,6 +1,5 @@
 import subprocess
 from pathlib import Path
-from os import read
 import sys
 
 index = open("index.html", "w")
@@ -9,8 +8,8 @@ index.write("""
 <!DOCTYPE html>
 <html><head>""")
 
-local = len(sys.argv) >= 2 and sys.argv[1] == "local"
-if not local:
+remote = len(sys.argv) >= 2 and sys.argv[1] == "remote"
+if remote:
     index.write("<base href=\"/Cours/\"")
 
 index.write("</head><body>")
