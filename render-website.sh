@@ -22,7 +22,6 @@ cd /tmp/Cours
 
 # Remove git ignore to allow pushing pdfs
 rm .gitignore
-echo "rendered/" > .gitignore
 
 python3 render-website.py remote
 
