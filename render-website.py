@@ -26,6 +26,9 @@ def compile_dir(path: Path):
             elif child.name.endswith(".typ"):
                 typsts.append((".typ", child))
 
+    typsts.sort(key=lambda x: x[1].name)
+    dirs.sort(key=lambda x: x.name)
+
     def compile_child(child, display_name):
         fixed_name = child.as_posix().replace('/', '_').replace('"', '_')
         index.write(f"<li><a href=\"rendered/{fixed_name}.pdf\">{display_name}</a></li>\n")
