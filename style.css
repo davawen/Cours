@@ -1,0 +1,23 @@
+body {
+	background-color: #E4E6FF;
+}
+
+h1 {
+	text-align: center;
+	color: crimson;
+}
+
+.page {
+	background-color: #B9DDF9;
+
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+
+	padding: 1em;
+}
+
+.footnote {
+	text-align: right;
+	font-size: 0.7em;
+}

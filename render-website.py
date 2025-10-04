@@ -12,7 +12,13 @@ remote = len(sys.argv) >= 2 and sys.argv[1] == "remote"
 if remote:
     index.write("<base href=\"/Cours/\"")
 
-index.write("</head><body>")
+index.write("<link href=\"style.css\" rel=\"stylesheet\" />")
+
+index.write("</head><body><div class=\"page\">")
+
+index.write("<h1>Notes de cours</h1>")
+
+index.write("<div class=\"list\">")
 
 def compile_dir(path: Path):
     dirs = []
@@ -75,8 +81,9 @@ for dir in ["Physique", "Fr"]:
 
 index.write("<ol>")
 
-index.write("""
-    </body>
-</html>""")
+index.write("</div>")
+index.write("<div class=\"footnote\">Arthaud Awen / HX𝑖² / 2024-2025</div>")
+
+index.write("""</div></body></html>""")
 
 index.close()
