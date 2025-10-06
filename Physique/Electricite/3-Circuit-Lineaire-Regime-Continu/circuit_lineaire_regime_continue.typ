@@ -91,13 +91,13 @@ On voit que $R_"mes" approx R$ quand $R << R_V$. On le préfera quand $R$ est pe
 
 Quand on place un ampèremètre sur un circuit, il faut que la tension à ses bornes soit négligable pour ne pas perturber le circuit.
 
-Ainsi, la résistance interne de l'ampèremètre doit être le plus faible possible. (de l'ordre de grandeur de quelques $ohm$).
+Ainsi, la résistance interne de l'ampèremètre doit être le plus faible possible. (de l'ordre de grandeur de quelques $Omega$).
 
 De même, pour que le voltmètre ne perturbe pas une mesure, l'intensité qui le parcourt doit être très petite, donc il doit avoir une résistance interne très grande.
 
-Il faut connaître l'ordre de grandeur des résistance de voltmètre: quelques M$ohm$.
+Il faut connaître l'ordre de grandeur des résistance de voltmètre: quelques M$Omega$.
 
-Il faudra aussi faire attention à la résistance interne des générateurs ($approx 50 ohm$) et des oscilloscopes.
+Il faudra aussi faire attention à la résistance interne des générateurs ($approx 50 Omega$) et des oscilloscopes.
 
 = Ponts diviseurs de tension et de courant
 
