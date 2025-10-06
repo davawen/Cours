@@ -10,7 +10,7 @@ index.write("""
 
 remote = len(sys.argv) >= 2 and sys.argv[1] == "remote"
 if remote:
-    index.write("<base href=\"/Cours/\"")
+    index.write("<base href=\"/Cours/\" />")
 
 index.write("<link href=\"style.css\" rel=\"stylesheet\" />")
 
